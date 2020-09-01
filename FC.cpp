@@ -15,6 +15,7 @@ int main()
 
     obj->get_n();
     // obj->draw_upper();
+    cout<< "aaaaa"<< endl;
     obj->calculate_upper();
 
   return 0; 
