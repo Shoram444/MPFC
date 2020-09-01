@@ -26,11 +26,12 @@ MPFeldman_Cousins::MPFeldman_Cousins(double _b, double _step, int _rows, double 
 	b = _b;
 	CL = _CL;
 
+	table = new double*[ROW_N];
 
-	table = (double**)malloc(sizeof(double*)*ROW_N);
+	// table = (double**)malloc(sizeof(double*)*ROW_N);
     for (int i = 0; i <= ROW_N; i++) 
     {
-        table[i] =(double*)malloc(sizeof(double)*COL_N);
+        table[i] = new double[COL_N];
     }
     
     
