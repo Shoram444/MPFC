@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC   -shared -Wl,-soname,libMPFC.so -o libMPFC.so CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.o 
