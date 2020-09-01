@@ -60,7 +60,7 @@ double* MPFeldman_Cousins::get_R()
 {	
 	// double mu_j = Get_mu();
 	
-	R = (double*)malloc(sizeof(double)*ROW_N);
+	R = new double[ROW_N];
 	int n_start = 0;
 	int n_end = ROW_N;
 
@@ -98,34 +98,26 @@ double* MPFeldman_Cousins::get_R()
 
 int* MPFeldman_Cousins::get_A(double* R)
 {
-	int* indexes= (int*)malloc(sizeof(int)*ROW_N);
-	// Vector to store element 
-	// with respective present index 
+	int* indexes= new int[ROW_N];
+
 	vector<pair<double, int> > vp; 
 
-	// Inserting element in pair vector 
-	// to keep track of previous indexes 
 	for (int i = 0; i < ROW_N; ++i) 
 	{ 
 		vp.push_back(make_pair(R[i], i)); 
 	} 
 
-	// Sorting pair vector 
+	// Sorting pair vector from highest (that's what greater stands for)
 	sort(vp.begin(), vp.end(), greater<>()); 
 
-	// Displaying sorted element 
-	// with previous indexes 
-	// corresponding to each element 
-
+	
   
-	for (int i = 0; i < ROW_N; i++) 
+	for (int i = 0; i < ROW_N; i++)  //saves indexes to the array
 	{ 
-		// cout<< "vp first (R)"<< vp[i].first<<"    vp secound (index)"<< vp[i].second<<endl;
-		// cout<< "R i "<< R[i]<<endl;
+		
 		indexes[i]=vp[i].second;
 	} 
 
-	// cout<< "index 4 = "<< indexes[4]<<endl;
 	return indexes;
 
 }

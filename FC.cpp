@@ -17,7 +17,7 @@ int main()
     // obj->draw_upper();
     // cout<< "aaaaa"<< endl;
     // obj->calculate_upper();
-    obj->print_poisson();
+    obj->print_A();
 
   return 0; 
 } 
