@@ -18,7 +18,7 @@ class MPFeldman_Cousins
 	    std::vector<int> CL_check(double mu_j);					// Checks for the CL condition and outputs array of indexes for n
 	    std::vector<std::vector<int>> get_n();					// Outputs array of n_min and n_max associated with each mu step
         void calculate_upper();									// Calculates TGraph for upper limit
-        // void calculate_lower();									// Calculates TGraph for upper limit
+        void calculate_lower();									// Calculates TGraph for upper limit
         // void draw_upper();										// draws upper limit
 
 

@@ -340,7 +340,7 @@ std::vector<vector<int>> MPFeldman_Cousins::get_n()
 }	
 
 
-// TGraph* MPFeldman_Cousins::calculate_upper() ///CHANGE TO GET GRAPH!!!
+// TGraph* MPFeldman_Cousins::calculate_upper() 
 // {
 // 	double mu_array[COL_N];
 // 	vector<int> n;
@@ -439,55 +439,61 @@ void MPFeldman_Cousins::calculate_upper() ///CHANGE TO GET GRAPH!!!
 
 	return;
 }
-// void MPFeldman_Cousins::calculate_lower() ///CHANGE TO GET GRAPH!!!
-// {
-// 	double mu_array[COL_N];
-// 	vector<int> n;
-// 	vector<double> mu_L;
+void MPFeldman_Cousins::calculate_lower() ///CHANGE TO GET GRAPH!!!
+{
+	double mu_array[COL_N];
+	vector<int> n;
+	vector<double> mu_L;
 
-// 	for (int i = 0; i<COL_N; i++)
-// 	{
-// 		mu_array[i] = i*STEP;
+	for (int i = 0; i<COL_N; i++)
+	{
+		mu_array[i] = i*STEP;
 		
-// 	}
+	}
 
-// 	int size = n_array.size();
-// 	int n_current = n_array[size - 1][1];
-// 	int i = size -1;
-// 	// cout<< "n_current" << n_current<<endl;
-// 	// cout<< "i " << i <<endl;
+	int size = n_array.size();
+	int n_current = n_array[size - 1][1];
+	// int i = size -1;
+	// cout<< "n_current" << n_current<<endl;
+	// cout<< "i " << i <<endl;
 
-// 	int y = 0;
-// 	for (int x = size -1 ; x >= 0; x--)
-// 	{
+	int y = 0;
+	for (int x = size -1 ; x >= 0; x--)
+	{
 		
-// 		if (n_current > n_array[x][1])
-// 		{
-// 			n.push_back(n_current);
-// 			cout<< " n = " << n[y]<< "\t";
+		if (n_current > n_array[x][1])
+		{
+			n.push_back(n_current);
 		
-// 			mu_L.push_back(mu_array[x+1]);
-// 			cout<< "mu_L = "<< mu_L[y]<<endl;
+			mu_L.push_back(mu_array[x+1]);
+			n.push_back(n_current - 1 );
+			
 		
-// 			n_current = n_array[x][1];
-// 			y+=1;
-// 		}
+			mu_L.push_back(mu_array[x+1]);
 		
-// 	}
+			n_current = n_array[x][1];
+			y+=2;
+		}
+		
+	}
 
 
-// 	// int entries = y;
+	// int entries = y;
 
-// 	// TGraph *gr  = new TGraph();
+	// TGraph *gr  = new TGraph();
 
-// 	// for (int i =0; i<y; i++)
-// 	// {
-// 	// 	gr->SetPoint(i, n[i], mu_L[i]);
-// 	// }
-  	
+	// for (int i =0; i<y; i++)
+	// {
+	// 	gr->SetPoint(i, n[i], mu_L[i]);
+	// }
+  	for (int i =0 ; i<y; i++)
+	{
+		cout<< "n = " << n[i] << "\t mu_L = " << mu_L[i] << endl;
 
-// 	return; //gr;
-// }
+	}
+
+	return; //gr;
+}
 
 
 // void MPFeldman_Cousins::draw_upper()
