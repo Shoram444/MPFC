@@ -259,13 +259,13 @@ std::vector<int> MPFeldman_Cousins::CL_check(double mu_j)
 	int i = 0;
 	int max_i = 0;
 	std::vector<int> B;
-
+	int check = 0;
 	while (P_Sum < CL)	
 	{
 		if(i == ROW_N - 1)
 		{
 			cout<< "THE CONDITION OF THE CL WAS NEVER ACHIEVED!! BREAK!"<<endl;
-
+			check = -1;
 			break;
 		}
 		// cout<<"mu_j + b = " <<mu_j+b<<endl;
@@ -300,8 +300,16 @@ std::vector<int> MPFeldman_Cousins::CL_check(double mu_j)
 		}
 	}
 
-	n_order.push_back(n_min);
-	n_order.push_back(n_max);
+	if(check !=-1)
+	{
+		n_order.push_back(n_min);
+		n_order.push_back(n_max);
+	}
+	else
+	{
+		n_order.push_back(10000);
+		n_order.push_back(10000);
+	}
 
 	B.clear();
 	// cout<< " n_min = "<< n_order[0]<< "\t n_max = "<< n_order[1]<<endl;
@@ -314,7 +322,7 @@ std::vector<int> MPFeldman_Cousins::CL_check(double mu_j)
 std::vector<vector<int>> MPFeldman_Cousins::get_n()
 {
 	
-	for(int col= 0; col< 2*mu_max ; col++)
+	for(int col= 0; col< COL_N ; col++)
 	{
 		set_mu(col*STEP);
 		double mu_j = get_mu();
@@ -454,10 +462,11 @@ void MPFeldman_Cousins::calculate_lower() ///CHANGE TO GET GRAPH!!!
 	int size = n_array.size();
 	int n_current = n_array[size - 1][1];
 	// int i = size -1;
-	// cout<< "n_current" << n_current<<endl;
+	cout<< "n_current" << n_current<<endl;
 	// cout<< "i " << i <<endl;
 
 	int y = 0;
+	
 	for (int x = size -1 ; x >= 0; x--)
 	{
 		
