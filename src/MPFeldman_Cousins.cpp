@@ -461,6 +461,8 @@ void MPFeldman_Cousins::calculate_upper() ///CHANGE TO GET GRAPH!!!
 }
 void MPFeldman_Cousins::calculate_lower() ///CHANGE TO GET GRAPH!!!
 {
+	get_n();
+	
 	double mu_array[COL_N];
 	vector<int> n;
 	vector<double> mu_L;
