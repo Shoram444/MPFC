@@ -48,7 +48,7 @@ MPFeldman_Cousins::MPFeldman_Cousins(double _b, double _step, int _rows, double 
         }
         
     }
-    set_mu(0);
+    set_mu(b);
 
 }
 
@@ -322,8 +322,8 @@ std::vector<int> MPFeldman_Cousins::CL_check(double mu_j)
 
 std::vector<vector<int>> MPFeldman_Cousins::get_n()
 {
-	
-	for(int col= 0; col< COL_N ; col++)
+	cout<< "============ get_n started ================"<<endl;
+	for(int col= 0; col< mu_max/STEP ; col++)
 	{
 		set_mu(col*STEP);
 		double mu_j = get_mu();
@@ -345,6 +345,8 @@ std::vector<vector<int>> MPFeldman_Cousins::get_n()
 		n_order.clear();
 		
 	}
+	cout<< "============ get_n ended ================"<<endl;
+
 	return n_array;
 }	
 
