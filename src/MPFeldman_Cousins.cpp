@@ -48,6 +48,7 @@ MPFeldman_Cousins::MPFeldman_Cousins(double _b, double _step, int _rows, double 
         }
         
     }
+    set_mu(0);
 
 }
 
@@ -58,7 +59,7 @@ MPFeldman_Cousins::~MPFeldman_Cousins()
 
 double* MPFeldman_Cousins::get_R()
 {	
-	// double mu_j = Get_mu();
+	mu_j = get_mu();
 	
 	R = new double[ROW_N];
 	int n_start = 0;
@@ -74,7 +75,7 @@ double* MPFeldman_Cousins::get_R()
 		int mu_i = int((mu_j+b)/STEP);
 		int mu_b_i = int((mu_best+b)/STEP);
 
-		// cout<<"mu_"<<i<<" = "<< mu_i<<endl;
+		// cout<<"mu_j = "<< mu_j<<endl;
 		// cout<<"mu_b_"<<i<<" = "<< mu_b_i<<endl;
 		if(table[i][mu_i] == 0)
 		{
@@ -188,8 +189,8 @@ double MPFeldman_Cousins::poisson(int n, double mu_j)
 void MPFeldman_Cousins::print_poisson()
 {
 
-	if(ROW_N>50){ROW_N=50;}
-	if(COL_N>0){COL_N=10;}
+	if(ROW_N>1000){ROW_N=1000;}
+	if(COL_N>10){COL_N=10;}
 
 	for(int i = 0; i<COL_N;i++)
 	{
@@ -213,7 +214,7 @@ void MPFeldman_Cousins::print_R()
 {	
 	R = get_R();
 
-	if(ROW_N>100){ROW_N=100;}
+	if(ROW_N>1000){ROW_N=1000;}
 	for (int i = 0; i<ROW_N;i++)
 	{
 		cout<< "n = "<< i << "\t R = " << R[i]<<"\tPoisson i = " <<table[i][int((mu_j+b)/STEP)] <<endl;
@@ -234,7 +235,7 @@ void MPFeldman_Cousins::print_A()
 {
 	R = get_R();
 	A = get_A(R);
-	if(ROW_N>50){ROW_N=50;}
+	if(ROW_N>1000){ROW_N=1000;}
 	// cout<<"mu_j = "<< mu_j << "\tb = "<<b<<endl;
 	cout << setw(4) << "n" << "|" <<setw(12) <<"P(n, mu+b)  |" << setw(4)<< " mu |" <<setw(16) <<"  P(n, mu_b+b)  |" <<setw(13)<<"R     |" << setw(5)<< "A|"<<endl;
 	cout << "----|------------|----|----------------|------------|----|" << endl;
@@ -402,6 +403,7 @@ std::vector<vector<int>> MPFeldman_Cousins::get_n()
 
 void MPFeldman_Cousins::calculate_upper() ///CHANGE TO GET GRAPH!!!
 {
+	get_n();
 	double mu_array[COL_N];
 	vector<int> n;
 	vector<double> mu_U;
@@ -422,16 +424,24 @@ void MPFeldman_Cousins::calculate_upper() ///CHANGE TO GET GRAPH!!!
 		
 		if (n_current > n_array[x][0])
 		{
-			n.push_back(n_current);
-		
-			mu_U.push_back(mu_array[x+1]);
-			n.push_back(n_current - 1 );
+			if(n_array[x][0] == 10000)
+			{
+				continue;
+			}
+			else
+			{
+				n.push_back(n_current);
 			
-		
-			mu_U.push_back(mu_array[x+1]);
-		
-			n_current = n_array[x][0];
-			y+=2;
+				mu_U.push_back(mu_array[x+1]);
+				n.push_back(n_current - 1 );
+				
+			
+				mu_U.push_back(mu_array[x+1]);
+			
+				n_current = n_array[x][0];
+				y+=2;
+			}
+			
 		}
 		
 	}
