@@ -25,13 +25,31 @@ MPFeldman_Cousins::MPFeldman_Cousins(double _b, double _step, int _rows, double 
 	COL_N = _rows/STEP;  //The number of columns dependent on max mu and step chosen.
 	b = _b;
 	CL = _CL;
+	table = fill_table();
+    set_mu(0);
+	R = get_R();
+	A = get_A(R);
+	n_order = CL_check(mu_j, R);
+	n_array = get_n();
+	// print_n();
 
-	table = new double*[ROW_N];
+
+
+}
+
+MPFeldman_Cousins::~MPFeldman_Cousins()
+{
+
+}
+
+double** MPFeldman_Cousins::fill_table()
+{
+	double** fill_table_table = new double*[ROW_N];
 
 	// table = (double**)malloc(sizeof(double*)*ROW_N);
     for (int i = 0; i <= ROW_N; i++) 
     {
-        table[i] = new double[COL_N];
+        fill_table_table[i] = new double[COL_N];
     }
     
     
@@ -43,25 +61,20 @@ MPFeldman_Cousins::MPFeldman_Cousins(double _b, double _step, int _rows, double 
             double mu_j = y*STEP;
 
             
-            table[x][y] = poisson(n,mu_j);   
+            fill_table_table[x][y] = poisson(n,mu_j);   
             
         }
         
     }
-    set_mu(b);
 
-}
-
-MPFeldman_Cousins::~MPFeldman_Cousins()
-{
-
+    return fill_table_table;
 }
 
 double* MPFeldman_Cousins::get_R()
 {	
 	mu_j = get_mu();
 	
-	R = new double[ROW_N];
+	double* get_R_R = new double[ROW_N];
 	int n_start = 0;
 	int n_end = ROW_N;
 
@@ -79,27 +92,27 @@ double* MPFeldman_Cousins::get_R()
 		// cout<<"mu_b_"<<i<<" = "<< mu_b_i<<endl;
 		if(table[i][mu_i] == 0)
 		{
-			R[i] = 0;
+			get_R_R[i] = 0;
 		}
 		else if(table[i][mu_b_i] == 0)
 		{
-			R[i] = 0;
+			get_R_R[i] = 0;
 		}
 		else
 		{
-			R[i] = table[i][mu_i]/table[i][mu_b_i];
+			get_R_R[i] = table[i][mu_i]/table[i][mu_b_i];
 		}
 		// cout<<"R_i is:  "<<R[i]<<endl;
 
 	}
 	
-	return R;
+	return get_R_R;
 
 }
 
 int* MPFeldman_Cousins::get_A(double* R)
 {
-	int* indexes= new int[ROW_N];
+	int* get_A_A= new int[ROW_N];
 
 	vector<pair<double, int> > vp; 
 
@@ -113,13 +126,13 @@ int* MPFeldman_Cousins::get_A(double* R)
 
 	
   
-	for (int i = 0; i < ROW_N; i++)  //saves indexes to the array
+	for (int i = 0; i < ROW_N; i++)  //saves get_A_A to the array
 	{ 
 		
-		indexes[i]=vp[i].second;
+		get_A_A[i]=vp[i].second;
 	} 
 
-	return indexes;
+	return get_A_A;
 
 }
 
@@ -212,7 +225,6 @@ void MPFeldman_Cousins::print_poisson()
 
 void MPFeldman_Cousins::print_R()
 {	
-	R = get_R();
 
 	if(ROW_N>1000){ROW_N=1000;}
 	for (int i = 0; i<ROW_N;i++)
@@ -251,11 +263,14 @@ void MPFeldman_Cousins::print_A()
 
 }
 
-std::vector<int> MPFeldman_Cousins::CL_check(double mu_j)
+std::vector<int> MPFeldman_Cousins::CL_check(double mu_j, double* _R)
 {
-	R = get_R();
-	A = get_A(R);
-	
+	// R = get_R();
+	// A = get_A(R);
+	double CL_check_mu_j = mu_j;
+	double* CL_check_R = _R;
+	int* CL_check_A = get_A(CL_check_R);
+	std::vector<int> CL_check_n_order;
 	double P_Sum = 0;
 	int i = 0;
 	int max_i = 0;
@@ -265,12 +280,12 @@ std::vector<int> MPFeldman_Cousins::CL_check(double mu_j)
 	{
 		if(i == ROW_N - 1)
 		{
-			cout<< "THE CONDITION OF THE CL WAS NEVER ACHIEVED!! BREAK!"<<endl;
+			cout<< "THE CONDITION OF THE CL WAS NEVER ACHIEVED!! YOU HAVE TO CHOSE LARGER ROW_N!"<<endl;
 			check = -1;
 			break;
 		}
-		// cout<<"mu_j + b = " <<mu_j+b<<endl;
-		P_Sum += table[A[i]][int((mu_j+b)/STEP)];
+		// cout<<"CL_check_mu_j + b = " <<CL_check_mu_j+b<<endl;
+		P_Sum += table[CL_check_A[i]][int((CL_check_mu_j+b)/STEP)];
 		// cout<<"P_sum = "<< P_Sum<<"i = "<<i <<endl;
 
 		i += 1;
@@ -281,7 +296,7 @@ std::vector<int> MPFeldman_Cousins::CL_check(double mu_j)
 
 	for(int x = 0; x<=max_i; x++)
 	{
-		B.push_back(A[x]);
+		B.push_back(CL_check_A[x]);
 	}
 
 	int n_min = B[0];
@@ -303,52 +318,63 @@ std::vector<int> MPFeldman_Cousins::CL_check(double mu_j)
 
 	if(check !=-1)
 	{
-		n_order.push_back(n_min);
-		n_order.push_back(n_max);
+		CL_check_n_order.push_back(n_min);
+		CL_check_n_order.push_back(n_max);
 	}
 	else
 	{
-		n_order.push_back(10000);
-		n_order.push_back(10000);
+		CL_check_n_order.push_back(10000);
+		CL_check_n_order.push_back(10000);
 	}
 
 	B.clear();
-	// cout<< " n_min = "<< n_order[0]<< "\t n_max = "<< n_order[1]<<endl;
+	// cout<< " n_min = "<< CL_check_n_order[0]<< "\t n_max = "<< CL_check_n_order[1]<<endl;
 
 
-	return n_order;
+	return CL_check_n_order;
 }
 
 
 std::vector<vector<int>> MPFeldman_Cousins::get_n()
 {
-	cout<< "============ get_n started ================"<<endl;
+	std::vector<vector<int>> get_n_n_array;
+	// cout<< "============ get_n started ================"<<endl;
 	for(int col= 0; col< mu_max/STEP ; col++)
 	{
 		set_mu(col*STEP);
-		double mu_j = get_mu();
-		R = get_R();
-		A = get_A(R);
-		n_order = CL_check(mu_j);
+		double get_n_mu_j = get_mu();
+		double* get_n_R = get_R();
+		// int* get_n_A = get_A(R);
+		std::vector<int> get_n_n_order = CL_check(get_n_mu_j, get_n_R);
 
 	
 	    std::vector<int> temp;
 	    for(int j=0;j<2;j++)
 	    {
-	        temp.push_back(n_order[j]);
+	        temp.push_back(get_n_n_order[j]);
 	    }
-	    cout<<"mu_j = "<< mu_j <<"\tn_min\t"<< n_order[0]<<"\t"<<"\tn_max\t"<< n_order[1]<<"\t";
+	    // cout<<"get_n_mu_j = "<< get_n_mu_j <<"\tn_min\t"<< get_n_n_order[0]<<"\t"<<"\tn_max\t"<< get_n_n_order[1]<<"\t";
 
-	    cout<<endl;
-	    n_array.push_back(temp);
+	    // cout<<endl;
+	    get_n_n_array.push_back(temp);
 		
-		n_order.clear();
+		get_n_n_order.clear();
 		
 	}
-	cout<< "============ get_n ended ================"<<endl;
+	// cout<< "============ get_n ended ================"<<endl;
 
-	return n_array;
+	return get_n_n_array;
 }	
+void MPFeldman_Cousins::print_n()
+{
+	int size = n_array.size();
+	for (int i = 0; i < size - 1 ; i++)
+	{
+		cout<<"mu_j = "<< i*STEP <<"\tn_min\t"<< n_array[i][0]<<"\t"<<"\tn_max\t"<< n_array[i][1]<<"\t";
+	    cout<<endl;
+	}
+
+}
 
 
 // TGraph* MPFeldman_Cousins::calculate_upper() 
@@ -405,7 +431,6 @@ std::vector<vector<int>> MPFeldman_Cousins::get_n()
 
 void MPFeldman_Cousins::calculate_upper() ///CHANGE TO GET GRAPH!!!
 {
-	get_n();
 	double mu_array[COL_N];
 	vector<int> n;
 	vector<double> mu_U;
@@ -416,19 +441,24 @@ void MPFeldman_Cousins::calculate_upper() ///CHANGE TO GET GRAPH!!!
 		
 	}
 
+
 	int size = n_array.size();
 	int n_current = n_array[size - 1][0];
+	// cout<< "n_current = "<< n_current<< endl;
 	// int i = size -1;
-
+				
 	int y = 0;
 	for (int x = size -1 ; x >= 0; x--)
 	{
 		
 		if (n_current > n_array[x][0])
 		{
+
 			if(n_array[x][0] == 10000)
 			{
+				cout<< " in sorting" << endl;
 				continue;
+
 			}
 			else
 			{
@@ -454,6 +484,8 @@ void MPFeldman_Cousins::calculate_upper() ///CHANGE TO GET GRAPH!!!
 	for (int i =0 ; i<y; i++)
 	{
 		cout<< "n = " << n[i] << "\t mu_U = " << mu_U[i] << endl;
+		// cout<< "Got to printing"<<endl;
+
 
 	}
 
@@ -476,7 +508,7 @@ void MPFeldman_Cousins::calculate_lower() ///CHANGE TO GET GRAPH!!!
 	int size = n_array.size();
 	int n_current = n_array[size - 1][1];
 	// int i = size -1;
-	cout<< "n_current" << n_current<<endl;
+	// cout<< "n_current" << n_current<<endl;
 	// cout<< "i " << i <<endl;
 
 	int y = 0;

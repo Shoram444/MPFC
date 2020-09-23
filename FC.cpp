@@ -12,17 +12,18 @@ using namespace std;
 int main() 
 { 
 
-    MPFeldman_Cousins* obj = new MPFeldman_Cousins(0, 0.01, 100, 50, 0.95);   // order for parameters (double _b, double _step, int _rows, int _mu_max, double _CL)
+    MPFeldman_Cousins* obj = new MPFeldman_Cousins(3, 0.1, 100, 50, 0.95);   // order for parameters (double _b, double _step, int _rows, int _mu_max, double _CL)
 
     // obj->print_poisson();
     // obj->set_mu(0.5);
     // obj->print_R();
     // obj->print_A();
-    // obj->get_n();
+    // std::vector<std::vector<int>> n_array = get_n();
+    // obj->print_n(n_array);
     // obj->calculate_upper();
     // cout<< "aaaaa"<< endl;
     obj->calculate_lower();
-    // obj->calculate_upper();
+    obj->calculate_upper();
     // obj->print_A();
 
   return 0; 
