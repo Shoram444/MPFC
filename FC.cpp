@@ -12,7 +12,7 @@ using namespace std;
 int main() 
 { 
 
-    MPFeldman_Cousins* obj = new MPFeldman_Cousins(0, 0.01, 1000, 350, 0.9);   // order for parameters (double _b, double _step, int _rows, int _mu_max, double _CL)
+    MPFeldman_Cousins* obj = new MPFeldman_Cousins(0, 0.01, 100, 50, 0.9);   // order for parameters (double _b, double _step, int _rows, int _mu_max, double _CL)
 
     // obj->print_poisson();
     // obj->set_mu(0.5);
@@ -23,7 +23,7 @@ int main()
     // obj->calculate_upper();
     // cout<< "aaaaa"<< endl;
     // obj->calculate_lower();
-    obj->get_mu_U_v_b(0);
+    obj->get_mu_L_v_b(0);
     // obj->print_A();
 
   return 0; 

@@ -473,7 +473,6 @@ vector<double> MPFeldman_Cousins::calculate_upper() ///CHANGE TO GET GRAPH!!!
 
 			if(calculate_upper_n_array[x][0] == 10000)
 			{
-				cout<< " in sorting" << endl;
 				continue;
 
 			}
@@ -508,13 +507,15 @@ vector<double> MPFeldman_Cousins::calculate_upper() ///CHANGE TO GET GRAPH!!!
 
 	return mu_U;
 }
-void MPFeldman_Cousins::calculate_lower() ///CHANGE TO GET GRAPH!!!
+
+vector<double>  MPFeldman_Cousins::calculate_lower() ///CHANGE TO GET GRAPH!!!
 {
-	get_n();
 	
 	double mu_array[COL_N];
 	vector<int> n;
 	vector<double> mu_L;
+	std::vector<vector<int>> calculate_lower_n_array = get_n();
+
 
 	for (int i = 0; i<COL_N; i++)
 	{
@@ -522,8 +523,8 @@ void MPFeldman_Cousins::calculate_lower() ///CHANGE TO GET GRAPH!!!
 		
 	}
 
-	int size = n_array.size();
-	int n_current = n_array[size - 1][1];
+	int size = calculate_lower_n_array.size();
+	int n_current = calculate_lower_n_array[size - 1][1];
 	// int i = size -1;
 	// cout<< "n_current" << n_current<<endl;
 	// cout<< "i " << i <<endl;
@@ -533,7 +534,7 @@ void MPFeldman_Cousins::calculate_lower() ///CHANGE TO GET GRAPH!!!
 	for (int x = size -1 ; x >= 0; x--)
 	{
 		
-		if (n_current > n_array[x][1])
+		if (n_current > calculate_lower_n_array[x][1])
 		{
 			n.push_back(n_current);
 		
@@ -543,7 +544,7 @@ void MPFeldman_Cousins::calculate_lower() ///CHANGE TO GET GRAPH!!!
 		
 			mu_L.push_back(mu_array[x+1]);
 		
-			n_current = n_array[x][1];
+			n_current = calculate_lower_n_array[x][1];
 			y+=2;
 		}
 		
@@ -558,13 +559,13 @@ void MPFeldman_Cousins::calculate_lower() ///CHANGE TO GET GRAPH!!!
 	// {
 	// 	gr->SetPoint(i, n[i], mu_L[i]);
 	// }
- //  	for (int i =0 ; i<y; i++)
-	// {
-	// 	cout<< "n = " << n[i] << "\t mu_L = " << mu_L[i] << endl;
+  	for (int i =0 ; i<y; i++)
+	{
+		cout<< "n = " << n[i] << "\t mu_L = " << mu_L[i] << endl;
 
-	// }
+	}
 
-	// return; //gr;
+	return mu_L;
 }
 
 
@@ -615,6 +616,50 @@ void MPFeldman_Cousins::get_mu_U_v_b(int n)
 		cout<< "b = " << bkg[i] << "\t mu_u = "<< mu_U_v_b[i]<<endl;
 
 		mu_U.clear();
+		auto end = std::chrono::steady_clock::now();
+		std::chrono::duration<double> elapsed_seconds = end-start;
+	    std::cout << "Time it took to find mu vs b: " << elapsed_seconds.count() << "s\n";
+	}
+	return;
+} 
+
+void MPFeldman_Cousins::get_mu_L_v_b(int n)
+{
+
+	double* bkg      = new double[ROW_N];
+	double* mu_L_v_b = new double[ROW_N];
+
+
+	for (int i = 0; i<ROW_N; i++)
+	{
+		// cout<< "started loop get mu v b"<< endl;
+		auto start = std::chrono::steady_clock::now();
+
+		set_b(i*STEP);
+
+		bkg[i] = get_b();
+
+		// cout<< "got to bkg = "<< bkg[i]<< endl;
+		vector<double> mu_L;
+		mu_L = calculate_upper();
+
+		// cout<< "got to calc upper "<< endl;
+		// print_upper();
+
+		if (n == 0)
+		{
+			int index = mu_L.size() - 1;
+			mu_L_v_b[i] = mu_L[index];
+
+
+		}
+		else
+		{
+			mu_L_v_b[i] = mu_L[1+2*i];
+		}
+		cout<< "b = " << bkg[i] << "\t mu_u = "<< mu_L_v_b[i]<<endl;
+
+		mu_L.clear();
 		auto end = std::chrono::steady_clock::now();
 		std::chrono::duration<double> elapsed_seconds = end-start;
 	    std::cout << "Time it took to find mu vs b: " << elapsed_seconds.count() << "s\n";
