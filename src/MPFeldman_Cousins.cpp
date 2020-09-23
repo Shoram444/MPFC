@@ -655,9 +655,9 @@ void MPFeldman_Cousins::get_mu_L_v_b(int n)
 		}
 		else
 		{
-			mu_L_v_b[i] = mu_L[1+2*i];
+			mu_L_v_b[i] = mu_L[1+2*i];	
 		}
-		cout<< "b = " << bkg[i] << "\t mu_u = "<< mu_L_v_b[i]<<endl;
+		cout<< "b = " << bkg[i] << "\t mu_L = "<< mu_L_v_b[i]<<endl;
 
 		mu_L.clear();
 		auto end = std::chrono::steady_clock::now();
