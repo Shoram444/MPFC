@@ -2,6 +2,7 @@
 #include <math.h> 
 #include <vector>
 #include <bits/stdc++.h> 
+#include <chrono>
 // #include "TROOT.h"  
 // #include "TGraph.h"
 // #include "TCanvas.h"
@@ -25,7 +26,11 @@ MPFeldman_Cousins::MPFeldman_Cousins(double _b, double _step, int _rows, double 
 	COL_N = _rows/STEP;  //The number of columns dependent on max mu and step chosen.
 	b = _b;
 	CL = _CL;
+	auto start = std::chrono::steady_clock::now();
 	table = fill_table();
+	auto end = std::chrono::steady_clock::now();
+	std::chrono::duration<double> elapsed_seconds = end-start;
+    std::cout << "Time it took to fill table: " << elapsed_seconds.count() << "s\n";
     set_mu(0);
 	R = get_R();
 	A = get_A(R);
@@ -68,6 +73,17 @@ double** MPFeldman_Cousins::fill_table()
     }
 
     return fill_table_table;
+}
+
+void MPFeldman_Cousins::set_b(double _b)
+{
+	b = _b;
+	return;
+}
+
+double MPFeldman_Cousins::get_b()
+{
+	return b;
 }
 
 double* MPFeldman_Cousins::get_R()
@@ -429,11 +445,12 @@ void MPFeldman_Cousins::print_n()
 
 
 
-void MPFeldman_Cousins::calculate_upper() ///CHANGE TO GET GRAPH!!!
+vector<double> MPFeldman_Cousins::calculate_upper() ///CHANGE TO GET GRAPH!!!
 {
 	double mu_array[COL_N];
 	vector<int> n;
 	vector<double> mu_U;
+	std::vector<vector<int>> calculate_upper_n_array = get_n();
 
 	for (int i = 0; i<COL_N; i++)
 	{
@@ -442,8 +459,8 @@ void MPFeldman_Cousins::calculate_upper() ///CHANGE TO GET GRAPH!!!
 	}
 
 
-	int size = n_array.size();
-	int n_current = n_array[size - 1][0];
+	int size = calculate_upper_n_array.size();
+	int n_current = calculate_upper_n_array[size - 1][0];
 	// cout<< "n_current = "<< n_current<< endl;
 	// int i = size -1;
 				
@@ -451,10 +468,10 @@ void MPFeldman_Cousins::calculate_upper() ///CHANGE TO GET GRAPH!!!
 	for (int x = size -1 ; x >= 0; x--)
 	{
 		
-		if (n_current > n_array[x][0])
+		if (n_current > calculate_upper_n_array[x][0])
 		{
 
-			if(n_array[x][0] == 10000)
+			if(calculate_upper_n_array[x][0] == 10000)
 			{
 				cout<< " in sorting" << endl;
 				continue;
@@ -470,7 +487,7 @@ void MPFeldman_Cousins::calculate_upper() ///CHANGE TO GET GRAPH!!!
 			
 				mu_U.push_back(mu_array[x+1]);
 			
-				n_current = n_array[x][0];
+				n_current = calculate_upper_n_array[x][0];
 				y+=2;
 			}
 			
@@ -481,15 +498,15 @@ void MPFeldman_Cousins::calculate_upper() ///CHANGE TO GET GRAPH!!!
 
 	// int entries = y;
 
-	for (int i =0 ; i<y; i++)
-	{
-		cout<< "n = " << n[i] << "\t mu_U = " << mu_U[i] << endl;
-		// cout<< "Got to printing"<<endl;
+	// for (int i =0 ; i<y; i++)
+	// {
+	// 	cout<< "n = " << n[i] << "\t mu_U = " << mu_U[i] << endl;
+	// 	// cout<< "Got to printing"<<endl;
 
 
-	}
+	// }
 
-	return;
+	return mu_U;
 }
 void MPFeldman_Cousins::calculate_lower() ///CHANGE TO GET GRAPH!!!
 {
@@ -541,13 +558,13 @@ void MPFeldman_Cousins::calculate_lower() ///CHANGE TO GET GRAPH!!!
 	// {
 	// 	gr->SetPoint(i, n[i], mu_L[i]);
 	// }
-  	for (int i =0 ; i<y; i++)
-	{
-		cout<< "n = " << n[i] << "\t mu_L = " << mu_L[i] << endl;
+ //  	for (int i =0 ; i<y; i++)
+	// {
+	// 	cout<< "n = " << n[i] << "\t mu_L = " << mu_L[i] << endl;
 
-	}
+	// }
 
-	return; //gr;
+	// return; //gr;
 }
 
 
@@ -561,3 +578,46 @@ void MPFeldman_Cousins::calculate_lower() ///CHANGE TO GET GRAPH!!!
 
 // 	return;
 // }										// draws upper limit
+
+
+void MPFeldman_Cousins::get_mu_U_v_b(int n)
+{
+
+	double* bkg      = new double[ROW_N];
+	double* mu_U_v_b = new double[ROW_N];
+
+
+	for (int i = 0; i<ROW_N; i++)
+	{
+		// cout<< "started loop get mu v b"<< endl;
+		auto start = std::chrono::steady_clock::now();
+
+		set_b(i*STEP);
+
+		bkg[i] = get_b();
+
+		// cout<< "got to bkg = "<< bkg[i]<< endl;
+		vector<double> mu_U;
+		mu_U = calculate_upper();
+
+		// cout<< "got to calc upper "<< endl;
+		// print_upper();
+
+		if (n == 0)
+		{
+			int index = mu_U.size() - 1;
+			mu_U_v_b[i] = mu_U[index];
+		}
+		else
+		{
+			mu_U_v_b[i] = mu_U[1+2*i];
+		}
+		cout<< "b = " << bkg[i] << "\t mu_u = "<< mu_U_v_b[i]<<endl;
+
+		mu_U.clear();
+		auto end = std::chrono::steady_clock::now();
+		std::chrono::duration<double> elapsed_seconds = end-start;
+	    std::cout << "Time it took to find mu vs b: " << elapsed_seconds.count() << "s\n";
+	}
+	return;
+} 
