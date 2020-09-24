@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/shoram/Work/Diploma_Thesis/Feldman_Cousins
+CMAKE_SOURCE_DIR = /home/shoram/Work/Diploma_Thesis/MPFC
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/shoram/Work/Diploma_Thesis/Feldman_Cousins/build
+CMAKE_BINARY_DIR = /home/shoram/Work/Diploma_Thesis/MPFC/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/shoram/Work/Diploma_Thesis/Feldman_Cousins/build/CMakeFiles /home/shoram/Work/Diploma_Thesis/Feldman_Cousins/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/shoram/Work/Diploma_Thesis/MPFC/build/CMakeFiles /home/shoram/Work/Diploma_Thesis/MPFC/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/shoram/Work/Diploma_Thesis/Feldman_Cousins/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/shoram/Work/Diploma_Thesis/MPFC/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -123,6 +123,33 @@ MPFC/fast:
 	$(MAKE) -f CMakeFiles/MPFC.dir/build.make CMakeFiles/MPFC.dir/build
 .PHONY : MPFC/fast
 
+MPFeldman_Cousinsdict.o: MPFeldman_Cousinsdict.cpp.o
+
+.PHONY : MPFeldman_Cousinsdict.o
+
+# target to build an object file
+MPFeldman_Cousinsdict.cpp.o:
+	$(MAKE) -f CMakeFiles/MPFC.dir/build.make CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o
+.PHONY : MPFeldman_Cousinsdict.cpp.o
+
+MPFeldman_Cousinsdict.i: MPFeldman_Cousinsdict.cpp.i
+
+.PHONY : MPFeldman_Cousinsdict.i
+
+# target to preprocess a source file
+MPFeldman_Cousinsdict.cpp.i:
+	$(MAKE) -f CMakeFiles/MPFC.dir/build.make CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.i
+.PHONY : MPFeldman_Cousinsdict.cpp.i
+
+MPFeldman_Cousinsdict.s: MPFeldman_Cousinsdict.cpp.s
+
+.PHONY : MPFeldman_Cousinsdict.s
+
+# target to generate assembly for a file
+MPFeldman_Cousinsdict.cpp.s:
+	$(MAKE) -f CMakeFiles/MPFC.dir/build.make CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.s
+.PHONY : MPFeldman_Cousinsdict.cpp.s
+
 src/MPFeldman_Cousins.o: src/MPFeldman_Cousins.cpp.o
 
 .PHONY : src/MPFeldman_Cousins.o
@@ -159,6 +186,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... MPFC"
 	@echo "... edit_cache"
+	@echo "... MPFeldman_Cousinsdict.o"
+	@echo "... MPFeldman_Cousinsdict.i"
+	@echo "... MPFeldman_Cousinsdict.s"
 	@echo "... src/MPFeldman_Cousins.o"
 	@echo "... src/MPFeldman_Cousins.i"
 	@echo "... src/MPFeldman_Cousins.s"

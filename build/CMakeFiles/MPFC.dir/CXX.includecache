@@ -6,11 +6,67 @@
 
 #IncludeRegexTransform: 
 
+../include/./MPFeldman_Cousins.hh
+vector
+-
+TObject.h
+../include/./TObject.h
+
 ../include/MPFeldman_Cousins.hh
 vector
 -
+TObject.h
+../include/TObject.h
 
-/home/shoram/Work/Diploma_Thesis/Feldman_Cousins/src/MPFeldman_Cousins.cpp
+/home/shoram/Work/Diploma_Thesis/MPFC/build/MPFeldman_Cousinsdict.cpp
+stddef.h
+-
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+assert.h
+-
+RConfig.h
+/home/shoram/Work/Diploma_Thesis/MPFC/build/RConfig.h
+TClass.h
+/home/shoram/Work/Diploma_Thesis/MPFC/build/TClass.h
+TDictAttributeMap.h
+/home/shoram/Work/Diploma_Thesis/MPFC/build/TDictAttributeMap.h
+TInterpreter.h
+/home/shoram/Work/Diploma_Thesis/MPFC/build/TInterpreter.h
+TROOT.h
+/home/shoram/Work/Diploma_Thesis/MPFC/build/TROOT.h
+TBuffer.h
+/home/shoram/Work/Diploma_Thesis/MPFC/build/TBuffer.h
+TMemberInspector.h
+/home/shoram/Work/Diploma_Thesis/MPFC/build/TMemberInspector.h
+TInterpreter.h
+/home/shoram/Work/Diploma_Thesis/MPFC/build/TInterpreter.h
+TVirtualMutex.h
+/home/shoram/Work/Diploma_Thesis/MPFC/build/TVirtualMutex.h
+TError.h
+/home/shoram/Work/Diploma_Thesis/MPFC/build/TError.h
+RtypesImp.h
+/home/shoram/Work/Diploma_Thesis/MPFC/build/RtypesImp.h
+TIsAProxy.h
+/home/shoram/Work/Diploma_Thesis/MPFC/build/TIsAProxy.h
+TFileMergeInfo.h
+/home/shoram/Work/Diploma_Thesis/MPFC/build/TFileMergeInfo.h
+algorithm
+-
+TCollectionProxyInfo.h
+/home/shoram/Work/Diploma_Thesis/MPFC/build/TCollectionProxyInfo.h
+TDataMember.h
+/home/shoram/Work/Diploma_Thesis/MPFC/build/TDataMember.h
+./MPFeldman_Cousins.hh
+/home/shoram/Work/Diploma_Thesis/MPFC/build/./MPFeldman_Cousins.hh
+./MPFeldman_Cousins.hh
+/home/shoram/Work/Diploma_Thesis/MPFC/build/./MPFeldman_Cousins.hh
+
+/home/shoram/Work/Diploma_Thesis/MPFC/src/MPFeldman_Cousins.cpp
 iostream
 -
 math.h
@@ -19,16 +75,12 @@ vector
 -
 bits/stdc++.h
 -
+chrono
+-
 TROOT.h
-/home/shoram/Work/Diploma_Thesis/Feldman_Cousins/src/TROOT.h
-TGraph.h
-/home/shoram/Work/Diploma_Thesis/Feldman_Cousins/src/TGraph.h
-TCanvas.h
-/home/shoram/Work/Diploma_Thesis/Feldman_Cousins/src/TCanvas.h
+/home/shoram/Work/Diploma_Thesis/MPFC/src/TROOT.h
 MPFeldman_Cousins.hh
-/home/shoram/Work/Diploma_Thesis/Feldman_Cousins/src/MPFeldman_Cousins.hh
-
-/home/shoram/Work/ROOT/install/include/Buttons.h
+/home/shoram/Work/Diploma_Thesis/MPFC/src/MPFeldman_Cousins.hh
 
 /home/shoram/Work/ROOT/install/include/Bytes.h
 Rtypes.h
@@ -44,9 +96,9 @@ Byteswap.h
 
 /home/shoram/Work/ROOT/install/include/ESTLType.h
 
-/home/shoram/Work/ROOT/install/include/GuiTypes.h
-Rtypes.h
-/home/shoram/Work/ROOT/install/include/Rtypes.h
+/home/shoram/Work/ROOT/install/include/RConfig.h
+ROOT/RConfig.hxx
+-
 
 /home/shoram/Work/ROOT/install/include/RConfigure.h
 
@@ -182,35 +234,11 @@ ROOT/RConfig.hxx
 stddef.h
 -
 
-/home/shoram/Work/ROOT/install/include/TAttBBox2D.h
-GuiTypes.h
-/home/shoram/Work/ROOT/install/include/GuiTypes.h
-Rtypes.h
-/home/shoram/Work/ROOT/install/include/Rtypes.h
-
-/home/shoram/Work/ROOT/install/include/TAttCanvas.h
-Rtypes.h
-/home/shoram/Work/ROOT/install/include/Rtypes.h
-
-/home/shoram/Work/ROOT/install/include/TAttFill.h
-Rtypes.h
-/home/shoram/Work/ROOT/install/include/Rtypes.h
-
-/home/shoram/Work/ROOT/install/include/TAttLine.h
-Rtypes.h
-/home/shoram/Work/ROOT/install/include/Rtypes.h
-
-/home/shoram/Work/ROOT/install/include/TAttMarker.h
-Rtypes.h
-/home/shoram/Work/ROOT/install/include/Rtypes.h
-
-/home/shoram/Work/ROOT/install/include/TAttPad.h
-Rtypes.h
-/home/shoram/Work/ROOT/install/include/Rtypes.h
-
-/home/shoram/Work/ROOT/install/include/TAttText.h
-Rtypes.h
-/home/shoram/Work/ROOT/install/include/Rtypes.h
+/home/shoram/Work/ROOT/install/include/RtypesImp.h
+TMemberInspector.h
+/home/shoram/Work/ROOT/install/include/TMemberInspector.h
+TError.h
+/home/shoram/Work/ROOT/install/include/TError.h
 
 /home/shoram/Work/ROOT/install/include/TBuffer.h
 TDataType.h
@@ -225,22 +253,6 @@ vector
 -
 typeinfo
 -
-
-/home/shoram/Work/ROOT/install/include/TCanvas.h
-TPad.h
-/home/shoram/Work/ROOT/install/include/TPad.h
-TAttCanvas.h
-/home/shoram/Work/ROOT/install/include/TAttCanvas.h
-TVirtualX.h
-/home/shoram/Work/ROOT/install/include/TVirtualX.h
-TString.h
-/home/shoram/Work/ROOT/install/include/TString.h
-TCanvasImp.h
-/home/shoram/Work/ROOT/install/include/TCanvasImp.h
-
-/home/shoram/Work/ROOT/install/include/TCanvasImp.h
-Rtypes.h
-/home/shoram/Work/ROOT/install/include/Rtypes.h
 
 /home/shoram/Work/ROOT/install/include/TClass.h
 TDictionary.h
@@ -284,6 +296,18 @@ thread
 unordered_set
 -
 
+/home/shoram/Work/ROOT/install/include/TCollectionProxyInfo.h
+TError.h
+/home/shoram/Work/ROOT/install/include/TError.h
+vector
+-
+forward_list
+-
+
+/home/shoram/Work/ROOT/install/include/TDataMember.h
+TDictionary.h
+/home/shoram/Work/ROOT/install/include/TDictionary.h
+
 /home/shoram/Work/ROOT/install/include/TDataType.h
 TDictionary.h
 /home/shoram/Work/ROOT/install/include/TDictionary.h
@@ -293,6 +317,12 @@ string
 -
 Rtypes.h
 /home/shoram/Work/ROOT/install/include/Rtypes.h
+
+/home/shoram/Work/ROOT/install/include/TDictAttributeMap.h
+TObject.h
+/home/shoram/Work/ROOT/install/include/TObject.h
+THashTable.h
+/home/shoram/Work/ROOT/install/include/THashTable.h
 
 /home/shoram/Work/ROOT/install/include/TDictionary.h
 TNamed.h
@@ -312,11 +342,17 @@ TDatime.h
 TUUID.h
 /home/shoram/Work/ROOT/install/include/TUUID.h
 
-/home/shoram/Work/ROOT/install/include/TFitResultPtr.h
+/home/shoram/Work/ROOT/install/include/TError.h
 Rtypes.h
 /home/shoram/Work/ROOT/install/include/Rtypes.h
-memory
+stdarg.h
 -
+
+/home/shoram/Work/ROOT/install/include/TFileMergeInfo.h
+TObject.h
+/home/shoram/Work/ROOT/install/include/TObject.h
+TString.h
+/home/shoram/Work/ROOT/install/include/TString.h
 
 /home/shoram/Work/ROOT/install/include/TGenericClassInfo.h
 vector
@@ -326,21 +362,11 @@ TSchemaHelper.h
 Rtypes.h
 /home/shoram/Work/ROOT/install/include/Rtypes.h
 
-/home/shoram/Work/ROOT/install/include/TGraph.h
-TNamed.h
-/home/shoram/Work/ROOT/install/include/TNamed.h
-TAttLine.h
-/home/shoram/Work/ROOT/install/include/TAttLine.h
-TAttFill.h
-/home/shoram/Work/ROOT/install/include/TAttFill.h
-TAttMarker.h
-/home/shoram/Work/ROOT/install/include/TAttMarker.h
-TVectorFfwd.h
-/home/shoram/Work/ROOT/install/include/TVectorFfwd.h
-TVectorDfwd.h
-/home/shoram/Work/ROOT/install/include/TVectorDfwd.h
-TFitResultPtr.h
-/home/shoram/Work/ROOT/install/include/TFitResultPtr.h
+/home/shoram/Work/ROOT/install/include/THashTable.h
+TCollection.h
+/home/shoram/Work/ROOT/install/include/TCollection.h
+TString.h
+/home/shoram/Work/ROOT/install/include/TString.h
 
 /home/shoram/Work/ROOT/install/include/TInterpreter.h
 TDataType.h
@@ -398,6 +424,10 @@ cmath
 algorithm
 -
 
+/home/shoram/Work/ROOT/install/include/TMemberInspector.h
+Rtypes.h
+/home/shoram/Work/ROOT/install/include/Rtypes.h
+
 /home/shoram/Work/ROOT/install/include/TNamed.h
 TObject.h
 /home/shoram/Work/ROOT/install/include/TObject.h
@@ -431,36 +461,6 @@ string
 -
 iosfwd
 -
-
-/home/shoram/Work/ROOT/install/include/TPad.h
-TVirtualPad.h
-/home/shoram/Work/ROOT/install/include/TVirtualPad.h
-TAttBBox2D.h
-/home/shoram/Work/ROOT/install/include/TAttBBox2D.h
-TPoint.h
-/home/shoram/Work/ROOT/install/include/TPoint.h
-GuiTypes.h
-/home/shoram/Work/ROOT/install/include/GuiTypes.h
-
-/home/shoram/Work/ROOT/install/include/TPoint.h
-Rtypes.h
-/home/shoram/Work/ROOT/install/include/Rtypes.h
-
-/home/shoram/Work/ROOT/install/include/TQClass.h
-TQObject.h
-/home/shoram/Work/ROOT/install/include/TQObject.h
-TClass.h
-/home/shoram/Work/ROOT/install/include/TClass.h
-
-/home/shoram/Work/ROOT/install/include/TQObject.h
-TList.h
-/home/shoram/Work/ROOT/install/include/TList.h
-TString.h
-/home/shoram/Work/ROOT/install/include/TString.h
-TVirtualQConnection.h
-/home/shoram/Work/ROOT/install/include/TVirtualQConnection.h
-TQClass.h
-/home/shoram/Work/ROOT/install/include/TQClass.h
 
 /home/shoram/Work/ROOT/install/include/TROOT.h
 TDirectory.h
@@ -512,14 +512,6 @@ string
 Rtypes.h
 /home/shoram/Work/ROOT/install/include/Rtypes.h
 
-/home/shoram/Work/ROOT/install/include/TVectorDfwd.h
-Rtypes.h
-/home/shoram/Work/ROOT/install/include/Rtypes.h
-
-/home/shoram/Work/ROOT/install/include/TVectorFfwd.h
-Rtypes.h
-/home/shoram/Work/ROOT/install/include/Rtypes.h
-
 /home/shoram/Work/ROOT/install/include/TVersionCheck.h
 RVersion.h
 /home/shoram/Work/ROOT/install/include/RVersion.h
@@ -532,45 +524,9 @@ TObject.h
 memory
 -
 
-/home/shoram/Work/ROOT/install/include/TVirtualPad.h
-TAttPad.h
-/home/shoram/Work/ROOT/install/include/TAttPad.h
-TVirtualX.h
-/home/shoram/Work/ROOT/install/include/TVirtualX.h
-TString.h
-/home/shoram/Work/ROOT/install/include/TString.h
-Buttons.h
-/home/shoram/Work/ROOT/install/include/Buttons.h
-TQObject.h
-/home/shoram/Work/ROOT/install/include/TQObject.h
-
-/home/shoram/Work/ROOT/install/include/TVirtualQConnection.h
-TList.h
-/home/shoram/Work/ROOT/install/include/TList.h
-TInterpreter.h
-/home/shoram/Work/ROOT/install/include/TInterpreter.h
-
 /home/shoram/Work/ROOT/install/include/TVirtualRWMutex.h
 TVirtualMutex.h
 /home/shoram/Work/ROOT/install/include/TVirtualMutex.h
-
-/home/shoram/Work/ROOT/install/include/TVirtualX.h
-utility
--
-vector
--
-TNamed.h
-/home/shoram/Work/ROOT/install/include/TNamed.h
-TAttLine.h
-/home/shoram/Work/ROOT/install/include/TAttLine.h
-TAttFill.h
-/home/shoram/Work/ROOT/install/include/TAttFill.h
-TAttText.h
-/home/shoram/Work/ROOT/install/include/TAttText.h
-TAttMarker.h
-/home/shoram/Work/ROOT/install/include/TAttMarker.h
-GuiTypes.h
-/home/shoram/Work/ROOT/install/include/GuiTypes.h
 
 /home/shoram/Work/ROOT/install/include/ThreadLocalStorage.h
 stddef.h

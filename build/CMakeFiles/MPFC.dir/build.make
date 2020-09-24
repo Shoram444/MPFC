@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/shoram/Work/Diploma_Thesis/Feldman_Cousins
+CMAKE_SOURCE_DIR = /home/shoram/Work/Diploma_Thesis/MPFC
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/shoram/Work/Diploma_Thesis/Feldman_Cousins/build
+CMAKE_BINARY_DIR = /home/shoram/Work/Diploma_Thesis/MPFC/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/MPFC.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/MPFC.dir/flags.make
 
 CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.o: CMakeFiles/MPFC.dir/flags.make
 CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.o: ../src/MPFeldman_Cousins.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/shoram/Work/Diploma_Thesis/Feldman_Cousins/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.o -c /home/shoram/Work/Diploma_Thesis/Feldman_Cousins/src/MPFeldman_Cousins.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/shoram/Work/Diploma_Thesis/MPFC/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.o -c /home/shoram/Work/Diploma_Thesis/MPFC/src/MPFeldman_Cousins.cpp
 
 CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/shoram/Work/Diploma_Thesis/Feldman_Cousins/src/MPFeldman_Cousins.cpp > CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/shoram/Work/Diploma_Thesis/MPFC/src/MPFeldman_Cousins.cpp > CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.i
 
 CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/shoram/Work/Diploma_Thesis/Feldman_Cousins/src/MPFeldman_Cousins.cpp -o CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/shoram/Work/Diploma_Thesis/MPFC/src/MPFeldman_Cousins.cpp -o CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.s
 
 CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.o.requires:
 
@@ -81,17 +81,61 @@ CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.o.provides: CMakeFiles/MPFC.dir/sr
 CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.o.provides.build: CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.o
 
 
+CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o: CMakeFiles/MPFC.dir/flags.make
+CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o: MPFeldman_Cousinsdict.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/shoram/Work/Diploma_Thesis/MPFC/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o -c /home/shoram/Work/Diploma_Thesis/MPFC/build/MPFeldman_Cousinsdict.cpp
+
+CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/shoram/Work/Diploma_Thesis/MPFC/build/MPFeldman_Cousinsdict.cpp > CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.i
+
+CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/shoram/Work/Diploma_Thesis/MPFC/build/MPFeldman_Cousinsdict.cpp -o CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.s
+
+CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o.requires:
+
+.PHONY : CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o.requires
+
+CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o.provides: CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o.requires
+	$(MAKE) -f CMakeFiles/MPFC.dir/build.make CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o.provides.build
+.PHONY : CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o.provides
+
+CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o.provides.build: CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o
+
+
 # Object files for target MPFC
 MPFC_OBJECTS = \
-"CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.o"
+"CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.o" \
+"CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o"
 
 # External object files for target MPFC
 MPFC_EXTERNAL_OBJECTS =
 
 libMPFC.so: CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.o
+libMPFC.so: CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o
 libMPFC.so: CMakeFiles/MPFC.dir/build.make
+libMPFC.so: /home/shoram/Work/ROOT/install/lib/libCore.so
+libMPFC.so: /home/shoram/Work/ROOT/install/lib/libImt.so
+libMPFC.so: /home/shoram/Work/ROOT/install/lib/libRIO.so
+libMPFC.so: /home/shoram/Work/ROOT/install/lib/libNet.so
+libMPFC.so: /home/shoram/Work/ROOT/install/lib/libHist.so
+libMPFC.so: /home/shoram/Work/ROOT/install/lib/libGraf.so
+libMPFC.so: /home/shoram/Work/ROOT/install/lib/libGraf3d.so
+libMPFC.so: /home/shoram/Work/ROOT/install/lib/libGpad.so
+libMPFC.so: /home/shoram/Work/ROOT/install/lib/libROOTDataFrame.so
+libMPFC.so: /home/shoram/Work/ROOT/install/lib/libTree.so
+libMPFC.so: /home/shoram/Work/ROOT/install/lib/libTreePlayer.so
+libMPFC.so: /home/shoram/Work/ROOT/install/lib/libRint.so
+libMPFC.so: /home/shoram/Work/ROOT/install/lib/libPostscript.so
+libMPFC.so: /home/shoram/Work/ROOT/install/lib/libMatrix.so
+libMPFC.so: /home/shoram/Work/ROOT/install/lib/libPhysics.so
+libMPFC.so: /home/shoram/Work/ROOT/install/lib/libMathCore.so
+libMPFC.so: /home/shoram/Work/ROOT/install/lib/libThread.so
+libMPFC.so: /home/shoram/Work/ROOT/install/lib/libMultiProc.so
 libMPFC.so: CMakeFiles/MPFC.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/shoram/Work/Diploma_Thesis/Feldman_Cousins/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX shared library libMPFC.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/shoram/Work/Diploma_Thesis/MPFC/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX shared library libMPFC.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/MPFC.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -100,6 +144,7 @@ CMakeFiles/MPFC.dir/build: libMPFC.so
 .PHONY : CMakeFiles/MPFC.dir/build
 
 CMakeFiles/MPFC.dir/requires: CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.o.requires
+CMakeFiles/MPFC.dir/requires: CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o.requires
 
 .PHONY : CMakeFiles/MPFC.dir/requires
 
@@ -108,6 +153,6 @@ CMakeFiles/MPFC.dir/clean:
 .PHONY : CMakeFiles/MPFC.dir/clean
 
 CMakeFiles/MPFC.dir/depend:
-	cd /home/shoram/Work/Diploma_Thesis/Feldman_Cousins/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/shoram/Work/Diploma_Thesis/Feldman_Cousins /home/shoram/Work/Diploma_Thesis/Feldman_Cousins /home/shoram/Work/Diploma_Thesis/Feldman_Cousins/build /home/shoram/Work/Diploma_Thesis/Feldman_Cousins/build /home/shoram/Work/Diploma_Thesis/Feldman_Cousins/build/CMakeFiles/MPFC.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/shoram/Work/Diploma_Thesis/MPFC/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/shoram/Work/Diploma_Thesis/MPFC /home/shoram/Work/Diploma_Thesis/MPFC /home/shoram/Work/Diploma_Thesis/MPFC/build /home/shoram/Work/Diploma_Thesis/MPFC/build /home/shoram/Work/Diploma_Thesis/MPFC/build/CMakeFiles/MPFC.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/MPFC.dir/depend
 

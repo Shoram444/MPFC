@@ -1,4 +1,4 @@
-# Install script for directory: /home/shoram/Work/Diploma_Thesis/Feldman_Cousins
+# Install script for directory: /home/shoram/Work/Diploma_Thesis/MPFC
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/shoram/Work/Diploma_Thesis/Feldman_Cousins/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/shoram/Work/Diploma_Thesis/MPFC/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
