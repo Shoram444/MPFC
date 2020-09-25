@@ -55,7 +55,7 @@ namespace ROOT {
       ::MPFeldman_Cousins *ptr = 0;
       static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::MPFeldman_Cousins >(0);
       static ::ROOT::TGenericClassInfo 
-         instance("MPFeldman_Cousins", ::MPFeldman_Cousins::Class_Version(), "MPFeldman_Cousins.hh", 5,
+         instance("MPFeldman_Cousins", ::MPFeldman_Cousins::Class_Version(), "MPFeldman_Cousins.hh", 8,
                   typeid(::MPFeldman_Cousins), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &::MPFeldman_Cousins::Dictionary, isa_proxy, 4,
                   sizeof(::MPFeldman_Cousins) );

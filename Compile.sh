@@ -1,8 +1,24 @@
+rm -rf build lib
 rm FC.a
 
-g++ -c -Wall -o lib/MPFeldman_Cousins.o -I./include ./src/MPFeldman_Cousins.cpp 
-ar rvs lib/libMPFeldman_Cousins.a lib/MPFeldman_Cousins.o
+mkdir build lib
 
-g++ -Wall -o FC.a -I./include -L./lib FC.cpp -lMPFeldman_Cousins
+cd include
 
-./FC.a
+echo "rootcint: ./include/MPFeldman_Cousins.hh -> ./build/MPFeldman_Cousinsdict.cpp"
+      rootcint -f ../build/MPFeldman_Cousinsdict.cpp   ./MPFeldman_Cousins.hh+
+
+cd ../build
+
+cmake ..
+make
+
+cd ..
+cp FC.cpp ./build/
+cd ./build/
+
+root FC.cpp
+
+##g++ -Wall -o FC.a -I./include -L./lib FC.cpp -lMPFC
+
+##./FC.a
