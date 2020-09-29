@@ -681,7 +681,7 @@ double* MPFeldman_Cousins::get_mu_U_v_b(int n)
 		}
 		cout<< "b = " << bkg[i] << "\t mu_u = "<< mu_U_v_b[i]<<endl;
 
-		vector<double>().swap(mu_U);
+		// vector<double>().swap(mu_U);
 		// mu_U.shrink_to_fit();
 		auto end = std::chrono::steady_clock::now();
 		std::chrono::duration<double> elapsed_seconds = end-start;

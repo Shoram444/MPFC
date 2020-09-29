@@ -27,7 +27,7 @@ int FC()
     // obj->get_mu_L_v_b(0);
     // obj->draw_upper();
     // obj->print_A();
-    obj->draw_mu_U_v_b(2);
+    obj->draw_mu_U_v_b(20);
 
   return 0; 
 } 
