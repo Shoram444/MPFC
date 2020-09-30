@@ -21,18 +21,22 @@ class MPFeldman_Cousins: public TObject
 	    void set_mu(double _mu_j);								// Sets mu for priting R array
 	    double get_mu();										// Outputs mu
 	    void print_A();											// Prints array of n and their according ordering number
-	    std::vector<int> CL_check(double mu_j, double* _R);					// Checks for the CL condition and outputs array of indexes for n
+	    std::vector<int> CL_check(double mu_j, double* _R);		// Checks for the CL condition and outputs array of indexes for n
 	    std::vector<std::vector<int> > get_n();					// Outputs array of n_min and n_max associated with each mu step
-        std::vector<double> calculate_upper();									// Calculates TGraph for upper limit
-        TGraph* TGraph_calculate_upper();
-        std::vector<double>  calculate_lower();									// Calculates TGraph for upper limit
-        void draw_upper();										// draws upper limit
+        std::vector<double>  calculate_lower();                 // Calculates TGraph for upper limit
+        std::vector<double> calculate_upper();					// Calculates TGraph for upper limit
+        TGraph* TGraph_calculate_upper();                       // Same as calculate upper, but returns TGraph for visualisation
+        TGraph* TGraph_calculate_lower();
+        void draw_upper();                                      // draws upper limit
+        void draw_lower();										// draws upper limit
         void print_n();                                         // 
         void set_b(double _b);
         double get_b();
         double* get_mu_U_v_b(int n);
-        void get_mu_L_v_b(int n);
+        double* get_mu_L_v_b(int n);
         void draw_mu_U_v_b(int n);
+        double* correct_mu_U(int n);
+
 
 
     private:

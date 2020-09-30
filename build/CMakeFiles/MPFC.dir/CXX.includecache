@@ -97,6 +97,8 @@ TCanvas.h
 /home/shoram/Work/Diploma_Thesis/MPFC/src/TCanvas.h
 TAxis.h
 /home/shoram/Work/Diploma_Thesis/MPFC/src/TAxis.h
+TLegend.h
+/home/shoram/Work/Diploma_Thesis/MPFC/src/TLegend.h
 MPFeldman_Cousins.hh
 /home/shoram/Work/Diploma_Thesis/MPFC/src/MPFeldman_Cousins.hh
 algorithm
@@ -318,6 +320,20 @@ TAttAxis.h
 TArrayD.h
 /home/shoram/Work/ROOT/install/include/TArrayD.h
 
+/home/shoram/Work/ROOT/install/include/TBox.h
+TObject.h
+/home/shoram/Work/ROOT/install/include/TObject.h
+TAttLine.h
+/home/shoram/Work/ROOT/install/include/TAttLine.h
+TAttFill.h
+/home/shoram/Work/ROOT/install/include/TAttFill.h
+TAttBBox2D.h
+/home/shoram/Work/ROOT/install/include/TAttBBox2D.h
+TPoint.h
+/home/shoram/Work/ROOT/install/include/TPoint.h
+GuiTypes.h
+/home/shoram/Work/ROOT/install/include/GuiTypes.h
+
 /home/shoram/Work/ROOT/install/include/TBuffer.h
 TDataType.h
 /home/shoram/Work/ROOT/install/include/TDataType.h
@@ -520,6 +536,12 @@ typeinfo
 Rtypes.h
 /home/shoram/Work/ROOT/install/include/Rtypes.h
 
+/home/shoram/Work/ROOT/install/include/TLegend.h
+TPave.h
+/home/shoram/Work/ROOT/install/include/TPave.h
+TAttText.h
+/home/shoram/Work/ROOT/install/include/TAttText.h
+
 /home/shoram/Work/ROOT/install/include/TList.h
 TSeqCollection.h
 /home/shoram/Work/ROOT/install/include/TSeqCollection.h
@@ -587,6 +609,12 @@ TPoint.h
 /home/shoram/Work/ROOT/install/include/TPoint.h
 GuiTypes.h
 /home/shoram/Work/ROOT/install/include/GuiTypes.h
+
+/home/shoram/Work/ROOT/install/include/TPave.h
+TBox.h
+/home/shoram/Work/ROOT/install/include/TBox.h
+TString.h
+/home/shoram/Work/ROOT/install/include/TString.h
 
 /home/shoram/Work/ROOT/install/include/TPoint.h
 Rtypes.h

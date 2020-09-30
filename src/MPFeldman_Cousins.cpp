@@ -7,6 +7,7 @@
 #include "TGraph.h"
 #include "TCanvas.h"
 #include "TAxis.h"
+#include "TLegend.h"
 #include "MPFeldman_Cousins.hh"
 #include <algorithm>
 
@@ -460,7 +461,6 @@ TGraph* MPFeldman_Cousins::TGraph_calculate_upper()
 	for (int i =0; i<mu_U_size; i++)
 	{
 		gr->SetPoint(i, n[i], mu_U[i]);
-		// cout<< "n_" << i << " = " << n[i] << "\t mu_U[" << i << "]  = "<< mu_U[i] << endl;
 	}
   	
 	auto end = std::chrono::steady_clock::now();
@@ -514,7 +514,127 @@ void MPFeldman_Cousins::draw_upper()
 	return;
 }	
 
+TGraph* MPFeldman_Cousins::TGraph_calculate_lower()
+{
+	auto start = std::chrono::steady_clock::now();
+	double mu_array[int(mu_max/STEP)];
+	vector<int> n;
+	vector<double> mu_L;
+	std::vector<vector<int>> calculate_lower_n_array = get_n();
 
+	for (int i = 0; i<mu_max/STEP; i++)
+	{
+		mu_array[i] = i*STEP;
+		
+	}
+
+
+	int size = calculate_lower_n_array.size();
+	int n_current = calculate_lower_n_array[size - 1][1];
+	// cout<< "n_current = "<< n_current<< endl;
+	// int i = size -1;
+
+	int y = 0;
+	for (int x = size -1 ; x > 0; x--)  			//algortihm checks the n_array generated in get_n from back to front. 
+													//Logs only jumps by one, so that there are no repetitions.
+	{
+		
+		if (n_current > calculate_lower_n_array[x][1])
+		{
+
+			if(calculate_lower_n_array[x][1] == 10000)
+			{
+				continue;
+
+			}
+			else
+			{
+				n.push_back(n_current);
+			
+				mu_L.push_back(mu_array[x+1]);
+				n.push_back(n_current - 1 );
+				
+			
+				mu_L.push_back(mu_array[x+1]);
+			
+				n_current = calculate_lower_n_array[x][1];
+				y+=2;
+			}
+			
+		}
+		
+	}
+
+	// for (int i =0 ; i<y; i++)
+	// {
+	// 	cout<< "n = " << n[i] << "\t mu_L = " << mu_L[i] << endl;
+	// 	// cout<< "Got to printing"<<endl;
+	// }
+
+	n.push_back(calculate_lower_n_array[0][1]);					//Adding first point so that the graph starts from bottom. 
+	mu_L.push_back(mu_array[0]);
+
+	int mu_L_size = mu_L.size();
+	reverse(mu_L.begin(),mu_L.end());
+	reverse(n.begin(),n.end());
+
+	TGraph *gr  = new TGraph();
+
+
+	for (int i =0; i<mu_L_size; i++)
+	{
+		gr->SetPoint(i, n[i], mu_L[i]);
+	}
+  	
+	auto end = std::chrono::steady_clock::now();
+	std::chrono::duration<double> elapsed_seconds = end-start;
+    std::cout << "Time it took to calculate_lower: " << elapsed_seconds.count() << "s\n";
+	// delete[] mu_array;
+	return gr;
+}
+
+void MPFeldman_Cousins::draw_lower()
+{
+
+	TGraph* gr2 = new TGraph();
+	gr2 = TGraph_calculate_lower();
+
+	stringstream graph_title;
+    graph_title  << "Lower Limit for bkg = " << b << " with C.L. = " << CL*100 << "%";
+    string strname  = graph_title.str();
+
+ 	gr2->SetTitle(strname.c_str());
+	gr2->SetFillStyle(1000);
+	gr2->SetLineColor(kBlue);
+	gr2->SetLineWidth(4);
+	gr2->SetMarkerStyle(0);
+
+	TAxis* xaxis;
+	xaxis = gr2->GetXaxis();
+	xaxis->CenterTitle(true);
+	xaxis->SetTitle("n [Counts]");
+
+	TAxis* yaxis;
+	yaxis = gr2->GetYaxis();
+	yaxis->SetTitle("\\mu_L  [Counts]");
+	yaxis->CenterTitle(true);
+
+
+	TCanvas *c2 = new TCanvas("c2","Graph Draw Options",600,600);
+
+
+	c2->SetFrameFillStyle(3013);
+	c2->SetFrameLineWidth(2);
+	c2->SetFrameBorderMode(0);
+	c2->SetFrameBorderSize(4);
+	c2->SetGridx();
+	c2->SetGridy();
+
+
+	gr2->Draw("ALP");
+
+	return;
+}
 
 vector<double> MPFeldman_Cousins::calculate_upper() ///CHANGE TO GET GRAPH!!!
 {
@@ -586,6 +706,7 @@ vector<double> MPFeldman_Cousins::calculate_upper() ///CHANGE TO GET GRAPH!!!
 
 vector<double>  MPFeldman_Cousins::calculate_lower() 
 {
+	auto start = std::chrono::steady_clock::now();
 	
 	double mu_array[COL_N];
 	vector<int> n;
@@ -627,19 +748,11 @@ vector<double>  MPFeldman_Cousins::calculate_lower()
 	}
 
 
-	// int entries = y;
-
-	// TGraph *gr  = new TGraph();
-
-	// for (int i =0; i<y; i++)
-	// {
-	// 	gr->SetPoint(i, n[i], mu_L[i]);
-	// }
-  	for (int i =0 ; i<y; i++)
-	{
-		cout<< "n = " << n[i] << "\t mu_L = " << mu_L[i] << endl;
-
-	}
+  	
+	auto end = std::chrono::steady_clock::now();
+	std::chrono::duration<double> elapsed_seconds = end-start;
+    std::cout << "Time it took to calculate_upper: " << elapsed_seconds.count() << "s\n";
+	delete[] mu_array;
 
 	return mu_L;
 }
@@ -691,7 +804,7 @@ double* MPFeldman_Cousins::get_mu_U_v_b(int n)
 	return mu_U_v_b;
 } 
 
-void MPFeldman_Cousins::get_mu_L_v_b(int n)
+double* MPFeldman_Cousins::get_mu_L_v_b(int n)
 {
 
 	double* bkg      = new double[ROW_N];
@@ -703,13 +816,13 @@ void MPFeldman_Cousins::get_mu_L_v_b(int n)
 		// cout<< "started loop get mu v b"<< endl;
 		auto start = std::chrono::steady_clock::now();
 
-		set_b(i*STEP);
+		set_b(i*0.2); //checking b in 0.2 steps.
 
 		bkg[i] = get_b();
 
 		// cout<< "got to bkg = "<< bkg[i]<< endl;
 		vector<double> mu_L;
-		mu_L = calculate_upper();
+		mu_L = calculate_lower();
 
 		// cout<< "got to calc upper "<< endl;
 		// print_upper();
@@ -725,20 +838,33 @@ void MPFeldman_Cousins::get_mu_L_v_b(int n)
 
 			mu_L_v_b[i] = mu_L[index-2*n];	
 		}
-		cout<< "b = " << bkg[i] << "\t mu_L = "<< mu_L_v_b[i]<<endl;
+		// cout<< "b = " << bkg[i] << "\t mu_L = "<< mu_L_v_b[i]<<endl;
 
 		mu_L.clear();
 		auto end = std::chrono::steady_clock::now();
 		std::chrono::duration<double> elapsed_seconds = end-start;
 	    std::cout << "Time it took to find mu vs b: " << elapsed_seconds.count() << "s\n";
 	}
-	return;
+	return mu_L_v_b;
 } 
 
 void MPFeldman_Cousins::draw_mu_U_v_b(int n)
 {
 	double* mu_U_v_b = new double[ROW_N];
 	double* bkg      = new double[ROW_N];
+	double* mu_corrected = new double[ROW_N];
+
+
+	TCanvas *c1 = new TCanvas("c1","Mu_u vs background",600,600);
+
+
+	c1->SetFrameFillStyle(3013);
+	c1->SetFrameLineWidth(2);
+	c1->SetFrameBorderMode(0);
+	c1->SetFrameBorderSize(4);
+	c1->SetGridx();
+	c1->SetGridy();
+
 
 	mu_U_v_b = get_mu_U_v_b(n);
 	for (int i = 0; i < ROW_N; ++i)
@@ -768,19 +894,52 @@ void MPFeldman_Cousins::draw_mu_U_v_b(int n)
 	yaxis = gr->GetYaxis();
 	yaxis->SetTitle("\\mu_U  [Counts]");
 	yaxis->CenterTitle(true);
-
-
-	TCanvas *c1 = new TCanvas("c1","Mu_u vs background",600,600);
-
-
-	c1->SetFrameFillStyle(3013);
-	c1->SetFrameLineWidth(2);
-	c1->SetFrameBorderMode(0);
-	c1->SetFrameBorderSize(4);
-	c1->SetGridx();
-	c1->SetGridy();
-
-
 	gr->Draw("ALP");
+
+	
+
+	mu_corrected = correct_mu_U(n);
+
+	TGraph* gr2 = new TGraph(ROW_N,bkg,mu_corrected);
+	gr2->SetLineColor(kBlue);
+	gr2->SetLineStyle(7);
+	gr2->SetLineWidth(4);
+
+	gr2->Draw("SAME");
+
+	TLegend*  legend = new TLegend(0.6,0.6,0.9,0.7);
+   	legend->AddEntry(gr,"Original \t \\mu_U","l");
+   	legend->AddEntry(gr2,"Corrected \t \\mu_U","l");
+   	legend->Draw();
+
+
+	// gr->Draw("ALP");
 	return;
+}
+
+double* MPFeldman_Cousins::correct_mu_U(int n)
+{
+	double* mu_corrected = new double[ROW_N];
+	mu_corrected = get_mu_U_v_b(n);
+	for (int i = ROW_N-1; i>=0; i--)
+	{
+		if(i == 0)
+		{	
+			continue;
+		}
+
+		else if(mu_corrected[i]<=mu_corrected[i-1])
+		{
+			mu_corrected[i-1] = mu_corrected[i-1];
+		}
+		else if(mu_corrected[i]>mu_corrected[i-1])
+		{
+			mu_corrected[i-1] = mu_corrected[i];
+		}
+	}
+	for (int x = 0; x<ROW_N;x++)
+	{
+		cout<< mu_corrected[x]<<endl;
+	}
+	return mu_corrected;
 }
