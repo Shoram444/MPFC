@@ -752,7 +752,7 @@ vector<double>  MPFeldman_Cousins::calculate_lower()
 	auto end = std::chrono::steady_clock::now();
 	std::chrono::duration<double> elapsed_seconds = end-start;
     std::cout << "Time it took to calculate_upper: " << elapsed_seconds.count() << "s\n";
-	delete[] mu_array;
+	// delete[] mu_array;
 
 	return mu_L;
 }
@@ -919,8 +919,8 @@ void MPFeldman_Cousins::draw_mu_U_v_b(int n)
 
 double* MPFeldman_Cousins::correct_mu_U(int n)
 {
-	double* mu_corrected = new double[ROW_N];
-	mu_corrected = get_mu_U_v_b(n);
+	double* mu_U_corrected = new double[ROW_N];
+	mu_U_corrected = get_mu_U_v_b(n);
 	for (int i = ROW_N-1; i>=0; i--)
 	{
 		if(i == 0)
@@ -928,18 +928,18 @@ double* MPFeldman_Cousins::correct_mu_U(int n)
 			continue;
 		}
 
-		else if(mu_corrected[i]<=mu_corrected[i-1])
+		else if(mu_U_corrected[i]<=mu_U_corrected[i-1])
 		{
-			mu_corrected[i-1] = mu_corrected[i-1];
+			mu_U_corrected[i-1] = mu_U_corrected[i-1];
 		}
-		else if(mu_corrected[i]>mu_corrected[i-1])
+		else if(mu_U_corrected[i]>mu_U_corrected[i-1])
 		{
-			mu_corrected[i-1] = mu_corrected[i];
+			mu_U_corrected[i-1] = mu_U_corrected[i];
 		}
 	}
 	for (int x = 0; x<ROW_N;x++)
 	{
-		cout<< mu_corrected[x]<<endl;
+		cout<< mu_U_corrected[x]<<endl;
 	}
-	return mu_corrected;
+	return mu_U_corrected;
 }

@@ -25,7 +25,7 @@ int FC()
     // cout<< "aaaaa"<< endl;
     // obj->calculate_lower();
     // obj->get_mu_L_v_b(0);
-    obj->draw_upper();
+    // obj->draw_upper();
     obj->draw_lower();
     // obj->print_A();
     // obj->draw_mu_U_v_b(2);
