@@ -640,12 +640,12 @@ void MPFeldman_Cousins::draw_lower()
 vector<double> MPFeldman_Cousins::calculate_upper() ///CHANGE TO GET GRAPH!!!
 {
 	auto start = std::chrono::steady_clock::now();
-	double* mu_array = new double[COL_N];
+	double* mu_array = new double[int(mu_max/STEP)];
 	vector<int> n;
 	vector<double> mu_U;
 	std::vector<vector<int>> calculate_upper_n_array = get_n();
 
-	for (int i = 0; i<COL_N; i++)
+	for (int i = 0; i<mu_max/STEP; i++)
 	{
 		mu_array[i] = i*STEP;
 		
@@ -658,7 +658,7 @@ vector<double> MPFeldman_Cousins::calculate_upper() ///CHANGE TO GET GRAPH!!!
 	// int i = size -1;
 				
 	int y = 0;
-	for (int x = size -1 ; x >= 0; x--)
+	for (int x = size-1 ; x > 0; x--)
 	{
 		
 		if (n_current > calculate_upper_n_array[x][0])
@@ -666,6 +666,7 @@ vector<double> MPFeldman_Cousins::calculate_upper() ///CHANGE TO GET GRAPH!!!
 
 			if(calculate_upper_n_array[x][0] == 10000)
 			{
+				// cout<<"watch out!" <<endl;
 				continue;
 
 			}
@@ -686,20 +687,24 @@ vector<double> MPFeldman_Cousins::calculate_upper() ///CHANGE TO GET GRAPH!!!
 		}
 		
 	}
-
+	// n.push_back(0);					//Adding point (0,0) so that the graph starts at 0. 
+	// mu_U.push_back(0);
 
 	// int entries = y;
-
-	// for (int i =0 ; i<y; i++)
+	// cout<< "  n|  mu_U"<<endl;
+	// cout<< "----------"<<endl;
+	// for (int i =0 ; i<y+1; i++)
 	// {
-	// 	cout<< "n = " << n[i] << "\t mu_U = " << mu_U[i] << endl;
+	// 	// cout<< "n = " << n[i] << "\t mu_U = " << mu_U[i] << endl;
+	// 	cout<<setw(3)<< n[i]<<"|"<<setw(6) << mu_U[i] << endl;
+
 	// 	// cout<< "Got to printing"<<endl;
 
 
 	// }
 	auto end = std::chrono::steady_clock::now();
 	std::chrono::duration<double> elapsed_seconds = end-start;
-    std::cout << "Time it took to calculate_upper: " << elapsed_seconds.count() << "s\n";
+    // std::cout << "Time it took to calculate_upper: " << elapsed_seconds.count() << "s\n";
 	delete[] mu_array;
 
 	return mu_U;
@@ -762,14 +767,14 @@ vector<double>  MPFeldman_Cousins::calculate_lower()
 
 double* MPFeldman_Cousins::get_mu_U_v_b(int n)
 {
-	int range = 100;
+	int range = 42;
 
 	double* bkg      = new double[range];
 	double* mu_U_v_b = new double[range];
 
 	for (int x = 0; x < range; x++)
 	{
-		bkg[x] = b+x*0.2;
+		bkg[x] = b+x*0.5;
 	}
 
 
@@ -800,13 +805,13 @@ double* MPFeldman_Cousins::get_mu_U_v_b(int n)
 
 			mu_U_v_b[i] = mu_U[index-2*n];
 		}
-		cout<< "b = " << bkg[i] << "\t mu_u = "<< mu_U_v_b[i]<<endl;
+		// cout<< "b = " << bkg[i] << "\t mu_u = "<< mu_U_v_b[i]<<endl;
 
 		// vector<double>().swap(mu_U);
 		// mu_U.shrink_to_fit();
 		auto end = std::chrono::steady_clock::now();
 		std::chrono::duration<double> elapsed_seconds = end-start;
-	    std::cout << "Time it took to find mu vs b: " << elapsed_seconds.count() << "s\n";
+	    // std::cout << "Time it took to find mu vs b: " << elapsed_seconds.count() << "s\n";
 
 	}
 	set_b(b_const);
@@ -859,7 +864,7 @@ double* MPFeldman_Cousins::get_mu_L_v_b(int n)
 
 void MPFeldman_Cousins::draw_mu_U_v_b(int n)
 {
-	int range = 100;
+	int range = 42;
 
 	double* mu_U_v_b = new double[range];
 	double* bkg      = new double[range];
@@ -999,7 +1004,7 @@ void MPFeldman_Cousins::draw_mu_L_v_b(int n)
 
 double* MPFeldman_Cousins::correct_mu_U(int n)
 {
-	int range = 100;
+	int range = 42;
 
 	double* mu_U_corrected = new double[range];
 	mu_U_corrected = get_mu_U_v_b(n);
@@ -1019,10 +1024,10 @@ double* MPFeldman_Cousins::correct_mu_U(int n)
 			mu_U_corrected[i-1] = mu_U_corrected[i];
 		}
 	}
-	for (int x = 0; x<range;x++)
-	{
-		cout<< mu_U_corrected[x]<<endl;
-	}
+	// for (int x = 0; x<range;x++)
+	// {
+	// 	cout<< mu_U_corrected[x]<<endl;
+	// }
 	return mu_U_corrected;
 }
 
@@ -1051,4 +1056,24 @@ double* MPFeldman_Cousins::correct_mu_L(int n)
 	// 	cout<< mu_L_corrected[x]<<endl;
 	// }
 	return mu_L_corrected;
+}
+
+double* MPFeldman_Cousins::mu_U_final()
+{
+	int range = 42;
+	double* mu_U_final = new double[range];
+
+	cout<< "  n|  mu_U"<<endl;
+	cout<< "----------"<<endl;
+	for (int i = 0; i< range/2; i++)
+	{
+		double* mu_U_corrected = new double[range];
+		mu_U_corrected = correct_mu_U(i);
+		mu_U_final[i] = mu_U_corrected[0];
+
+		cout<<setw(3)<< i<<"|"<<setw(6) << mu_U_final[i] << endl;
+		delete[] mu_U_corrected;
+	}
+
+	return mu_U_final;
 }

@@ -13,7 +13,7 @@ R__LOAD_LIBRARY(libMPFC.so);
 int FC() 
 { 
 
-    MPFeldman_Cousins* obj = new MPFeldman_Cousins(3, 0.01, 100, 40, 0.9);   // order for parameters (double _b, double _step, int _rows, int _mu_max, double _CL)
+    MPFeldman_Cousins* obj = new MPFeldman_Cousins(6, 0.01, 100, 50, 0.9);   // order for parameters (double _b, double _step, int _rows, int _mu_max, double _CL)
 
     // obj->print_poisson();
     // obj->set_mu(0.5);
@@ -29,9 +29,12 @@ int FC()
     // obj->draw_lower();
     // obj->print_n();
 
-    obj->draw_mu_U_v_b(0);
+    // obj->draw_mu_U_v_b(0);
     // obj->correct_mu_U(2);
-
+    double b;
+    b = obj->get_b();
+    cout<< "b = " << b<<endl;
+    obj->mu_U_final();
   return 0; 
 } 
     

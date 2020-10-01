@@ -30,14 +30,15 @@ class MPFeldman_Cousins: public TObject
         void draw_upper();                                      // draws upper limit
         void draw_lower();										// draws upper limit
         void print_n();                                         // 
-        void set_b(double _b);
-        double get_b();
-        double* get_mu_U_v_b(int n);
-        double* get_mu_L_v_b(int n);
-        void draw_mu_U_v_b(int n);
-        void draw_mu_L_v_b(int n);
-        double* correct_mu_U(int n);
+        void set_b(double _b);                                  // sets b
+        double get_b();                                         // gets b
+        double* get_mu_U_v_b(int n);                            // outputs array of mu values based on different backgrounds
+        double* get_mu_L_v_b(int n);                            // outputs array of mu values based on different backgrounds
+        double* correct_mu_U(int n);                            // outputs array of corrected mu values based on get mu -> correction is done so that higher b doesnt give lower mu
         double* correct_mu_L(int n);
+        void draw_mu_U_v_b(int n);                              // draws graph of mu vs b, with original mu from get_mu_v_b and correct mu
+        void draw_mu_L_v_b(int n);                              // draws graph of mu vs b, with original mu from get_mu_v_b and correct mu
+        double* mu_U_final();                                   // outputs array of mu for different n and constant b. The array is corrected based on correct_mu()
 
 
 
