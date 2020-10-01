@@ -35,13 +35,16 @@ class MPFeldman_Cousins: public TObject
         double* get_mu_U_v_b(int n);
         double* get_mu_L_v_b(int n);
         void draw_mu_U_v_b(int n);
+        void draw_mu_L_v_b(int n);
         double* correct_mu_U(int n);
+        double* correct_mu_L(int n);
 
 
 
     private:
 
-        double b;
+        double b;                                               // background b, variable through get and set
+        double b_const;                                         // constant b, keeps same as in constructor
         double STEP;  											//step at which mu iterates. 
 		int ROW_N;												//Number of n.
 		int COL_N;  											//Number of columns
