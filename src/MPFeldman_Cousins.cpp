@@ -16,34 +16,32 @@ ClassImp(MPFeldman_Cousins);
 
 MPFeldman_Cousins::MPFeldman_Cousins()
 {
-
 }
 
-
-MPFeldman_Cousins::MPFeldman_Cousins(double _b, double _step, int _rows, double _mu_max, double _CL)
+MPFeldman_Cousins::MPFeldman_Cousins(double _b, double _CL)
 {
+	table_set = false;
+	b         = _b;
+	CL        = _CL;
 
-	STEP  = _step;  //step at which mu iterates. 
-	ROW_N = _rows;	//Number of n.
-	mu_max = _mu_max;
-	COL_N = _rows/STEP;  //The number of columns dependent on max mu and step chosen.
-	b = _b;
+	auto start = chrono::steady_clock::now();
+		fill_table();
+	auto end   = chrono::steady_clock::now();
+	chrono::duration<double> elapsed_seconds = end-start;
+    
+	cout << "Time it took to fill table: " << elapsed_seconds.count() << "s\n";
+/*
+
 	b_const = _b;
-	CL = _CL;
-	auto start = std::chrono::steady_clock::now();
-	table = fill_table();
-	auto end = std::chrono::steady_clock::now();
-	std::chrono::duration<double> elapsed_seconds = end-start;
-    std::cout << "Time it took to fill table: " << elapsed_seconds.count() << "s\n";
-    set_mu(0);
-	R = get_R();
-	A = get_A(R);
+	     table = fill_table();
+    	
+	set_mu(0);
+
+	R       = get_R();
+	A       = get_A(R);
 	n_order = CL_check(mu_j, R);
-	n_array = get_n();
+	n_array = get_n();*/
 	// print_n();
-
-
-
 }
 
 MPFeldman_Cousins::~MPFeldman_Cousins()
@@ -51,33 +49,221 @@ MPFeldman_Cousins::~MPFeldman_Cousins()
 
 }
 
-double** MPFeldman_Cousins::fill_table()
+double MPFeldman_Cousins::calculate_lim()
 {
-	double** fill_table_table = new double*[ROW_N];
-
-	// table = (double**)malloc(sizeof(double*)*ROW_N);
-    for (int i = 0; i <= ROW_N; i++) 
-    {
-        fill_table_table[i] = new double[COL_N];
-    }
-    
-    
-    for (int x = 0; x<=ROW_N;x++)
-    {
-        for (int y = 0; y<=COL_N;y++)
-        {
-            int n = x;
-            double mu_j = y*STEP;
-
-            
-            fill_table_table[x][y] = poisson(n,mu_j);   
-            
-        }
-        
-    }
-
-    return fill_table_table;
+		
 }
+
+double MPFeldman_Cousins::get_R(int _n, double _lam1, double _lam2)
+{
+	double p_numer = poisson(_n, _lam1);
+	double p_denom = poisson(_n, _lam2);
+	
+	if (p_denom != 0.0)
+	{
+		return poisson(_n, _lam1)/poisson(_n, _lam2);
+	}
+	else
+	{
+		cout << "ERROR: MPFeldman_Cousins::get_R(int, double, double): division by zero!" << endl;
+		
+		return -1.0; 
+	}	
+}
+
+void MPFeldman_Cousins::fill_table()
+{
+	table = new double*[ROW_N];
+
+    	for (int i = 0; i < ROW_N; i++) 
+    	{
+    	    table[i] = new double[COL_N];
+    	}
+    
+    	for (int m = 0; m < COL_N; m++)
+    	{
+    	    for (int n = 0; n < ROW_N; n++)
+    	    {
+    	        double mu = double(m) * STEP;
+	
+		if (m == 0)
+		{
+			if (n == 0)
+			{
+				table[0][0] = 1.0;
+			}
+			else
+			{
+				table[n][0] = 0.0;
+			}
+		}	
+		else
+		{
+			if (n == 0)
+			{
+				table[0][m] = exp(-mu);
+			}
+			else
+			{
+				table[n][m] = (mu / n) * table[n-1][m];
+			}
+		}	
+
+		
+		if ( table[n][m] < 1e-310 &&
+		     table[n][m] > 0.0 )
+		{
+			cout << "WARNING: MPFeldman_Cousins::fill_table(): value P(" << n << ", " << mu << ") lower than 1e-310, value was set to zero!" << endl;  
+			table[n][m] = 0.0;
+		}
+            }
+       	}
+
+	table_set = true;
+
+    	return;
+}
+
+void   MPFeldman_Cousins::print_table  (double _mumin, double _mumax)
+{
+	if (table_set)
+	{
+		cout << "*  mu|";
+		
+		for (int i = ceil(_mumin/STEP); double(i)*STEP < _mumax; i++)
+		{
+			cout << "        |";
+		}
+
+		cout << endl << " *   |";
+		
+		for (int i = ceil(_mumin/STEP); double(i)*STEP < _mumax; i++)
+		{
+			cout << fixed << setprecision(5) << setw(7) << double(i)*STEP << " |";
+		}
+	
+		cout << endl << "n *  |";
+		
+		for (int i = ceil(_mumin/STEP); double(i)*STEP < _mumax; i++)
+		{
+			cout << "        |";
+		}
+
+		cout << endl << "-----";
+
+		for (int i = ceil(_mumin/STEP); double(i)*STEP < _mumax; i++)
+		{
+			cout << "---------";
+		}
+
+		cout << endl;
+		cout << showpoint;
+		for (int n = 0; n < ROW_N; n++)
+		{
+			cout << setw(4) << n << " |";
+
+			for (int m = floor(_mumin/STEP); double(m)*STEP < _mumax; m++)
+			{
+				cout << setw(6) << table[n][m] << " |";
+			}
+
+			cout << endl;
+		}
+	}
+	else
+	{
+		cout << "ERROR: MPFeldman_Cousins::print_table(int, double): table with values was not set! Please call MPFeldman_Cousins::fill_table() to generate values first." << endl; 
+	}
+		
+	return;
+}
+
+double MPFeldman_Cousins::poisson(int _n, double _mu)
+{
+	if (table_set)
+	{
+		int m1 = floor(_mu / STEP);
+		int m2 = m1 + 1;
+
+		double mu1 = double(m1) * STEP;
+		double mu2 = double(m2) * STEP;
+		double P1  = table[_n][m1];
+		double P2  = table[_n][m2];
+	
+		double a   = (P1 - P2) / (mu1 - mu2);
+		double b   = P1 - a * mu1; 
+		
+		return	a*_mu + b;	
+	}
+	else
+	{
+		cout << "ERROR: MPFeldman_Cousins::poisson(int, double): table with values was not set! Please call MPFeldman_Cousins::fill_table() to generate values first." << endl; 
+		return NULL;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
 
 void MPFeldman_Cousins::set_b(double _b)
 {
@@ -93,11 +279,11 @@ double MPFeldman_Cousins::get_b()
 double* MPFeldman_Cousins::get_R()
 {	
 
-	mu_j = get_mu();
+	mu_j = get_mu(); //???
 	
 	double* get_R_R = new double[ROW_N];
-	int n_start = 0;
-	int n_end = ROW_N;
+	int     n_start = 0;
+	int      n_end  = ROW_N;
 
 	for (int i = n_start; i<n_end;i++)
 	{
@@ -106,8 +292,8 @@ double* MPFeldman_Cousins::get_R()
 		// cout<< " n_start is : "<< i << "   and int(mu+b)/STEP is: "<< int((mu_j+b)/STEP)<< "   and mub+b is: "<< int((mu_best+b))<< endl;
 		// cout<< "table[i][mu+b] "<< table[i][int((mu_j+b)/STEP)]<< "   and table[i][mu_best]:   "<< table[i][int((mu_best+b)/STEP)]<< endl;
 
-		int mu_i = int((mu_j+b)/STEP);
-		int mu_b_i = int((mu_best+b)/STEP);
+		int mu_i   = int( (mu_j   + b)/STEP );
+		int mu_b_i = int( (mu_best+ b)/STEP );
 
 		// cout<<"mu_j = "<< mu_j<<endl;
 		// cout<<"mu_b_"<<i<<" = "<< mu_b_i<<endl;
@@ -173,53 +359,7 @@ double MPFeldman_Cousins::get_muBest(int n, double b)
 }
 
 
-double MPFeldman_Cousins::poisson(int n, double mu_j)
-{
 
-	double const e_to_mu_n  = exp(mu_j / double(n));
-	double P = 1.0;
-	
-	if (n == 0)
-	{
-		if (mu_j == 0.0)
-		{
-			P = 1.0;
-		}
-		else
-		{
-			P = exp(-mu_j); // exp(-mu_j)*(mu_j^0/0!) = exp(-mu_j)
-		}
-	}
-	else if (mu_j == 0.0 && n != 0)
-	{
-		P = 0.0;
-	}
-	else
-	{
-		int no_multip  = 0;
-		int factor_div = 1;
-		for (int i = 1; i <= 2*n; i++)	
-		{
-				if ( P < 1.0 && no_multip < n)
-				{ 
-					P *= mu_j;
-					no_multip++;
-				}
-				else
-				{				
-					P /= factor_div*e_to_mu_n;
-					factor_div++;
-				}
-		}
-	}
-	if (P < 1e-310)
-	{
-		P = 0;
-	}
-
-    return P;
-    
-}
 
 void MPFeldman_Cousins::print_poisson()
 {
@@ -1076,4 +1216,4 @@ double* MPFeldman_Cousins::mu_U_final()
 	}
 
 	return mu_U_final;
-}
+}*/

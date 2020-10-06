@@ -81,40 +81,40 @@ CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.o.provides: CMakeFiles/MPFC.dir/sr
 CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.o.provides.build: CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.o
 
 
-CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o: CMakeFiles/MPFC.dir/flags.make
-CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o: MPFeldman_Cousinsdict.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/shoram/Work/Diploma_Thesis/MPFC/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o -c /home/shoram/Work/Diploma_Thesis/MPFC/build/MPFeldman_Cousinsdict.cpp
+CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.o: CMakeFiles/MPFC.dir/flags.make
+CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.o: ../src/dicts/MPFeldman_Cousinsdict.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/shoram/Work/Diploma_Thesis/MPFC/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.o -c /home/shoram/Work/Diploma_Thesis/MPFC/src/dicts/MPFeldman_Cousinsdict.cpp
 
-CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/shoram/Work/Diploma_Thesis/MPFC/build/MPFeldman_Cousinsdict.cpp > CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.i
+CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/shoram/Work/Diploma_Thesis/MPFC/src/dicts/MPFeldman_Cousinsdict.cpp > CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.i
 
-CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/shoram/Work/Diploma_Thesis/MPFC/build/MPFeldman_Cousinsdict.cpp -o CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.s
+CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/shoram/Work/Diploma_Thesis/MPFC/src/dicts/MPFeldman_Cousinsdict.cpp -o CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.s
 
-CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o.requires:
+CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.o.requires:
 
-.PHONY : CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o.requires
+.PHONY : CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.o.requires
 
-CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o.provides: CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o.requires
-	$(MAKE) -f CMakeFiles/MPFC.dir/build.make CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o.provides.build
-.PHONY : CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o.provides
+CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.o.provides: CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.o.requires
+	$(MAKE) -f CMakeFiles/MPFC.dir/build.make CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.o.provides.build
+.PHONY : CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.o.provides
 
-CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o.provides.build: CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o
+CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.o.provides.build: CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.o
 
 
 # Object files for target MPFC
 MPFC_OBJECTS = \
 "CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.o" \
-"CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o"
+"CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.o"
 
 # External object files for target MPFC
 MPFC_EXTERNAL_OBJECTS =
 
 libMPFC.so: CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.o
-libMPFC.so: CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o
+libMPFC.so: CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.o
 libMPFC.so: CMakeFiles/MPFC.dir/build.make
 libMPFC.so: /home/shoram/Work/ROOT/install/lib/libCore.so
 libMPFC.so: /home/shoram/Work/ROOT/install/lib/libImt.so
@@ -144,7 +144,7 @@ CMakeFiles/MPFC.dir/build: libMPFC.so
 .PHONY : CMakeFiles/MPFC.dir/build
 
 CMakeFiles/MPFC.dir/requires: CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.o.requires
-CMakeFiles/MPFC.dir/requires: CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o.requires
+CMakeFiles/MPFC.dir/requires: CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.o.requires
 
 .PHONY : CMakeFiles/MPFC.dir/requires
 

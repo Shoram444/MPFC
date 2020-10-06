@@ -1,6 +1,6 @@
 // Do NOT change. Changes will be lost next time file is generated
 
-#define R__DICTIONARY_FILENAME dOdOdIbuilddIMPFeldman_Cousinsdict
+#define R__DICTIONARY_FILENAME dOdOdIlibdIMPFeldman_Cousinsdict
 #define R__NO_DEPRECATION
 
 /*******************************************************************/
@@ -38,7 +38,7 @@
 namespace std {} using namespace std;
 
 // Header files passed as explicit arguments
-#include "./MPFeldman_Cousins.hh"
+#include "MPFeldman_Cousins.hh"
 
 // Header files passed via #pragma extra_include
 
@@ -55,7 +55,7 @@ namespace ROOT {
       ::MPFeldman_Cousins *ptr = 0;
       static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::MPFeldman_Cousins >(0);
       static ::ROOT::TGenericClassInfo 
-         instance("MPFeldman_Cousins", ::MPFeldman_Cousins::Class_Version(), "MPFeldman_Cousins.hh", 8,
+         instance("MPFeldman_Cousins", ::MPFeldman_Cousins::Class_Version(), "MPFeldman_Cousins.hh", 12,
                   typeid(::MPFeldman_Cousins), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &::MPFeldman_Cousins::Dictionary, isa_proxy, 4,
                   sizeof(::MPFeldman_Cousins) );
@@ -271,7 +271,7 @@ namespace ROOT {
 namespace {
   void TriggerDictionaryInitialization_MPFeldman_Cousinsdict_Impl() {
     static const char* headers[] = {
-"./MPFeldman_Cousins.hh",
+"MPFeldman_Cousins.hh",
 0
     };
     static const char* includePaths[] = {
@@ -285,7 +285,7 @@ namespace {
 #pragma clang diagnostic ignored "-Wignored-attributes"
 #pragma clang diagnostic ignored "-Wreturn-type-c-linkage"
 extern int __Cling_Autoloading_Map;
-class __attribute__((annotate("$clingAutoload$./MPFeldman_Cousins.hh")))  MPFeldman_Cousins;
+class __attribute__((annotate("$clingAutoload$MPFeldman_Cousins.hh")))  MPFeldman_Cousins;
 )DICTFWDDCLS";
     static const char* payloadCode = R"DICTPAYLOAD(
 #line 1 "MPFeldman_Cousinsdict dictionary payload"
@@ -293,7 +293,7 @@ class __attribute__((annotate("$clingAutoload$./MPFeldman_Cousins.hh")))  MPFeld
 
 #define _BACKWARD_BACKWARD_WARNING_H
 // Inline headers
-#include "./MPFeldman_Cousins.hh"
+#include "MPFeldman_Cousins.hh"
 
 #undef  _BACKWARD_BACKWARD_WARNING_H
 )DICTPAYLOAD";

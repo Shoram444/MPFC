@@ -7,11 +7,8 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include_directories(include ${ROOT_INCLUDE_DIRS})
-file(GLOB SOURCES "src/*.cpp" "build/*.cpp")
+file(GLOB SOURCES "src/*.cpp" "src/dicts/*.cpp")
 
-message(${ROOT_INCLUDE_DIRS})
-message(${ROOT_LIBRARIES})
-message(${ROOT_FOUND})
 
 add_library(MPFC SHARED ${SOURCES} )
 target_link_libraries(MPFC PUBLIC ${ROOT_LIBRARIES})

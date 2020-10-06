@@ -1,24 +1,43 @@
-rm -rf build lib
-rm FC.a
+	rm -rf build lib ./src/dicts/
+	mkdir build lib
 
-mkdir build lib
+echo "#############################################"
+echo "#         GENERATE ROOT DICTIONARIES        #"
+echo "#############################################"
+echo " "
 
-cd include
+	cd include
 
-echo "rootcint: ./include/MPFeldman_Cousins.hh -> ./build/MPFeldman_Cousinsdict.cpp"
-      rootcint -f ../build/MPFeldman_Cousinsdict.cpp   ./MPFeldman_Cousins.hh+
+	echo "rootcint: ./include/MPFeldman_Cousins.hh -> ./src/dicts/MPFeldman_Cousinsdict.cpp + ./lib/MPFeldman_Cousinsdict_rdict.pcm"
+      	rootcint -f ../lib/MPFeldman_Cousinsdict.cpp   MPFeldman_Cousins.hh+
+	
+	echo " "
+	echo "Dictionaries generated!"
+	echo " "
 
-cd ../build
+	cd ..
 
-cmake ..
-make
+	cp -R ./lib/ ./src/dicts/
+	rm -rf ./lib/*.cpp
+	rm -rf ./src/dicts/*.pcm
 
-cd ..
-cp FC.cpp ./build/
-cd ./build/
+echo "#############################################"
+echo "#         MODULE COMPILATION (CMAKE)        #"
+echo "#############################################"
+echo " "	
 
-root FC.cpp
+	cd build
 
-##g++ -Wall -o FC.a -I./include -L./lib FC.cpp -lMPFC
+	cmake .. || { echo $'\n****Cmake failed, installation of MPFC library aborted!****' ; exit 1; }
 
-##./FC.a
+echo " "
+echo "#############################################"
+echo "#         MODULE COMPILATION (MAKE)         #"
+echo "#############################################"
+echo " "
+
+	make
+
+	cp libMPFC.so ../lib/libMPFC.so
+	rm libMPFC.so
+

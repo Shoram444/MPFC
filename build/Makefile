@@ -123,33 +123,6 @@ MPFC/fast:
 	$(MAKE) -f CMakeFiles/MPFC.dir/build.make CMakeFiles/MPFC.dir/build
 .PHONY : MPFC/fast
 
-MPFeldman_Cousinsdict.o: MPFeldman_Cousinsdict.cpp.o
-
-.PHONY : MPFeldman_Cousinsdict.o
-
-# target to build an object file
-MPFeldman_Cousinsdict.cpp.o:
-	$(MAKE) -f CMakeFiles/MPFC.dir/build.make CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o
-.PHONY : MPFeldman_Cousinsdict.cpp.o
-
-MPFeldman_Cousinsdict.i: MPFeldman_Cousinsdict.cpp.i
-
-.PHONY : MPFeldman_Cousinsdict.i
-
-# target to preprocess a source file
-MPFeldman_Cousinsdict.cpp.i:
-	$(MAKE) -f CMakeFiles/MPFC.dir/build.make CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.i
-.PHONY : MPFeldman_Cousinsdict.cpp.i
-
-MPFeldman_Cousinsdict.s: MPFeldman_Cousinsdict.cpp.s
-
-.PHONY : MPFeldman_Cousinsdict.s
-
-# target to generate assembly for a file
-MPFeldman_Cousinsdict.cpp.s:
-	$(MAKE) -f CMakeFiles/MPFC.dir/build.make CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.s
-.PHONY : MPFeldman_Cousinsdict.cpp.s
-
 src/MPFeldman_Cousins.o: src/MPFeldman_Cousins.cpp.o
 
 .PHONY : src/MPFeldman_Cousins.o
@@ -177,6 +150,33 @@ src/MPFeldman_Cousins.cpp.s:
 	$(MAKE) -f CMakeFiles/MPFC.dir/build.make CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.s
 .PHONY : src/MPFeldman_Cousins.cpp.s
 
+src/dicts/MPFeldman_Cousinsdict.o: src/dicts/MPFeldman_Cousinsdict.cpp.o
+
+.PHONY : src/dicts/MPFeldman_Cousinsdict.o
+
+# target to build an object file
+src/dicts/MPFeldman_Cousinsdict.cpp.o:
+	$(MAKE) -f CMakeFiles/MPFC.dir/build.make CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.o
+.PHONY : src/dicts/MPFeldman_Cousinsdict.cpp.o
+
+src/dicts/MPFeldman_Cousinsdict.i: src/dicts/MPFeldman_Cousinsdict.cpp.i
+
+.PHONY : src/dicts/MPFeldman_Cousinsdict.i
+
+# target to preprocess a source file
+src/dicts/MPFeldman_Cousinsdict.cpp.i:
+	$(MAKE) -f CMakeFiles/MPFC.dir/build.make CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.i
+.PHONY : src/dicts/MPFeldman_Cousinsdict.cpp.i
+
+src/dicts/MPFeldman_Cousinsdict.s: src/dicts/MPFeldman_Cousinsdict.cpp.s
+
+.PHONY : src/dicts/MPFeldman_Cousinsdict.s
+
+# target to generate assembly for a file
+src/dicts/MPFeldman_Cousinsdict.cpp.s:
+	$(MAKE) -f CMakeFiles/MPFC.dir/build.make CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.s
+.PHONY : src/dicts/MPFeldman_Cousinsdict.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -186,12 +186,12 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... MPFC"
 	@echo "... edit_cache"
-	@echo "... MPFeldman_Cousinsdict.o"
-	@echo "... MPFeldman_Cousinsdict.i"
-	@echo "... MPFeldman_Cousinsdict.s"
 	@echo "... src/MPFeldman_Cousins.o"
 	@echo "... src/MPFeldman_Cousins.i"
 	@echo "... src/MPFeldman_Cousins.s"
+	@echo "... src/dicts/MPFeldman_Cousinsdict.o"
+	@echo "... src/dicts/MPFeldman_Cousinsdict.i"
+	@echo "... src/dicts/MPFeldman_Cousinsdict.s"
 .PHONY : help
 
 

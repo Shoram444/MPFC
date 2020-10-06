@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/MPFC.dir/src/MPFeldman_Cousins.cpp.o"
-  "CMakeFiles/MPFC.dir/MPFeldman_Cousinsdict.cpp.o"
+  "CMakeFiles/MPFC.dir/src/dicts/MPFeldman_Cousinsdict.cpp.o"
   "libMPFC.pdb"
   "libMPFC.so"
 )

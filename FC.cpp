@@ -5,15 +5,16 @@
 #include "TROOT.h"  
 #include "TGraph.h"
 #include "TCanvas.h"
-#include "../include/MPFeldman_Cousins.hh"
+#include "./include/MPFeldman_Cousins.hh"
 
 using namespace std;
-R__LOAD_LIBRARY(libMPFC.so);
+R__LOAD_LIBRARY(./lib/libMPFC.so);
 
 int FC() 
 { 
 
-    MPFeldman_Cousins* obj = new MPFeldman_Cousins(6, 0.01, 100, 50, 0.9);   // order for parameters (double _b, double _step, int _rows, int _mu_max, double _CL)
+    MPFeldman_Cousins* obj = new MPFeldman_Cousins(6, 0.9);   // order for parameters (double _b, double _step, int _rows, int _mu_max, double _CL)
+    obj->print_table  (0.0, 2.5);
 
     // obj->print_poisson();
     // obj->set_mu(0.5);
@@ -31,10 +32,10 @@ int FC()
 
     // obj->draw_mu_U_v_b(0);
     // obj->correct_mu_U(2);
-    double b;
-    b = obj->get_b();
-    cout<< "b = " << b<<endl;
-    obj->mu_U_final();
+    //double b;
+    //b = obj->get_b();
+    //cout<< "b = " << b<<endl;
+    //obj->mu_U_final();
   return 0; 
 } 
     
