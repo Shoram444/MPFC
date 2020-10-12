@@ -13,15 +13,17 @@ class MPFeldman_Cousins: public TObject
 { 
 	public:    
 		// Constructors and destructor
-		MPFeldman_Cousins    ();
-    		MPFeldman_Cousins    (double _b, double _CL);
-    		~MPFeldman_Cousins   ();
+		MPFeldman_Cousins             ();
+    		MPFeldman_Cousins         (double _b, double _CL);
+    		~MPFeldman_Cousins        ();
 
-		double  calculate_lim();
-		double  get_R        (int _n, double _lam1, double _lam2);   // Generates an array of R ratios where R = P(n,mu+b)/P(n, mu_best+b)
- 		void    fill_table   ();
- 		void    print_table  (double _mumin, double _mumax);
-		double  poisson      (int _n, double _mu);		    
+		double  calculate_lim         ();
+		double  get_R                 (int _n, double _lam1, double _lam2);   // Generates an array of R ratios where R = P(n,mu+b)/P(n, mu_best+b)
+ 		void    fill_table            ();
+ 		void    print_table           (double _mumin, double _mumax);
+		double  print_poisson         (int _n, double _mu);		    
+        double  get_muBest            (int n, double b);
+        double  poisson               (int _n, double _mu);
 
 
 
@@ -83,8 +85,8 @@ class MPFeldman_Cousins: public TObject
 
 	private:
 
-        	const double STEP   = 0.1; 		// step at which mu iterates. 
-		const int    ROW_N  = 100;		// Number of n.
+        	const double STEP   = 0.01; 		// step at which mu iterates. 
+		const int    ROW_N  = 1000;		// Number of n.
 		const int    COL_N  = ROW_N/STEP;            // The number of columns dependent on max mu and step chosen.
 		double       b;                         // background b, variable through get and set
         	double       CL; 			// Desired confidence level. 

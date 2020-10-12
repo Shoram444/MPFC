@@ -5,6 +5,7 @@
 #include "TROOT.h"  
 #include "TGraph.h"
 #include "TCanvas.h"
+#include "TMath.h"
 #include "./include/MPFeldman_Cousins.hh"
 
 using namespace std;
@@ -13,8 +14,10 @@ R__LOAD_LIBRARY(./lib/libMPFC.so);
 int FC() 
 { 
 
-    MPFeldman_Cousins* obj = new MPFeldman_Cousins(6, 0.9);   // order for parameters (double _b, double _step, int _rows, int _mu_max, double _CL)
-    obj->print_table  (0.0, 2.5);
+    MPFeldman_Cousins* obj = new MPFeldman_Cousins(3, 0.9);   // order for parameters (double _b, double _step, int _rows, int _mu_max, double _CL)
+    // obj->print_table  (0.0, 2.5);
+
+    obj->calculate_lim();
 
     // obj->print_poisson();
     // obj->set_mu(0.5);
@@ -39,3 +42,33 @@ int FC()
   return 0; 
 } 
     
+    // double p;
+    // double p1;
+    // double ratio;
+    // double max_error = 0;
+    // for(int i = 0; i < 100000; i++)
+    // {
+    //     p = obj->poisson(1,i*0.001);
+    //     p1 = TMath::Poisson(1,i*0.001);
+    //     ratio = abs((p-p1)/p1);
+    //     if(ratio > 0.0001)
+    //     {
+    //         cout<< "==> p from FC = " << p;
+
+    //         cout<< "<====> p from TMath = "<<p1 << endl;
+
+    //         cout<< " ===== Ratio = "<< ratio << "=====" <<endl;
+
+    //     }
+    //     else
+    //     {
+    //         cout<< " ===== Ratio = "<< ratio << "=====" <<endl;
+
+    //     }
+    //     if(max_error < ratio)
+    //     {
+    //         max_error = ratio;
+    //     }
+
+    // }
+    // cout<< " Max error = " << max_error << endl;

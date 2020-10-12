@@ -51,7 +51,290 @@ MPFeldman_Cousins::~MPFeldman_Cousins()
 
 double MPFeldman_Cousins::calculate_lim()
 {
-		
+		double P_Sum 		= 0;
+		double mu_tester    = 0.5;
+		int    n_min        = 0;
+		int    n_max        = 0;
+		int	   checker 		= 0;
+		int    iter;
+		bool   n_3_used;
+
+
+		int 	n_top	 =	 ceil       ( mu_tester + b ) ; 
+		double  mu_bst; 
+		double  mub_highest;
+
+
+
+		double* buffer  =	 new double[7];
+		double* buf_n   =    new double[7];
+
+		for(int i = 0 ; i < 7; i++) //Filling out buffer around the n_top value. 
+		{
+			buf_n[i]  = 	n_top - 3 + i;
+			mu_bst    = 	get_muBest ( buf_n[i] , b );
+			buffer[i] = 	get_R(buf_n[i] , mu_tester + b , mu_bst + b );
+		}
+
+		double max 			= 	buffer[0];
+		int    n_highest 	= 	buf_n[0];
+
+		for (int j = 0 ; j <7 ; j++) //find the highest R value from buffer and it's corresponding n
+		{
+			if(max < buffer[j])
+			{
+				max 		= 	buffer[j];
+				n_highest 	= 	buf_n[j];
+				mub_highest =	get_muBest(n_highest , b);
+				iter = j;
+			}
+		}
+
+		for(int i =0 ; i<7 ; i++)
+		{
+			cout<< "n = "<< buf_n[i] << " \t buf = "<< buffer[i] << endl;
+		}
+		cout<<endl;
+
+		cout<< "n used = " << n_highest << endl;
+
+		n_min 	= 	n_highest;
+		n_max 	= 	n_highest; 
+		buffer[iter] = -1;
+
+		P_Sum += poisson(n_highest , mu_tester + b);
+
+
+		while(P_Sum < CL)
+		{
+
+			////////
+			if ( checker != -1 )
+			{
+
+				if( poisson(buf_n[0] - 1, mu_tester ) > poisson(buf_n[6] + 1, mu_tester ) )
+				{
+					buf_n[0] 	 = buf_n[0] - 1;
+					mu_bst    	 = get_muBest ( buf_n[0] , b );
+					buffer[0] 	 = get_R(buf_n[0] , mu_tester + b , mu_bst + b );
+
+
+					for (int i = 1 ; i<4 ; i++)
+					{
+						buf_n[i]  = 	buf_n[i] - 1;
+						mu_bst    = 	get_muBest ( buf_n[i] , b );
+						buffer[i] = 	get_R(buf_n[i] , mu_tester + b , mu_bst + b );
+						
+					}
+
+					for(int i =0 ; i<7 ; i++)
+					{
+						cout<< "n = "<< buf_n[i] << " \t buf = "<< buffer[i] << endl;
+					}
+					cout<<endl;
+
+					max 		= 	buffer[0];
+					n_highest 	= 	buf_n[0];
+					mub_highest =	get_muBest(n_highest , b);
+
+
+					for (int j = 0 ; j <7 ; j++) //find the highest R value from buffer and it's corresponding n
+					{
+						
+						if(max < buffer[j])
+						{
+							max 		= 	buffer[j];
+							n_highest 	= 	buf_n[j];
+							mub_highest =	get_muBest(n_highest , b);
+							iter = j;
+
+						}
+						else if(max == buffer[0])
+						{
+							iter = 0;
+						}
+					}
+
+					if( n_highest <= n_min )
+					{
+						n_min = n_highest;
+						buffer[iter] = -1;
+					}
+					else
+					{
+						n_max = n_highest;
+						buffer[iter] = -1;
+					}
+
+					P_Sum += poisson(n_highest , mu_tester + b);
+
+					if(iter == 3)
+						{n_3_used = true;}
+					else
+						{n_3_used = false; }
+
+					if( buf_n[0] == 0)
+					{
+						checker = -1;
+					}
+
+					if(iter == 3)
+						{n_3_used = true;}
+					else
+						{n_3_used = false;}
+
+					cout<< "P_sum = " << P_Sum << endl;
+					cout<< "n used = " << n_highest << endl;
+
+
+
+
+				}
+				else if( poisson(buf_n[0] - 1, mu_tester ) < poisson(buf_n[6] + 1, mu_tester ) )
+				{
+					buf_n[3] 	 = buf_n[4];
+					mu_bst    	 = get_muBest ( buf_n[3] , b );
+					buffer[3] 	 = get_R(buf_n[3] , mu_tester + b , mu_bst + b );
+					for (int i = 4 ; i<7 ; i++)
+					{
+						buf_n[i]  = 	buf_n[i] + 1;
+						mu_bst    = 	get_muBest ( buf_n[i] , b );
+						buffer[i] = 	get_R(buf_n[i] , mu_tester + b , mu_bst + b );
+					}
+
+					for(int i =0 ; i<7 ; i++)
+					{
+						cout<< "n = "<< buf_n[i] << " \t buf = "<< buffer[i] << endl;
+					}
+					cout<<endl;
+
+
+					max 		= 	buffer[0];
+					n_highest 	= 	buf_n[0];
+					mub_highest =	get_muBest(n_highest , b);
+
+
+					for (int j = 0 ; j <7 ; j++) //find the highest R value from buffer and it's corresponding n
+					{
+						if(max < buffer[j])
+						{
+							max 		= 	buffer[j];
+							n_highest 	= 	buf_n[j];
+							mub_highest =	get_muBest(n_highest , b);
+							iter = j;
+						}
+						else if(max == buffer[0])
+						{
+							iter = 0;
+						}
+					}
+
+					if( n_highest <= n_min )
+					{
+						n_min = n_highest;
+						buffer[iter] = -1;
+					}
+					else
+					{
+						n_max = n_highest;
+						buffer[iter] = -1;
+
+					}
+
+					if(iter == 3)
+						{n_3_used = true;}
+					else
+						{n_3_used = false;}
+
+					P_Sum += poisson(n_highest , mu_tester + b);
+					cout<< "P_sum = " << P_Sum << endl;
+					cout<< "n used = " << n_highest << endl;
+
+
+
+				}
+			}
+			
+			else
+			{
+				double buf_sum = buffer[0] + buffer[1] + buffer[2];
+				if(n_3_used)
+				{
+					buf_n[3] 	 = buf_n[4];
+					mu_bst    	 = get_muBest ( buf_n[3] , b );
+					buffer[3] 	 = get_R(buf_n[3] , mu_tester + b , mu_bst + b );
+
+					for (int i = 4 ; i<7 ; i++)
+					{
+						buf_n[i]  = 	buf_n[i] + 1;
+						mu_bst    = 	get_muBest ( buf_n[i] , b );
+						buffer[i] = 	get_R(buf_n[i] , mu_tester + b , mu_bst + b );
+					}
+				}
+				
+				
+				
+
+				for(int i =0 ; i<7 ; i++)
+				{
+					cout<< "n = "<< buf_n[i] << " \t buf = "<< buffer[i] << endl;
+				}
+					cout<<endl;
+
+
+				max 		= 	buffer[0];
+				n_highest 	= 	buf_n[0];
+				mub_highest =	get_muBest(n_highest , b);
+
+
+				for (int j = 0 ; j <7 ; j++) //find the highest R value from buffer and it's corresponding n
+				{
+					if(max < buffer[j])
+					{
+						max 		= 	buffer[j];
+						n_highest 	= 	buf_n[j];
+						mub_highest =	get_muBest(n_highest , b);
+						iter = j;
+					}
+					else if(max == buffer[0])
+					{
+						iter = 0;
+					}
+				}
+
+				if( n_highest <= n_min )
+				{
+					n_min = n_highest;
+					buffer[iter] = -1;
+
+				}
+				else
+				{
+					n_max = n_highest;
+					buffer[iter] = -1;
+
+				}
+
+				if(iter == 3)
+					{n_3_used = true;}
+				else
+					{n_3_used = false; }
+
+				P_Sum += poisson(n_highest , mu_tester + b);
+				cout<< "P_sum = " << P_Sum << endl;
+		cout<< "n used = " << n_highest << endl;
+
+
+			}	
+
+
+// 
+		}
+
+		cout<< "P_sum = " << P_Sum << endl;
+		cout<< "nmin = " << n_min << endl;
+		cout<< "nmax = " << n_max << endl;
+	return P_Sum;
 }
 
 double MPFeldman_Cousins::get_R(int _n, double _lam1, double _lam2)
@@ -113,7 +396,7 @@ void MPFeldman_Cousins::fill_table()
 		if ( table[n][m] < 1e-310 &&
 		     table[n][m] > 0.0 )
 		{
-			cout << "WARNING: MPFeldman_Cousins::fill_table(): value P(" << n << ", " << mu << ") lower than 1e-310, value was set to zero!" << endl;  
+			// cout << "WARNING: MPFeldman_Cousins::fill_table(): value P(" << n << ", " << mu << ") lower than 1e-310, value was set to zero!" << endl;  
 			table[n][m] = 0.0;
 		}
             }
@@ -203,6 +486,18 @@ double MPFeldman_Cousins::poisson(int _n, double _mu)
 }
 
 
+double MPFeldman_Cousins::get_muBest(int n, double b)
+{
+
+	double mu_bst = double(n) - b;		
+
+	if (mu_bst < 0)
+	{
+		mu_bst = 0;
+	}
+
+	return mu_bst;
+}
 
 
 
@@ -345,18 +640,6 @@ int* MPFeldman_Cousins::get_A(double* R)
 }
 
 
-double MPFeldman_Cousins::get_muBest(int n, double b)
-{
-
-	double mu_bst = double(n) - b;		
-
-	if (mu_bst < 0)
-	{
-		mu_bst = 0;
-	}
-
-	return mu_bst;
-}
 
 
 
