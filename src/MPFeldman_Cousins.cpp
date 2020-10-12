@@ -52,7 +52,7 @@ MPFeldman_Cousins::~MPFeldman_Cousins()
 double MPFeldman_Cousins::calculate_lim()
 {
 
-	for (int m = 0; m<40; m++)
+	for (double m = 0; m<40; m ++)
 	{
 		double P_Sum 		= 0;
 		int    n_min        = 0;
@@ -90,7 +90,7 @@ double MPFeldman_Cousins::calculate_lim()
 
 		for (int j = 0 ; j <7 ; j++) //find the highest R value from buffer and it's corresponding n
 		{
-			if(max < buffer[j])
+			if(max <= buffer[j])
 			{
 				max 		= 	buffer[j];
 				n_highest 	= 	buf_n[j];
@@ -99,17 +99,22 @@ double MPFeldman_Cousins::calculate_lim()
 			}
 		}
 
-		for(int i =0 ; i<7 ; i++)
-		{
-			cout<< "n = "<< buf_n[i] << " \t buf = "<< buffer[i] << endl;
-		}
-		cout<<endl;
+		// for(int i =0 ; i<7 ; i++)
+		// {
+		// 	cout<< "n = "<< buf_n[i] << " \t buf = "<< buffer[i] << endl;
+		// }
+		// cout<<endl;
 
-		cout<< "n used = " << n_highest << endl;
+		// cout<< "n used = " << n_highest << endl;
 
 		n_min 	= 	n_highest;
 		n_max 	= 	n_highest; 
 		buffer[iter] = -1;
+
+		if( buf_n[0] == 0)
+		{
+			checker = -1;
+		}
 
 		P_Sum += poisson(n_highest , m + b);
 
@@ -145,11 +150,11 @@ double MPFeldman_Cousins::calculate_lim()
 						
 					}
 
-					for(int i =0 ; i<7 ; i++)
-					{
-						cout<< "n = "<< buf_n[i] << " \t buf = "<< buffer[i] << endl;
-					}
-					cout<<endl;
+					// for(int i =0 ; i<7 ; i++)
+					// {
+					// 	cout<< "n = "<< buf_n[i] << " \t buf = "<< buffer[i] << endl;
+					// }
+					// cout<<endl;
 
 					max 		= 	buffer[0];
 					n_highest 	= 	buf_n[0];
@@ -159,7 +164,7 @@ double MPFeldman_Cousins::calculate_lim()
 					for (int j = 0 ; j <7 ; j++) //find the highest R value from buffer and it's corresponding n
 					{
 						
-						if(max < buffer[j])
+						if(max <= buffer[j])
 						{
 							max 		= 	buffer[j];
 							n_highest 	= 	buf_n[j];
@@ -167,10 +172,10 @@ double MPFeldman_Cousins::calculate_lim()
 							iter = j;
 
 						}
-						else if(max == buffer[0])
-						{
-							iter = 0;
-						}
+						// else if(max == buffer[0])
+						// {
+						// 	iter = 0;
+						// }
 					}
 
 					if( n_highest <= n_min )
@@ -220,11 +225,11 @@ double MPFeldman_Cousins::calculate_lim()
 						buffer[i] = 	get_R(buf_n[i] , m + b , mu_bst + b );
 					}
 
-					for(int i =0 ; i<7 ; i++)
-					{
-						cout<< "n = "<< buf_n[i] << " \t buf = "<< buffer[i] << endl;
-					}
-					cout<<endl;
+					// for(int i =0 ; i<7 ; i++)
+					// {
+					// 	cout<< "n = "<< buf_n[i] << " \t buf = "<< buffer[i] << endl;
+					// }
+					// cout<<endl;
 
 
 					max 		= 	buffer[0];
@@ -234,17 +239,17 @@ double MPFeldman_Cousins::calculate_lim()
 
 					for (int j = 0 ; j <7 ; j++) //find the highest R value from buffer and it's corresponding n
 					{
-						if(max < buffer[j])
+						if(max <= buffer[j])
 						{
 							max 		= 	buffer[j];
 							n_highest 	= 	buf_n[j];
 							mub_highest =	get_muBest(n_highest , b);
 							iter = j;
 						}
-						else if(max == buffer[0])
-						{
-							iter = 0;
-						}
+						// else if(max == buffer[0])
+						// {
+						// 	iter = 0;
+						// }
 					}
 
 					if( n_highest <= n_min )
@@ -275,7 +280,6 @@ double MPFeldman_Cousins::calculate_lim()
 			
 			else
 			{
-				double buf_sum = buffer[0] + buffer[1] + buffer[2];
 				if(n_3_used)
 				{
 					buf_n[3] 	 = buf_n[4];
@@ -293,11 +297,11 @@ double MPFeldman_Cousins::calculate_lim()
 				
 				
 
-				for(int i =0 ; i<7 ; i++)
-				{
-					cout<< "n = "<< buf_n[i] << " \t buf = "<< buffer[i] << endl;
-				}
-					cout<<endl;
+				// for(int i =0 ; i<7 ; i++)
+				// {
+				// 	cout<< "n = "<< buf_n[i] << " \t buf = "<< buffer[i] << endl;
+				// }
+				// 	cout<<endl;
 
 
 				max 		= 	buffer[0];
@@ -307,17 +311,17 @@ double MPFeldman_Cousins::calculate_lim()
 
 				for (int j = 0 ; j <7 ; j++) //find the highest R value from buffer and it's corresponding n
 				{
-					if(max < buffer[j])
+					if(max <= buffer[j])
 					{
 						max 		= 	buffer[j];
 						n_highest 	= 	buf_n[j];
 						mub_highest =	get_muBest(n_highest , b);
 						iter = j;
 					}
-					else if(max == buffer[0])
-					{
-						iter = 0;
-					}
+					// else if(max == buffer[0])
+					// {
+					// 	iter = 0;
+					// }
 				}
 
 				if( n_highest <= n_min )
