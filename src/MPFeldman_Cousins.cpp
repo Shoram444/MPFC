@@ -51,29 +51,38 @@ MPFeldman_Cousins::~MPFeldman_Cousins()
 
 double MPFeldman_Cousins::calculate_lim()
 {
+
+	for (int m = 0; m<40; m++)
+	{
 		double P_Sum 		= 0;
-		double mu_tester    = 0.5;
 		int    n_min        = 0;
 		int    n_max        = 0;
 		int	   checker 		= 0;
 		int    iter;
 		bool   n_3_used;
 
-
-		int 	n_top	 =	 ceil       ( mu_tester + b ) ; 
+		int 	n_top	 =	 ceil( m + b ) ; 
 		double  mu_bst; 
 		double  mub_highest;
-
-
 
 		double* buffer  =	 new double[7];
 		double* buf_n   =    new double[7];
 
 		for(int i = 0 ; i < 7; i++) //Filling out buffer around the n_top value. 
 		{
-			buf_n[i]  = 	n_top - 3 + i;
-			mu_bst    = 	get_muBest ( buf_n[i] , b );
-			buffer[i] = 	get_R(buf_n[i] , mu_tester + b , mu_bst + b );
+			if (n_top - 3 + i < 0)
+			{
+				buf_n[i]  = 	0;
+				mu_bst    = 	get_muBest ( buf_n[i] , b );
+				buffer[i] = 	get_R(buf_n[i] , m + b , mu_bst + b );
+			}
+			else
+			{
+				buf_n[i]  = 	n_top - 3 + i;
+				mu_bst    = 	get_muBest ( buf_n[i] , b );
+				buffer[i] = 	get_R(buf_n[i] , m + b , mu_bst + b );
+			}
+
 		}
 
 		double max 			= 	buffer[0];
@@ -102,7 +111,7 @@ double MPFeldman_Cousins::calculate_lim()
 		n_max 	= 	n_highest; 
 		buffer[iter] = -1;
 
-		P_Sum += poisson(n_highest , mu_tester + b);
+		P_Sum += poisson(n_highest , m + b);
 
 
 		while(P_Sum < CL)
@@ -112,18 +121,27 @@ double MPFeldman_Cousins::calculate_lim()
 			if ( checker != -1 )
 			{
 
-				if( poisson(buf_n[0] - 1, mu_tester ) > poisson(buf_n[6] + 1, mu_tester ) )
+				if( poisson(buf_n[0] - 1, m ) > poisson(buf_n[6] + 1, m ) )
 				{
 					buf_n[0] 	 = buf_n[0] - 1;
 					mu_bst    	 = get_muBest ( buf_n[0] , b );
-					buffer[0] 	 = get_R(buf_n[0] , mu_tester + b , mu_bst + b );
+					buffer[0] 	 = get_R(buf_n[0] , m + b , mu_bst + b );
 
 
 					for (int i = 1 ; i<4 ; i++)
 					{
-						buf_n[i]  = 	buf_n[i] - 1;
-						mu_bst    = 	get_muBest ( buf_n[i] , b );
-						buffer[i] = 	get_R(buf_n[i] , mu_tester + b , mu_bst + b );
+						if(buf_n[i] - 1 <0 )
+						{
+							buf_n[i]  = 0;
+							mu_bst    = 	get_muBest ( buf_n[i] , b );
+							buffer[i] = 	get_R(buf_n[i] , m + b , mu_bst + b );
+						}
+						else
+						{
+							buf_n[i]  = 	buf_n[i] - 1;
+							mu_bst    = 	get_muBest ( buf_n[i] , b );
+							buffer[i] = 	get_R(buf_n[i] , m + b , mu_bst + b );
+						}
 						
 					}
 
@@ -166,7 +184,7 @@ double MPFeldman_Cousins::calculate_lim()
 						buffer[iter] = -1;
 					}
 
-					P_Sum += poisson(n_highest , mu_tester + b);
+					P_Sum += poisson(n_highest , m + b);
 
 					if(iter == 3)
 						{n_3_used = true;}
@@ -183,23 +201,23 @@ double MPFeldman_Cousins::calculate_lim()
 					else
 						{n_3_used = false;}
 
-					cout<< "P_sum = " << P_Sum << endl;
-					cout<< "n used = " << n_highest << endl;
+					// cout<< "P_sum = " << P_Sum << endl;
+					// cout<< "n used = " << n_highest << endl;
 
 
 
 
 				}
-				else if( poisson(buf_n[0] - 1, mu_tester ) < poisson(buf_n[6] + 1, mu_tester ) )
+				else if( poisson(buf_n[0] - 1, m ) < poisson(buf_n[6] + 1, m ) )
 				{
 					buf_n[3] 	 = buf_n[4];
 					mu_bst    	 = get_muBest ( buf_n[3] , b );
-					buffer[3] 	 = get_R(buf_n[3] , mu_tester + b , mu_bst + b );
+					buffer[3] 	 = get_R(buf_n[3] , m + b , mu_bst + b );
 					for (int i = 4 ; i<7 ; i++)
 					{
 						buf_n[i]  = 	buf_n[i] + 1;
 						mu_bst    = 	get_muBest ( buf_n[i] , b );
-						buffer[i] = 	get_R(buf_n[i] , mu_tester + b , mu_bst + b );
+						buffer[i] = 	get_R(buf_n[i] , m + b , mu_bst + b );
 					}
 
 					for(int i =0 ; i<7 ; i++)
@@ -246,9 +264,9 @@ double MPFeldman_Cousins::calculate_lim()
 					else
 						{n_3_used = false;}
 
-					P_Sum += poisson(n_highest , mu_tester + b);
-					cout<< "P_sum = " << P_Sum << endl;
-					cout<< "n used = " << n_highest << endl;
+					P_Sum += poisson(n_highest , m + b);
+					// cout<< "P_sum = " << P_Sum << endl;
+					// cout<< "n used = " << n_highest << endl;
 
 
 
@@ -262,13 +280,13 @@ double MPFeldman_Cousins::calculate_lim()
 				{
 					buf_n[3] 	 = buf_n[4];
 					mu_bst    	 = get_muBest ( buf_n[3] , b );
-					buffer[3] 	 = get_R(buf_n[3] , mu_tester + b , mu_bst + b );
+					buffer[3] 	 = get_R(buf_n[3] , m + b , mu_bst + b );
 
 					for (int i = 4 ; i<7 ; i++)
 					{
 						buf_n[i]  = 	buf_n[i] + 1;
 						mu_bst    = 	get_muBest ( buf_n[i] , b );
-						buffer[i] = 	get_R(buf_n[i] , mu_tester + b , mu_bst + b );
+						buffer[i] = 	get_R(buf_n[i] , m + b , mu_bst + b );
 					}
 				}
 				
@@ -320,9 +338,9 @@ double MPFeldman_Cousins::calculate_lim()
 				else
 					{n_3_used = false; }
 
-				P_Sum += poisson(n_highest , mu_tester + b);
-				cout<< "P_sum = " << P_Sum << endl;
-		cout<< "n used = " << n_highest << endl;
+				P_Sum += poisson(n_highest , m + b);
+				// cout<< "P_sum = " << P_Sum << endl;
+		// cout<< "n used = " << n_highest << endl;
 
 
 			}	
@@ -330,11 +348,11 @@ double MPFeldman_Cousins::calculate_lim()
 
 // 
 		}
+	cout<< "mu = " << m << " \t nmin = " << n_min <<  "\t nmax = " << n_max << endl;
+	}
+	
 
-		cout<< "P_sum = " << P_Sum << endl;
-		cout<< "nmin = " << n_min << endl;
-		cout<< "nmax = " << n_max << endl;
-	return P_Sum;
+	return 0.0;
 }
 
 double MPFeldman_Cousins::get_R(int _n, double _lam1, double _lam2)
