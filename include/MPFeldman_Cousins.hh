@@ -85,11 +85,11 @@ class MPFeldman_Cousins: public TObject
 
 	private:
 
-        	const double STEP   = 0.01; 		// step at which mu iterates. 
+    	const double STEP   = 0.01; 		// step at which mu iterates. 
 		const int    ROW_N  = 1000;		// Number of n.
 		const int    COL_N  = ROW_N/STEP;            // The number of columns dependent on max mu and step chosen.
 		double       b;                         // background b, variable through get and set
-        	double       CL; 			// Desired confidence level. 
+    	double       CL; 			// Desired confidence level. 
         			
 		double** table;				// 2D Array generated in constructor - holds values of P. Row -> n ; Column -> mu/STEP. 
 		bool     table_set;
