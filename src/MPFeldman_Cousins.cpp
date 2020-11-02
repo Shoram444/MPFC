@@ -56,7 +56,7 @@ double MPFeldman_Cousins::calculate_lim()
 	// for(int g = 0; g<4; g++)
 	// {
 		bkg = 3;
-		cout<< "++++++++++++++++++bkg = " << bkg << "+++++++++++++++++"<< endl;
+		cout<< "++++++++++++++++++bkg = " << bkg << " +++++++++++++++++"<< endl;
 		int 	cycles = 200; 
 		double* mu_U_temp = new double[cycles];
 		double* mu_L_temp = new double[cycles];
@@ -136,7 +136,7 @@ double MPFeldman_Cousins::calculate_lim()
 
 
 
-			if( buf_n[0] != 0 && (poisson(buf_n[0] - 1, mu ) > poisson(buf_n[6] + 1, mu )) ) //this condition makes sure that when moving buffer toward lower numbers, we do not get out of bounds.
+			if( buf_n[0] != 0 && (poisson(buf_n[0] - 1, mu + bkg ) > poisson(buf_n[6] + 1, mu + bkg)) ) //this condition makes sure that when moving buffer toward lower numbers, we do not get out of bounds.
 			{
 				buf_n[n_index] 	= buf_n[n_index] - 1;
 				mu_bst    	 	= get_muBest ( buf_n[n_index] , bkg );
@@ -219,7 +219,7 @@ double MPFeldman_Cousins::calculate_lim()
 
 			while(P_Sum < CL)			// buffer moves up or down depending on whether the last used n was above or below n_top respectively
 			{
-				if( buf_n[0] != 0 && (poisson(buf_n[0] - 1, mu ) > poisson(buf_n[6] + 1, mu )) ) //this condition makes sure that when moving buffer toward lower numbers, we do not get out of bounds.
+				if( buf_n[0] != 0 && (poisson(buf_n[0] - 1, mu + bkg) > poisson(buf_n[6] + 1, mu + bkg)) ) //this condition makes sure that when moving buffer toward lower numbers, we do not get out of bounds.
 				{
 					buf_n[n_index] 	= buf_n[n_index] - 1;
 					mu_bst    	 	= get_muBest ( buf_n[n_index] , bkg );
