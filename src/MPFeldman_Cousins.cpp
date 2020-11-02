@@ -51,8 +51,16 @@ MPFeldman_Cousins::~MPFeldman_Cousins()
 
 double MPFeldman_Cousins::calculate_lim()
 {
+	int 	cycles = 2000; 
+	double* mu_U_temp = new double[cycles];
+	double* mu_L_temp = new double[cycles];
+	int*	n_U_temp  = new int[cycles];
+	int* 	n_L_temp  = new int[cycles];
 
-	for (double m = 0; m<20000; m ++)
+
+
+
+	for (int m = 0; m<cycles; m ++)
 	{
 		double mu 			= m*STEP;
 		double P_Sum 		= 0.0;
@@ -257,9 +265,67 @@ double MPFeldman_Cousins::calculate_lim()
 			P_Sum += poisson(n_highest , mu + b);
 
 		}
-		cout<< "mu = " << mu << " \t nmin = " << n_min <<  "\t nmax = " << n_max << endl;
+		mu_U_temp[m] = mu;
+		mu_L_temp[m] = mu;
+		n_U_temp[m]  = n_min;
+		n_L_temp[m]  = n_max;
+
+
+		// cout<< "mu = " << mu_U_temp[m] << " \t nmin = " << n_U_temp[m] <<  "\t nmax = " << n_L_temp[m] << endl;
+
+
 	}
 	
+	vector<int> n_U;
+	vector<int> n_L; 
+
+	vector<double> mu_U;
+	vector<double> mu_L;
+
+
+	int size = cycles;
+	int n_current = n_U_temp[size - 1];
+	// cout<< "n_current = "<< n_current<< endl;
+	// int i = size -1;
+
+	int y = 0;
+	for (int x = size -1 ; x > 0; x--)  			//algortihm checks the n_array generated in get_n from back to front. 
+													//Logs only jumps by one, so that there are no repetitions.
+	{
+		
+		if (n_current > n_U_temp[x])
+		{
+
+			n_U.push_back(n_current);
+		
+			mu_U.push_back(mu_U_temp[x+1]);
+			n_U.push_back(n_current - 1 );
+			
+		
+			mu_U.push_back(mu_U_temp[x+1]);
+		
+			n_current = n_U_temp[x];
+			y+=2;
+			
+		}
+		
+	}
+	n_U.push_back(0);					//Adding point (0,0) so that the graph starts at 0. 
+	mu_U.push_back(0);
+
+	int mu_U_size = mu_U.size();
+	reverse(mu_U.begin(),mu_U.end());
+	reverse(n_U.begin(),n_U.end());
+
+	for(int i = 0; i<mu_U_size; i++)
+	{
+		cout<< "n_U = " << n_U[i] << "\t mu_U = "<< mu_U[i] << endl;
+	}
+
+	delete[] mu_U_temp;
+	delete[] mu_L_temp;
+	delete[] n_U_temp;
+	delete[] n_L_temp;
 
 	return 0.0;
 }
