@@ -51,152 +51,118 @@ MPFeldman_Cousins::~MPFeldman_Cousins()
 
 double MPFeldman_Cousins::calculate_lim()
 {
-	int 	cycles = 2000; 
-	double* mu_U_temp = new double[cycles];
-	double* mu_L_temp = new double[cycles];
-	int*	n_U_temp  = new int[cycles];
-	int* 	n_L_temp  = new int[cycles];
+	double bkg;
+
+	// for(int g = 0; g<4; g++)
+	// {
+		bkg = 3;
+		cout<< "++++++++++++++++++bkg = " << bkg << "+++++++++++++++++"<< endl;
+		int 	cycles = 200; 
+		double* mu_U_temp = new double[cycles];
+		double* mu_L_temp = new double[cycles];
+		int*	n_U_temp  = new int[cycles];
+		int* 	n_L_temp  = new int[cycles];
 
 
 
 
-	for (int m = 0; m<cycles; m ++)
-	{
-		double mu 			= m*STEP;
-		double P_Sum 		= 0.0;
-		int    n_min        = 0;
-		int    n_max        = 0;
-		int	   checker 		= 0;
-		int    iter;
-		bool   n_3_used     = false;
-
-		int 	n_top	 	= ceil( mu + b ) ; 
-
-		double  mu_bst; 
-		double  mub_highest;
-
-		double* buffer  =	 new double[7]; //Prepare buffer for R values of size 7
-		double* buf_n   =    new double[7]; //Prepare buffer of corresponding n values associated to buffer
-
-		for(int i = 0 ; i < 7; i++) //Filling out buffer around the n_top value. 
+		for (int m = 0; m<cycles; m ++)
 		{
-			if (n_top - 3 + i < 0)  //Makes sure that the buffer of n values doesn't go to negatives 
+			double mu 			= m*STEP;
+			// cout<< "mu = " << mu << endl;
+			double P_Sum 		= 0.0;
+			int    n_min        = 0;
+			int    n_max        = 0;
+			int	   checker 		= 0;
+			int    iter;
+			bool   n_3_used     = false;
+
+			int 	n_top	 	= ceil( mu + bkg ) ; 
+			// cout<< " n_top : "<< n_top<< endl;
+
+			double  mu_bst; 
+			double  mub_highest;
+
+			double* buffer  =	 new double[7]; //Prepare buffer for R values of size 7
+			double* buf_n   =    new double[7]; //Prepare buffer of corresponding n values associated to buffer
+			
+			// cout<< " First round of buffering" <<endl;
+			for(int i = 0 ; i < 7; i++) //Filling out buffer around the n_top value. 
 			{
-				buf_n[i]  = 	 0;
-				buffer[i] = 	-1; 
-			}
-			else
-			{
-				buf_n[i]  = 	n_top - 3 + i;
-				mu_bst    = 	get_muBest ( buf_n[i] , b );
-				buffer[i] = 	get_R(buf_n[i] , mu + b , mu_bst + b );
-			}
-
-		}
-
-		double max 			= 	buffer[0]; //max is used to search for highest R value
-		int    n_highest 	= 	buf_n[0];  //n_highest is the corresponding n for highest R
-
-		for (int j = 0 ; j <7 ; j++)       //find the highest R value from buffer and it's corresponding n
-		{
-			if(max <= buffer[j])
-			{
-				max 		= 	buffer[j];
-				n_highest 	= 	buf_n[j];
-				mub_highest =	get_muBest(n_highest , b);
-				iter = j;					// iter is used to make sure that the R value that has been used once will not be used again
-			}
-		}
-
-		n_min 	= 	n_highest;			//In first round of searching for n_min and n_max both are set to default first highest value
-		n_max 	= 	n_highest; 
-		buffer[iter] = -1;
-		P_Sum += poisson(n_highest , mu + b);
-
-
-
-		if( buf_n[0] != 0 && (poisson(buf_n[0] - 1, mu ) > poisson(buf_n[6] + 1, mu )) ) //this condition makes sure that when moving buffer toward lower numbers, we do not get out of bounds.
-		{
-			buf_n[0] 	 = buf_n[0] - 1;
-			mu_bst    	 = get_muBest ( buf_n[0] , b );
-			buffer[0] 	 = get_R(buf_n[0] , mu + b , mu_bst + b );
-
-
-			for (int i = 1 ; i<4 ; i++)
-			{
-
-				if(buf_n[i] - 1 <0 )
+				if (n_top - 3 + i < 0)  //Makes sure that the buffer of n values doesn't go to negatives 
 				{
-					buf_n[i]  = 	0;
-					mu_bst    = 	get_muBest ( buf_n[i] , b );
-					buffer[i] = 	get_R(buf_n[i] , mu + b , mu_bst + b );
+
+					buf_n[i]  = 	 0;
+					mu_bst    = 	get_muBest ( buf_n[i] , bkg );
+					buffer[i] = 	-1; 
 				}
 				else
 				{
-					buf_n[i]  = 	buf_n[i] - 1;
-					mu_bst    = 	get_muBest ( buf_n[i] , b );
-					buffer[i] = 	get_R(buf_n[i] , mu + b , mu_bst + b );
+					buf_n[i]  = 	n_top - 3 + i;
+					mu_bst    = 	get_muBest ( buf_n[i] , bkg );
+					buffer[i] = 	get_R(buf_n[i] , mu + bkg , mu_bst + bkg );
 				}
-			}
-		}
-		else 
-		{
-			buf_n[3] 	 = buf_n[4];
-			mu_bst    	 = get_muBest ( buf_n[3] , b );
-			buffer[3] 	 = get_R(buf_n[3] , mu + b , mu_bst + b );
+				
+				// cout<< " first round: i = "<<i <<"\t buf_n = "<<buf_n[i] <<"\t buffer = "<<buffer[i] <<"\t mu_bst= "<< mu_bst <<"\t mu =" << mu<<endl; 
+				// 
 
-			for (int i = 4 ; i<7 ; i++)
+
+			}
+
+			double max 			= 	buffer[0]; //max is used to search for highest R value
+			int    n_highest 	= 	buf_n[0];  //n_highest is the corresponding n for highest R
+
+
+			for (int j = 0 ; j <7 ; j++)       //find the highest R value from buffer and it's corresponding n
 			{
-				if(buffer[i] == -1)
+				if(max <= buffer[j])
 				{
-					buf_n[i]  = 	buf_n[i] + 1;
-					buffer[i] = -1;
+					max 		= 	buffer[j];
+					n_highest 	= 	buf_n[j];
+					mub_highest =	get_muBest(n_highest , bkg );
+					iter = j;					// iter is used to make sure that the R value that has been used once will not be used again
 				}
-				else
-				{
-					buf_n[i]  = 	buf_n[i] + 1;
-					mu_bst    = 	get_muBest ( buf_n[i] , b );
-					buffer[i] = 	get_R(buf_n[i] , mu + b , mu_bst + b );
-				}
-
 			}
-		}
-		max 		= 	buffer[0];
-		n_highest 	= 	buf_n[0];
 
-		for (int j = 0 ; j <7 ; j++) //find the highest R value from buffer and it's corresponding n
-		{
-			if(max <= buffer[j])
+			n_min 	= 	n_highest;			//In first round of searching for n_min and n_max both are set to default first highest value
+			n_max 	= 	n_highest; 
+
+			// cout<< " n_highest = "<< n_highest << endl;
+			buffer[iter] = -1;
+			P_Sum += poisson(n_highest , mu + bkg );
+			// cout<< " P(n_highest) = "<< poisson(n_highest , mu + bkg ) << "\t P_Sum = " << P_Sum<< endl;
+
+			int n_index = iter; 		//the index is used to remember at which place in buffer the last R has been used
+
+
+
+			if( buf_n[0] != 0 && (poisson(buf_n[0] - 1, mu ) > poisson(buf_n[6] + 1, mu )) ) //this condition makes sure that when moving buffer toward lower numbers, we do not get out of bounds.
 			{
-				max 		= 	buffer[j];
-				n_highest 	= 	buf_n[j];
-				mub_highest =	get_muBest(n_highest , b);
-				iter = j;
+				buf_n[n_index] 	= buf_n[n_index] - 1;
+				mu_bst    	 	= get_muBest ( buf_n[n_index] , bkg );
+				buffer[n_index] = get_R(buf_n[n_index] , mu + bkg , mu_bst + bkg );
+
+
+				for (int i = n_index - 1 ; i> 0 ; i--)
+				{
+					if(buf_n[i] - 1 <0 )
+					{
+						buf_n[i]  = 	 0;
+						buffer[i] = 	-1; 
+					}
+					else
+					{
+						buf_n[i]  = 	buf_n[i] - 1;
+						mu_bst    = 	get_muBest ( buf_n[i] , bkg );
+						buffer[i] = 	get_R(buf_n[i] , mu + bkg , mu_bst + bkg );
+					}
+				}			
 			}
-		}
-
-		if( n_highest <= n_min )
-		{
-			n_min = n_highest;
-			buffer[iter] = -1;
-		}
-		else
-		{
-			n_max = n_highest;
-			buffer[iter] = -1;
-		}
-		
-		int n_index = iter; 		//the index is used to remember at which place in buffer the last R has been used
-		P_Sum += poisson(n_highest , mu + b);
-
-
-		while(P_Sum < CL)			// buffer moves up or down depending on whether the last used n was above or below n_top respectively
-		{
-			if( n_highest > n_top )
+			else 
 			{
 				buf_n[n_index] 		= buf_n[n_index] +1 ;
-				mu_bst    	 		= get_muBest ( buf_n[n_index] , b );
-				buffer[n_index] 	= get_R(buf_n[n_index] , mu + b , mu_bst + b );
+				mu_bst    	 		= get_muBest ( buf_n[n_index] , bkg );
+				buffer[n_index] 	= get_R(buf_n[n_index] , mu + bkg , mu_bst + bkg );
 
 				for (int i = n_index + 1 ; i<7 ; i++)
 				{
@@ -208,34 +174,11 @@ double MPFeldman_Cousins::calculate_lim()
 					else
 					{
 						buf_n[i]  = 	buf_n[i] + 1;
-						mu_bst    = 	get_muBest ( buf_n[i] , b );
-						buffer[i] = 	get_R(buf_n[i] , mu + b , mu_bst + b );
+						mu_bst    = 	get_muBest ( buf_n[i] , bkg );
+						buffer[i] = 	get_R(buf_n[i] , mu + bkg , mu_bst + bkg );
 					}
 				}
 			}
-			else if ( buf_n[0] != 0 )
-			{
-				buf_n[n_index] 	= buf_n[n_index] - 1;
-				mu_bst    	 	= get_muBest ( buf_n[n_index] , b );
-				buffer[n_index] = get_R(buf_n[n_index] , mu + b , mu_bst + b );
-
-
-				for (int i = n_index - 1 ; i>=0 ; i--)
-				{
-					if(buf_n[i] - 1 <0 )
-					{
-						buf_n[i]  = 	 0;
-						buffer[i] = 	-1; 
-					}
-					else
-					{
-						buf_n[i]  = 	buf_n[i] - 1;
-						mu_bst    = 	get_muBest ( buf_n[i] , b );
-						buffer[i] = 	get_R(buf_n[i] , mu + b , mu_bst + b );
-					}
-				}
-			}
-			
 			max 		= 	buffer[0];
 			n_highest 	= 	buf_n[0];
 
@@ -245,9 +188,13 @@ double MPFeldman_Cousins::calculate_lim()
 				{
 					max 		= 	buffer[j];
 					n_highest 	= 	buf_n[j];
-					mub_highest =	get_muBest(n_highest , b);
+					mub_highest =	get_muBest(n_highest , bkg );
 					iter = j;
 				}
+				// cout<< " first round: i = "<<j <<"\t buf_n = "<<buf_n[j] <<"\t buffer = "<<buffer[j] <<"\t mu_bst= "<< mu_bst <<"\t mu =" << mu<<endl; 
+				
+
+
 			}
 
 			if( n_highest <= n_min )
@@ -260,73 +207,176 @@ double MPFeldman_Cousins::calculate_lim()
 				n_max = n_highest;
 				buffer[iter] = -1;
 			}
+			// cout<< " n_highest = "<< n_highest << endl;
 			
-			n_index = iter;
-			P_Sum += poisson(n_highest , mu + b);
+
+			n_index = iter; 		//the index is used to remember at which place in buffer the last R has been used
+			P_Sum += poisson(n_highest , mu + bkg );
+
+			// cout<< " P(n_highest) = "<< poisson(n_highest , mu + bkg ) << "\t P_Sum = " << P_Sum<< endl;
+
+
+
+			while(P_Sum < CL)			// buffer moves up or down depending on whether the last used n was above or below n_top respectively
+			{
+				if( buf_n[0] != 0 && (poisson(buf_n[0] - 1, mu ) > poisson(buf_n[6] + 1, mu )) ) //this condition makes sure that when moving buffer toward lower numbers, we do not get out of bounds.
+				{
+					buf_n[n_index] 	= buf_n[n_index] - 1;
+					mu_bst    	 	= get_muBest ( buf_n[n_index] , bkg );
+					buffer[n_index] = get_R(buf_n[n_index] , mu + bkg , mu_bst + bkg );
+
+
+					for (int i = n_index - 1 ; i>0 ; i--)
+					{
+						if(buf_n[i] - 1 <0 )
+						{
+							buf_n[i]  = 	 0;
+							buffer[i] = 	-1; 
+						}
+						else
+						{
+							buf_n[i]  = 	buf_n[i] - 1;
+							mu_bst    = 	get_muBest ( buf_n[i] , bkg );
+							buffer[i] = 	get_R(buf_n[i] , mu + bkg , mu_bst + bkg );
+						}
+					}			
+				}
+				else 
+				{
+					buf_n[n_index] 		= buf_n[n_index] +1 ;
+					mu_bst    	 		= get_muBest ( buf_n[n_index] , bkg );
+					buffer[n_index] 	= get_R(buf_n[n_index] , mu + bkg , mu_bst + bkg );
+
+					for (int i = n_index + 1 ; i<7 ; i++)
+					{
+						if(buffer[i] == -1)
+						{
+							buf_n[i]  = 	buf_n[i] + 1;
+							buffer[i] = 	-1;
+						}
+						else
+						{
+							buf_n[i]  = 	buf_n[i] + 1;
+							mu_bst    = 	get_muBest ( buf_n[i] , bkg );
+							buffer[i] = 	get_R(buf_n[i] , mu + bkg , mu_bst + bkg );
+						}
+					}
+				}
+				
+				max 		= 	buffer[0];
+				n_highest 	= 	buf_n[0];
+
+				for (int j = 0 ; j <7 ; j++) //find the highest R value from buffer and it's corresponding n
+				{
+					if(max <= buffer[j])
+					{
+						max 		= 	buffer[j];
+						n_highest 	= 	buf_n[j];
+						mub_highest =	get_muBest(n_highest , bkg );
+						iter = j;
+					}
+					// cout<< " upper branch: i = "<<j <<"\t buf_n = "<<buf_n[j] <<"\t buffer = "<<buffer[j] <<"\t mu_bst= "<< mu_bst <<"\t mu =" << mu<<endl; 
+
+				}
+
+				// cout<< "n_highest = " <<n_highest <<endl;
+
+				// cout<<endl;
+
+				if( n_highest <= n_min )
+				{
+					n_min = n_highest;
+					buffer[iter] = -1;
+				}
+				else
+				{
+					n_max = n_highest;
+					buffer[iter] = -1;
+				}
+				
+				n_index = iter;
+				P_Sum += poisson(n_highest , mu + bkg );
+				// cout<<"P(n_highest) = "<< poisson(n_highest , mu + bkg ) <<"\t P_Sum = "<<P_Sum<<endl;
+
+			}
+			mu_U_temp[m] = mu;
+			mu_L_temp[m] = mu;
+			n_U_temp[m]  = n_min;
+			n_L_temp[m]  = n_max;
+
+			// if(buf_n[6] > 600)
+			// {
+			// 	break;
+			// }
+
+			// cout<< "mu = " << mu_U_temp[m] << " \t nmin = " << n_U_temp[m] <<  "\t nmax = " << n_L_temp[m] <<"\t b = "<<bkg << endl;
+
 
 		}
-		mu_U_temp[m] = mu;
-		mu_L_temp[m] = mu;
-		n_U_temp[m]  = n_min;
-		n_L_temp[m]  = n_max;
-
-
-		// cout<< "mu = " << mu_U_temp[m] << " \t nmin = " << n_U_temp[m] <<  "\t nmax = " << n_L_temp[m] << endl;
-
-
-	}
-	
-	vector<int> n_U;
-	vector<int> n_L; 
-
-	vector<double> mu_U;
-	vector<double> mu_L;
-
-
-	int size = cycles;
-	int n_current = n_U_temp[size - 1];
-	// cout<< "n_current = "<< n_current<< endl;
-	// int i = size -1;
-
-	int y = 0;
-	for (int x = size -1 ; x > 0; x--)  			//algortihm checks the n_array generated in get_n from back to front. 
-													//Logs only jumps by one, so that there are no repetitions.
-	{
 		
-		if (n_current > n_U_temp[x])
+		vector<int> n_U;
+		vector<int> n_L; 
+
+		vector<double> mu_U;
+		vector<double> mu_L;
+
+
+		int size = cycles;
+		int n_current = n_U_temp[size - 1];
+		// cout<< "n_current = "<< n_current<< endl;
+		// int i = size -1;
+
+		int y = 0;
+		for (int x = size -1 ; x > 0; x--)  			//algortihm checks the n_array generated in get_n from back to front. 
+														//Logs only jumps by one, so that there are no repetitions.
 		{
-
-			n_U.push_back(n_current);
-		
-			mu_U.push_back(mu_U_temp[x+1]);
-			n_U.push_back(n_current - 1 );
 			
-		
-			mu_U.push_back(mu_U_temp[x+1]);
-		
-			n_current = n_U_temp[x];
-			y+=2;
+			if (n_current > n_U_temp[x])
+			{
+
+				n_U.push_back(n_current);
+			
+				mu_U.push_back(mu_U_temp[x+1]);
+				n_U.push_back(n_current - 1 );
+				
+			
+				mu_U.push_back(mu_U_temp[x+1]);
+			
+				n_current = n_U_temp[x];
+				y+=2;
+				
+			}
 			
 		}
-		
-	}
-	n_U.push_back(0);					//Adding point (0,0) so that the graph starts at 0. 
-	mu_U.push_back(0);
+		n_U.push_back(0);					//Adding point (0,0) so that the graph starts at 0. 
+		mu_U.push_back(0);
 
-	int mu_U_size = mu_U.size();
-	reverse(mu_U.begin(),mu_U.end());
-	reverse(n_U.begin(),n_U.end());
+		int mu_U_size = mu_U.size();
+		reverse(mu_U.begin(),mu_U.end());
+		reverse(n_U.begin(),n_U.end());
 
-	for(int i = 0; i<mu_U_size; i++)
-	{
-		cout<< "n_U = " << n_U[i] << "\t mu_U = "<< mu_U[i] << endl;
-	}
+		// cout<< "+++++++++++++ bkg = " << bkg <<"++++++++++++ " <<endl;
 
-	delete[] mu_U_temp;
-	delete[] mu_L_temp;
-	delete[] n_U_temp;
-	delete[] n_L_temp;
+		for(int i = 0; i<mu_U_size; i++)
+		{
+			cout<< "n_U = " << n_U[i] << "\t mu_U = "<< mu_U[i] << endl;
+		}
+		cout<< endl;
 
+		delete[] mu_U_temp;
+		delete[] mu_L_temp;
+		delete[] n_U_temp;
+		delete[] n_L_temp;
+
+		n_U.clear();
+		n_L.clear();
+		mu_U.clear();
+		mu_L.clear();
+
+
+	// }
+
+	
 	return 0.0;
 }
 
@@ -484,7 +534,11 @@ double MPFeldman_Cousins::get_muBest(int n, double b)
 
 	double mu_bst = double(n) - b;
 
-	if (mu_bst < 0)
+	if (n ==0 && b ==0)
+	{
+		mu_bst = 0;
+	}
+	else if(mu_bst < 0)
 	{
 		mu_bst = 0;
 	}
