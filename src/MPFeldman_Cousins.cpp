@@ -107,7 +107,7 @@ double MPFeldman_Cousins::calculate_lim()
 
 
 
-		if( buf_n[0] != 0 && (poisson(buf_n[0] - 1, mu ) > poisson(buf_n[6] + 1, mu )) ) //this condition makes sure that when moving buffer toward lower numbers, we do not get out of bounds.
+		if( buf_n[0] != 0 && (poisson(buf_n[0] - 1, mu + b ) > poisson(buf_n[6] + 1, mu + b)) ) //this condition makes sure that when moving buffer toward lower numbers, we do not get out of bounds.
 		{
 			buf_n[0] 	 = buf_n[0] - 1;
 			mu_bst    	 = get_muBest ( buf_n[0] , b );
@@ -184,7 +184,7 @@ double MPFeldman_Cousins::calculate_lim()
 
 		while(P_Sum < CL)			// buffer moves up or down depending on whether the last used n was above or below n_top respectively
 		{
-			if( n_highest > n_top )
+			if( buf_n[0] != 0 && (poisson(buf_n[0] - 1, mu + b ) > poisson(buf_n[6] + 1, mu + b)) )
 			{
 				buf_n[n_index] 		= buf_n[n_index] +1 ;
 				mu_bst    	 		= get_muBest ( buf_n[n_index] , b );
@@ -204,6 +204,7 @@ double MPFeldman_Cousins::calculate_lim()
 						buffer[i] = 	get_R(buf_n[i] , mu + b , mu_bst + b );
 					}
 				}
+			
 			}
 			else if ( buf_n[0] != 0 )
 			{
