@@ -14,7 +14,7 @@ R__LOAD_LIBRARY(./lib/libMPFC.so);
 int FC() 
 { 
 
-    MPFeldman_Cousins* obj = new MPFeldman_Cousins(3, 0.99);   // order for parameters (double _b, double _step, int _rows, int _mu_max, double _CL)
+    MPFeldman_Cousins* obj = new MPFeldman_Cousins(3, 0.9);   // order for parameters (double _b, double _step, int _rows, int _mu_max, double _CL)
     // obj->print_table  (0.0, 2.5);
 
     obj->calculate_lim();
