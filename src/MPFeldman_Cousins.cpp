@@ -211,11 +211,13 @@ double MPFeldman_Cousins::calculate_lim()
 
 
     //     }
+        cout<< "belt mu \t nmin \t nmax" << endl;
         
-        belt* b    = new belt[10];   //Value 1000 is a place holder, need to find boundary limit. 
-        for(int m = 0; m<10; m++)
+        belt* bt    = new belt[ROW_N*10];   //Value 1000 is a place holder, need to find boundary limit. 
+        for(int m = 0; m<ROW_N*10; m++)
         {
-            b[m] = calculate_limit(m*STEP, 3.0);
+            bt[m] = calculate_limit(m*STEP, b);
+            cout<< "\t"<< bt[m].mu << "\t"<< bt[m].n_min <<"\t"<< bt[m].n_max <<endl;
         }
 
 
@@ -619,83 +621,38 @@ belt MPFeldman_Cousins::calculate_limit(double _mu, double _b)
     return *r;
 }
 
-std::vector<double> MPFeldman_Cousins::shift_mu_U(double _b)
+double* MPFeldman_Cousins::shift_mu_U(double _b, int _n_0)
 {
+    int*    n_U  = new      int[_n_0]; // n0 = 10, can be changed later
+    double* mu_U = new   double[_n_0];
 
-    vector<double> mu_U;
-    vector<int> n_U;
 
-    int cycles = 1000;
-    belt* b    = new belt[cycles];   //Value 1000 is a place holder, need to find boundary limit. 
-    for(int m = 0; m<cycles; m++)
+    belt* bt    = new belt[ROW_N*_n_0];   //Value ROW_N0 is a place holder, need to find boundary limit. 
+    for(int m = 0; m<ROW_N*_n_0; m++)
     {
-        b[m] = calculate_limit(m*STEP, _b);
-        // cout<< "b[m]->n_min = "<<b[m].n_min << endl;
+        bt[m] = calculate_limit(m*STEP, _b);    //change 0.1 to STEP, change ROW_N to ROW_N
     }
 
-
-
-        // vector<int> n_L; 
-
-        // vector<double> mu_L;
-
-
-    int size = cycles;
-
-    int n_current = b[size - 1].n_min;
-
-    // cout<< "n_current = "<< n_current<< endl;
-    // int i = size -1;
-
-    int y = 0;
-
-    for (int x = size -1 ; x > 0; x--)              //algortihm checks the n_array generated in get_n from back to front. 
-                                                    //Logs only jumps by one, so that there are no repetitions.
+    for(int i = 0; i<_n_0; i++)
     {
-        
-        if (n_current > b[x].n_min)
+        n_U[i] = i;
+
+        for(int j = 0; j < ROW_N*_n_0; j++)
         {
-
-            n_U.push_back(n_current);
-        
-            mu_U.push_back(b[x+1].mu);
-            n_U.push_back(n_current - 1 );
-            
-        
-            mu_U.push_back(b[x+1].mu);
-        
-            n_current = b[x].n_min;
-            y+=2;
-            
+            if(bt[j].n_min == n_U[i])
+            {
+              if(bt[j+1].n_min > bt[j].n_min)
+                {
+                    mu_U[i] = bt[j].mu;
+                }  
+            }
         }
-        
+
+        // cout<< "n_u = "<< n_U[i]<< "\t mu_U = "<< mu_U[i]<< endl;
+
     }
-    n_U.push_back(0);                   //Adding point (0,0) so that the graph starts at 0. 
-    mu_U.push_back(0);
 
-    int mu_U_size = mu_U.size();
-    // cout<< " mu u size = "<< mu_U_size << "for b = "<< _b<<endl;
-    reverse(mu_U.begin(),mu_U.end());
-    reverse(n_U.begin(),n_U.end());
 
-    // cout<< "+++++++++++++ bkg = " << _b <<"++++++++++++ " <<endl;
-
-    // for(int i = 0; i<mu_U_size; i++)
-    // {
-    //     cout<< "n_U = " << n_U[i] << "\t mu_U = "<< mu_U[i] << endl;
-    // }
-    // cout<< endl;
-    // cout<< "size of vector = "<< mu_U.size() << endl;
-
-        // delete[] mu_U_temp;
-        // delete[] mu_L_temp;
-        // delete[] n_U_temp;
-        // delete[] n_L_temp;
-
-        // n_U.clear();
-        // n_L.clear();
-        // mu_U.clear();
-        // mu_L.clear();
     
     return mu_U;
 }
@@ -704,44 +661,44 @@ std::vector<double> MPFeldman_Cousins::shift_mu_U(double _b)
 
 
 
-void MPFeldman_Cousins::fill_m_table()
+void MPFeldman_Cousins::fill_m_table(int _n_0)
 {   
-    int table_size = int(ceil(4*b));
-    m_table = new double*[table_size];
-    double bkg;
-    std::vector<double> mu_array; 
+    int max_bkg = int(ceil(4*b));
+    m_table = new double*[max_bkg];
 
-    for (int i = 0; i < table_size; i++) 
+
+    for (int i = 0; i < max_bkg; i++) 
     {
-        m_table[i] = new double[table_size];
+        m_table[i] = new double[_n_0];
     }
 
 
 
-    cout<< "n\\b  |"<<setw(12)<<"|"<<setw(12)<< "|"<<setw(12)<<"|"<<setw(12)<<"|"<<setw(12)<<endl;
+    cout<< "b\\n  |"<<setw(12)<<"|"<<setw(12)<< "|"<<setw(12)<<"|"<<setw(12)<<"|"<<setw(12)<<endl;
     cout<< "-------------------------------------------------"<<endl;
     cout << std::setprecision(3);
     
-    for(int j = 0; j<table_size; j++)
+    for(int bg = 0; bg<max_bkg; bg++)
     {
-        bkg = b+j*0.1; //step 0.1 in backgrounds
-        mu_array = shift_mu_U(bkg);
-        // cout<< "bkg = "<< bkg<<endl;
-        // for(int i = 0; i<int(mu_array.size())-1;i++)
-        // {
-        //     cout<< "n_max = "<< mu_array[i]<<endl;
-        // }
+        double* mu_array; 
 
-        for(int n=0; n<table_size; n++)
-        {
-            m_table[n][j] = mu_array[1+2*n];
-            cout<< m_table[n][j]<<setw(8)<<"|";
-        }
-
-        cout<< endl;
-        mu_array.clear()
+        mu_array = shift_mu_U( int( b + bg * 0.1 ) , 10);
+        m_table[bg] = mu_array;
+        
+        delete[] mu_array;
     }
 
+    for(int r = 0; r<_n_0; r++)
+    {
+        for(int c = 0; c<max_bkg; c++)
+        {
+            cout<< m_table[r][c]<<setw(8)<<"|";
+
+        }
+        cout<< endl; 
+
+    }
+        
         
 
     m_table_set = true;
@@ -790,6 +747,102 @@ void MPFeldman_Cousins::fill_m_table()
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // vector<double> mu_U;
+    // vector<int> n_U;
+
+    // int cycles = 1000;
+    // belt* b    = new belt[cycles];   //Value 1000 is a place holder, need to find boundary limit. 
+    // for(int m = 0; m<cycles; m++)
+    // {
+    //     b[m] = calculate_limit(m*STEP, _b);
+    //     // cout<< "b[m]->n_min = "<<b[m].n_min << endl;
+    // }
+
+
+
+    //     // vector<int> n_L; 
+
+    //     // vector<double> mu_L;
+
+
+    // int size = cycles;
+
+    // int n_current = b[size - 1].n_min;
+
+    // // cout<< "n_current = "<< n_current<< endl;
+    // // int i = size -1;
+
+    // int y = 0;
+
+    // for (int x = size -1 ; x > 0; x--)              //algortihm checks the n_array generated in get_n from back to front. 
+    //                                                 //Logs only jumps by one, so that there are no repetitions.
+    // {
+        
+    //     if (n_current > b[x].n_min)
+    //     {
+
+    //         n_U.push_back(n_current);
+        
+    //         mu_U.push_back(b[x+1].mu);
+    //         n_U.push_back(n_current - 1 );
+            
+        
+    //         mu_U.push_back(b[x+1].mu);
+        
+    //         n_current = b[x].n_min;
+    //         y+=2;
+            
+    //     }
+        
+    // }
+    // n_U.push_back(0);                   //Adding point (0,0) so that the graph starts at 0. 
+    // mu_U.push_back(0);
+
+    // int mu_U_size = mu_U.size();
+    // // cout<< " mu u size = "<< mu_U_size << "for b = "<< _b<<endl;
+    // reverse(mu_U.begin(),mu_U.end());
+    // reverse(n_U.begin(),n_U.end());
+
+    // // cout<< "+++++++++++++ bkg = " << _b <<"++++++++++++ " <<endl;
+
+    // // for(int i = 0; i<mu_U_size; i++)
+    // // {
+    // //     cout<< "n_U = " << n_U[i] << "\t mu_U = "<< mu_U[i] << endl;
+    // // }
+    // // cout<< endl;
+    // // cout<< "size of vector = "<< mu_U.size() << endl;
+
+    //     // delete[] mu_U_temp;
+    //     // delete[] mu_L_temp;
+    //     // delete[] n_U_temp;
+    //     // delete[] n_L_temp;
+
+    //     // n_U.clear();
+    //     // n_L.clear();
+    //     // mu_U.clear();
+    //     // mu_L.clear();
 
 
 

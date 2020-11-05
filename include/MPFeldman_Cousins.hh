@@ -35,14 +35,14 @@ class MPFeldman_Cousins: public TObject
         double  poisson               (int _n, double _mu, bool _warn = true);
         belt    calculate_limit       (double _mu, double _b);
 
-        std::vector<double> shift_mu_U(double _b);
+        double* shift_mu_U(double _b, int _n_0);
         
 
         static double** p_table;             // 2D Array generated in constructor - holds values of P. Row -> n ; Column -> mu/STEP. 
 
         static bool     p_table_set;
 
-        void    fill_m_table();
+        void    fill_m_table(int _n_0);
 
 
         static double** m_table;             // 2D Array generated in constructor - holds values of P. Row -> n ; Column -> mu/STEP. 
