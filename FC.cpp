@@ -17,8 +17,22 @@ int FC()
     MPFeldman_Cousins* obj = new MPFeldman_Cousins(3, 0.9);   // order for parameters (double _b, double _step, int _rows, int _mu_max, double _CL)
     // obj->print_table  (0.0, 2.5);
 
-    obj->fill_m_table(10);
-    // obj->calculate_lim();
+    obj->calculate_lim();
+
+    // double bkg;
+    // for(int i = 0; i < 10; i++)
+    // {
+    //     bkg = 30+i*0.1;
+    //     cout<< " +++++++ bkg = "<< bkg<< "++++++++" << endl;
+    //     obj->shift_mu_U(bkg, 10);
+    //     cout<< endl;
+    // }
+    obj->draw_upper();
+
+
+    // obj->fill_m_table(10);
+
+
     // obj->shift_mu_U(3.0, 10);
 
     // cout<< "second object: "<<endl;

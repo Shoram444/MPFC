@@ -33,20 +33,17 @@ class MPFeldman_Cousins: public TObject
         double  print_poisson         (int _n, double _mu);         
         double  get_muBest            (int n, double b, bool _warn = true);
         double  poisson               (int _n, double _mu, bool _warn = true);
-        belt    calculate_limit       (double _mu, double _b);
+        double* shift_mu_U            (double _b, int _n_0);
+        void    fill_m_table          (int _n_0);
+        void    draw_upper            ();
 
-        double* shift_mu_U(double _b, int _n_0);
+        belt    calculate_limit       (double _mu, double _b);
         
 
         static double** p_table;             // 2D Array generated in constructor - holds values of P. Row -> n ; Column -> mu/STEP. 
-
         static bool     p_table_set;
 
-        void    fill_m_table(int _n_0);
-
-
         static double** m_table;             // 2D Array generated in constructor - holds values of P. Row -> n ; Column -> mu/STEP. 
-
         static bool     m_table_set;
 
         // vector<belt>  b;
@@ -116,6 +113,8 @@ class MPFeldman_Cousins: public TObject
         const int    COL_N  = ROW_N/STEP;            // The number of columns dependent on max mu and step chosen.
         double       b;                         // background b, variable through get and set
         double       CL;            // Desired confidence level. 
+        
+        vector<belt> mu_U;
                     
                      // 2D Array generated in constructor - holds values of P. Row -> n ; Column -> mu/STEP. 
 

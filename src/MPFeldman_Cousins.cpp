@@ -64,225 +64,44 @@ MPFeldman_Cousins::~MPFeldman_Cousins()
 
 double MPFeldman_Cousins::calculate_lim()
 {
-    // double bkg;
-
-    // // for(int g = 0; g<200; g++)
-    // // {
-    //     bkg =   30.2;
-    //     // cout<< "++++++++++++++++++bkg = " << bkg << "+++++++++++++++++"<< endl;
-    //     int     cycles = 200; 
-    //     double* mu_U_temp = new double[cycles];
-    //     double* mu_L_temp = new double[cycles];
-    //     int*    n_U_temp  = new int[cycles];
-    //     int*    n_L_temp  = new int[cycles];
-
-    //     for (int m = 0; m<cycles; m ++)
-    //     {
-    //         double  mu              = m*STEP;
-    //         int     n_min           = 0;
-    //         int     n_max           = 0;
-
-    //         double mu_bst;
-    
-    //         double* buf_R  = new double[7]; //Prepare buffer for R values of size 7
-    //         double* buf_n  = new double[7]; //Prepare buffer of corresponding n values associated to buffer
-            
-    //         cout<< "mu = " << mu << endl << " n_top : "<< ceil( mu + bkg ) << endl << " First round of buffering" <<endl;
-
-    //         for(int i = 0 ; i < 7; i++) //Filling out buffer around the n_top value. 
-    //         {
-    //             if (ceil( mu + bkg ) - 3 + i < 0)  //Makes sure that the buffer of n values doesn't go to negatives 
-    //             {
-    //                 buf_n[i]  =      0;
-    //                 buf_R[i]  =     -1; 
-    //             }
-    //             else
-    //             {
-    //                 buf_n[i]  =     ceil( mu + bkg ) - 3 + i;
-    //                 buf_R[i]  =     get_R(buf_n[i], mu + bkg, get_muBest(buf_n[i], bkg, false) + bkg, false);
-    //             }
-
-    //         }
-
-    //         double  P_Sum       = 0.0;
-
-    //         n_min               = ceil( mu + bkg ); //this initiates the n_min to the "n_top" value (middle of the buffer)
-    //         n_max               = ceil( mu + bkg ); //this initiates the n_max to the "n_top" value (middle of the buffer)
-
-
-    //         while(P_Sum < CL)
-    //         {   
-    //             int    cho_n = 0;   //cho_n is the corresponding n for highest R
-    //             double cho_R = 0.0; //cho_R is used to search for highest R value
-    //             double cho_P = 0;   //cho_n is the corresponding n for highest R
-    //             int    cho_j = 0;   //cho_n is the corresponding n for highest R
-
-
-
-
-    //             cout << "PO| n |   P    |    P_bst    |     R   " << endl;
-    //             for(int i = 0 ; i < 7; i++)
-    //             {
-    //                 cout << i << " | " << buf_n[i] << " | " << poisson(buf_n[i] , mu + bkg, false) << " | " << poisson(buf_n[i] , get_muBest(buf_n[i], bkg, false) + bkg, false) << " | " << buf_R[i] << endl;
-    //             }
-    //             cout << endl << endl;
-
-    //             for (int j = 0 ; j < 7 ; j++)       //find the highest R value from buffer and it's corresponding n
-    //             {
-    //                 if(cho_R <= buf_R[j])
-    //                 {
-    //                     cho_n       =   buf_n[j];
-    //                     cho_R       =   buf_R[j];
-    //                     cho_P       =   poisson(cho_n , mu + bkg, false);
-    //                     cho_j       =   j;      // cho_j is used to make sure that the R value that has been used once will not be used again
-    //                 }
-    //             }
-
-
-    //             if(n_min >= cho_n)
-    //             {
-    //                 n_min       =   cho_n; 
-    //             }
-    //             else
-    //             {
-    //                 n_max       =   cho_n; 
-    //             }
-                         
-                
-    //             P_Sum       +=  cho_P;
-
-    //             cout << "*****CHOSEN = " << cho_n << " cho_j " << cho_j << ", P(cho_n) = " << poisson(cho_n , mu + bkg, false) << "\t P_Sum = " << P_Sum << endl << endl;
-
-
-    //             if( buf_n[0] == 0 || 
-    //                     get_R(buf_n[0] - 1, mu + bkg, get_muBest(buf_n[0] - 1, bkg, false) + bkg, false ) 
-    //                   > get_R(buf_n[6] + 1, mu + bkg, get_muBest(buf_n[6] + 1, bkg, false) + bkg, false ) ) //this condition makes sure that when moving buffer toward lower numbers, we do not get out of bounds.
-    //             {                   
-    //                 if (cho_j == 0)
-    //                 {
-    //                     buf_n[0]    =  buf_n[0] - 1;
-    //                     buf_R[0]    =  get_R(buf_n[0], mu + bkg, get_muBest(buf_n[0], bkg, false) + bkg, false );                   
-    //                 }
-    //                 else 
-    //                 {
-    //                     while (cho_j >= 1)
-    //                     {
-    //                         buf_R[cho_j]    =  buf_R[cho_j - 1];
-    //                         buf_n[cho_j]    =  buf_n[cho_j - 1];
-
-    //                         cho_j--;
-    //                     }
-
-    //                     buf_n[0]    =  buf_n[1] - 1;
-    //                     buf_R[0]    =  get_R(buf_n[0], mu + bkg, get_muBest(buf_n[0], bkg, false) + bkg, false );   
-    //                 }                   
-    //             }
-    //             else 
-    //             {
-    //                 if (cho_j == 6)
-    //                 {
-    //                     buf_n[6]    =  buf_n[6] + 1;
-    //                     buf_R[6]    =  get_R(buf_n[6], mu + bkg, get_muBest(buf_n[6], bkg, false) + bkg, false );   
-    //                 }
-    //                 else
-    //                 {
-    //                     while (cho_j <= 5)
-    //                     {
-    //                         buf_R[cho_j]    =  buf_R[cho_j + 1];
-    //                         buf_n[cho_j]    =  buf_n[cho_j + 1];
-
-    //                         cho_j++;
-    //                     }
-
-    //                     buf_n[6]    =  buf_n[5] + 1;
-    //                     buf_R[6]    =  get_R(buf_n[6], mu + bkg, get_muBest(buf_n[6], bkg, false) + bkg, false );   
-    //                 }
-    //             }    
-
-    //         }
-
-
-    //         mu_U_temp[m] = mu;
-    //         mu_L_temp[m] = mu;
-    //         n_U_temp[m]  = n_min;  
-    //         n_L_temp[m]  = n_max;
-
-    //         cout<< "mu = " << mu_U_temp[m] << " \t nmin = " << n_U_temp[m] <<  "\t nmax = " << n_L_temp[m] <<"\t b = "<<bkg << endl;
-
-
-    //     }
+ 
         cout<< "belt mu \t nmin \t nmax" << endl;
         
-        belt* bt    = new belt[ROW_N*10];   //Value 1000 is a place holder, need to find boundary limit. 
-        for(int m = 0; m<ROW_N*10; m++)
+        mu_U.push_back(calculate_limit(0, b));
+        cout<< "\t"<< mu_U[0].mu << "\t"<< mu_U[0].n_min <<"\t"<< mu_U[0].n_max <<endl;
+
+        int m = 1;
+
+        // belt* bt    = new belt[ROW_N*10];   //Value 1000 is a place holder, need to find boundary limit. 
+        while(mu_U.back().n_min<10)
         {
-            bt[m] = calculate_limit(m*STEP, b);
-            cout<< "\t"<< bt[m].mu << "\t"<< bt[m].n_min <<"\t"<< bt[m].n_max <<endl;
+
+            mu_U.push_back(calculate_limit(m*STEP, b));
+            cout<< "\t"<< mu_U[m].mu << "\t"<< mu_U[m].n_min <<"\t"<< mu_U[m].n_max <<endl;
+            m++;
         }
 
 
 
-        // vector<int> n_U;
-        // vector<int> n_L; 
-
-        // vector<double> mu_U;
-        // vector<double> mu_L;
 
 
-        // int size = cycles;
-        // int n_current = n_U_temp[size - 1];
-        // cout<< "n_current = "<< n_current<< endl;
-        // // int i = size -1;
+        for (int x = mu_U.size() -1 ; x > 0; x--)              //algortihm checks the n_array generated in get_n from back to front. 
+                                                        //Logs only jumps by one, so that there are no repetitions.
+        {
+            if (mu_U[x].n_min <= mu_U[x-1].n_min)
+            {
 
-        // int y = 0;
-        // for (int x = size -1 ; x > 0; x--)              //algortihm checks the n_array generated in get_n from back to front. 
-        //                                                 //Logs only jumps by one, so that there are no repetitions.
-        // {
-            
-        //     if (n_current > n_U_temp[x])
-        //     {
-
-        //         n_U.push_back(n_current);
-            
-        //         mu_U.push_back(mu_U_temp[x+1]);
-        //         n_U.push_back(n_current - 1 );
+                mu_U.erase(mu_U.begin()+x);
                 
+            }
             
-        //         mu_U.push_back(mu_U_temp[x+1]);
-            
-        //         n_current = n_U_temp[x];
-        //         y+=2;
-                
-        //     }
-            
-        // }
-        // n_U.push_back(0);                   //Adding point (0,0) so that the graph starts at 0. 
-        // mu_U.push_back(0);
-
-        // int mu_U_size = mu_U.size();
-        // reverse(mu_U.begin(),mu_U.end());
-        // reverse(n_U.begin(),n_U.end());
-
-        // cout<< "+++++++++++++ bkg = " << bkg <<"++++++++++++ " <<endl;
-
-        // for(int i = 0; i<mu_U_size; i++)
-        // {
-        //     cout<< "n_U = " << n_U[i] << "\t mu_U = "<< mu_U[i] << endl;
-        // }
-        // cout<< endl;
-
-        // delete[] mu_U_temp;
-        // delete[] mu_L_temp;
-        // delete[] n_U_temp;
-        // delete[] n_L_temp;
-
-        // n_U.clear();
-        // n_L.clear();
-        // mu_U.clear();
-        // mu_L.clear();
+        }
+        for(int i = 0; i< mu_U.size();i++)
+        {
+            cout<< "\t"<< mu_U[i].mu << "\t"<< mu_U[i].n_min <<"\t"<< mu_U[i].n_max <<endl;
+        }
 
 
-    // }
 
     
     return 0.0;
@@ -648,7 +467,7 @@ double* MPFeldman_Cousins::shift_mu_U(double _b, int _n_0)
             }
         }
 
-        // cout<< "n_u = "<< n_U[i]<< "\t mu_U = "<< mu_U[i]<< endl;
+        cout<< "n_u = "<< n_U[i]<< "\t mu_U = "<< mu_U[i]<< endl;
 
     }
 
@@ -661,9 +480,11 @@ double* MPFeldman_Cousins::shift_mu_U(double _b, int _n_0)
 
 
 
+
+
 void MPFeldman_Cousins::fill_m_table(int _n_0)
 {   
-    int max_bkg = int(ceil(4*b));
+    int max_bkg = int(ceil(3*b));
     m_table = new double*[max_bkg];
 
 
@@ -678,19 +499,22 @@ void MPFeldman_Cousins::fill_m_table(int _n_0)
     cout<< "-------------------------------------------------"<<endl;
     cout << std::setprecision(3);
     
+    double* mu_array; 
+
+
     for(int bg = 0; bg<max_bkg; bg++)
     {
-        double* mu_array; 
 
-        mu_array = shift_mu_U( int( b + bg * 0.1 ) , 10);
+        mu_array = shift_mu_U( double( b + bg * 0.1 ) , 10);
         m_table[bg] = mu_array;
+        cout<< mu_array[0]<< endl;
         
-        delete[] mu_array;
+        // delete[] mu_array;
     }
 
-    for(int r = 0; r<_n_0; r++)
+    for(int r = 0; r < max_bkg ; r++)
     {
-        for(int c = 0; c<max_bkg; c++)
+        for(int c = 0; c < _n_0; c++)
         {
             cout<< m_table[r][c]<<setw(8)<<"|";
 
@@ -708,7 +532,75 @@ void MPFeldman_Cousins::fill_m_table(int _n_0)
 
 
 
+void MPFeldman_Cousins::draw_upper()
+{
 
+
+    int*           n =      new int[int(2*mu_U.size())];
+    double*       mu =   new double[int(2*mu_U.size())];
+    // double* mu_U =      shift_mu_U(_b, mu_U.size);
+
+    TGraph *gr  = new TGraph();
+
+    int y = 0;
+    for (int i = 0; i<2*mu_U.size() ; i+=2)
+    {
+        n[i]    = y;
+        n[i+1]  = y;
+        y++;
+    }
+
+    mu[0]            = 0 ;
+    y = 0;
+    for (int i = 1; i<2*mu_U.size()-1; i+=2)
+    {
+        mu[i]   = mu_U[y].mu;
+        mu[i+1] =   mu_U[y].mu;
+        cout<< "mu[i] = " << mu[i] << "\t mu[i+1] = " <<mu[i+1] <<endl;
+        y++;
+    }
+
+    for (int i =0; i<2*mu_U.size()-1; i++)
+    {
+        gr->SetPoint(i, n[i], mu[i]);
+    }
+
+    stringstream graph_title;
+    graph_title  << "Upper Limit for bkg = " << b << " with C.L. = " << CL*100 << "%";
+    string strname  = graph_title.str();
+
+    gr->SetTitle(strname.c_str());
+    gr->SetFillStyle(1000);
+    gr->SetLineColor(2);
+    gr->SetLineWidth(4);
+    gr->SetMarkerStyle(0);
+    // gr->SetMaximum(20);
+    TAxis* xaxis;
+    xaxis = gr->GetXaxis();
+    // xaxis->SetLimits(0,20);
+    xaxis->CenterTitle(true);
+    xaxis->SetTitle("n [Counts]");
+
+    TAxis* yaxis;
+    yaxis = gr->GetYaxis();
+    yaxis->SetTitle("\\mu_U  [Counts]");
+    yaxis->CenterTitle(true);
+
+
+    TCanvas *c1 = new TCanvas("c1","Graph Draw Options",600,600);
+
+
+    c1->SetFrameFillStyle(3013);
+    c1->SetFrameLineWidth(2);
+    c1->SetFrameBorderMode(0);
+    c1->SetFrameBorderSize(4);
+    c1->SetGridx();
+    c1->SetGridy();
+
+    gr->Draw("ALP");
+
+    return;
+}
 
 
 

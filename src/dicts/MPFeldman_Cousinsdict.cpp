@@ -142,6 +142,69 @@ namespace ROOT {
    }
 } // end of namespace ROOT for class ::MPFeldman_Cousins
 
+namespace ROOT {
+   static TClass *vectorlEbeltgR_Dictionary();
+   static void vectorlEbeltgR_TClassManip(TClass*);
+   static void *new_vectorlEbeltgR(void *p = 0);
+   static void *newArray_vectorlEbeltgR(Long_t size, void *p);
+   static void delete_vectorlEbeltgR(void *p);
+   static void deleteArray_vectorlEbeltgR(void *p);
+   static void destruct_vectorlEbeltgR(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const vector<belt>*)
+   {
+      vector<belt> *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(vector<belt>));
+      static ::ROOT::TGenericClassInfo 
+         instance("vector<belt>", -2, "vector", 216,
+                  typeid(vector<belt>), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &vectorlEbeltgR_Dictionary, isa_proxy, 0,
+                  sizeof(vector<belt>) );
+      instance.SetNew(&new_vectorlEbeltgR);
+      instance.SetNewArray(&newArray_vectorlEbeltgR);
+      instance.SetDelete(&delete_vectorlEbeltgR);
+      instance.SetDeleteArray(&deleteArray_vectorlEbeltgR);
+      instance.SetDestructor(&destruct_vectorlEbeltgR);
+      instance.AdoptCollectionProxyInfo(TCollectionProxyInfo::Generate(TCollectionProxyInfo::Pushback< vector<belt> >()));
+      return &instance;
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const vector<belt>*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+
+   // Dictionary for non-ClassDef classes
+   static TClass *vectorlEbeltgR_Dictionary() {
+      TClass* theClass =::ROOT::GenerateInitInstanceLocal((const vector<belt>*)0x0)->GetClass();
+      vectorlEbeltgR_TClassManip(theClass);
+   return theClass;
+   }
+
+   static void vectorlEbeltgR_TClassManip(TClass* ){
+   }
+
+} // end of namespace ROOT
+
+namespace ROOT {
+   // Wrappers around operator new
+   static void *new_vectorlEbeltgR(void *p) {
+      return  p ? ::new((::ROOT::Internal::TOperatorNewHelper*)p) vector<belt> : new vector<belt>;
+   }
+   static void *newArray_vectorlEbeltgR(Long_t nElements, void *p) {
+      return p ? ::new((::ROOT::Internal::TOperatorNewHelper*)p) vector<belt>[nElements] : new vector<belt>[nElements];
+   }
+   // Wrapper around operator delete
+   static void delete_vectorlEbeltgR(void *p) {
+      delete ((vector<belt>*)p);
+   }
+   static void deleteArray_vectorlEbeltgR(void *p) {
+      delete [] ((vector<belt>*)p);
+   }
+   static void destruct_vectorlEbeltgR(void *p) {
+      typedef vector<belt> current_t;
+      ((current_t*)p)->~current_t();
+   }
+} // end of namespace ROOT for class vector<belt>
+
 namespace {
   void TriggerDictionaryInitialization_MPFeldman_Cousinsdict_Impl() {
     static const char* headers[] = {
