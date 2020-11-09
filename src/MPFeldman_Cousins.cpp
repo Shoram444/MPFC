@@ -487,13 +487,13 @@ void MPFeldman_Cousins::fill_m_table(int _n_0)
 
     }
         
-    for(int r = 0; r < _n_0  ; r++)
+    for(int n = 0; n < _n_0  ; n++)
     {
-        for(int c = max_bkg - 1; c > 0; c--)
+        for(int bg = max_bkg - 1; bg > 0; bg--)
         {
-            if( m_table[r][c] >= m_table[r][c-1] )
+            if( m_table[n][bg]    >= m_table[n][bg-1] )
             {
-                m_table[r][c - 1] = m_table[r][c];
+                m_table[n][bg - 1] = m_table[n][bg]   ;
             }
         }
     }
