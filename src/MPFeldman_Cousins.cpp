@@ -35,10 +35,26 @@ MPFeldman_Cousins::MPFeldman_Cousins(double _b, double _CL)
         
         cout << "Time it took to fill table: " << elapsed_seconds.count() << "s\n";
     }
-
     b         = _b;
     CL        = _CL;
+    // auto start = chrono::steady_clock::now();
+    // fill_table();
+    // auto end   = chrono::steady_clock::now();
+    // chrono::duration<double> elapsed_seconds = end-start;
+    
+    // cout << "Time it took to fill table: " << elapsed_seconds.count() << "s\n";
+/*
 
+    b_const = _b;
+         table = fill_table();
+        
+    set_mu(0);
+
+    R       = get_R();
+    A       = get_A(R);
+    n_order = CL_check(mu_j, R);
+    n_array = get_n();*/
+    // print_n();
 }
 
 MPFeldman_Cousins::~MPFeldman_Cousins()
@@ -48,12 +64,18 @@ MPFeldman_Cousins::~MPFeldman_Cousins()
 
 double MPFeldman_Cousins::calculate_lim()
 {
+ 
+        // cout<< "belt mu \t nmin \t nmax" << endl;
+        
         mu_U.push_back(calculate_limit(0, b));
+        // cout<< "\t"<< mu_U[0].mu << "\t"<< mu_U[0].n_min <<"\t"<< mu_U[0].n_max <<endl;
 
         int m = 1;
 
+        // belt* bt    = new belt[ROW_N*10];   //Value 1000 is a place holder, need to find boundary limit. 
         while( mu_U.back().n_min < 10 )
         {
+
             mu_U.push_back(calculate_limit(m*STEP, b));
             // cout<< "\t"<< mu_U[m].mu << "\t"<< mu_U[m].n_min <<"\t"<< mu_U[m].n_max <<endl;
             m++;
@@ -61,11 +83,27 @@ double MPFeldman_Cousins::calculate_lim()
 
         mu_U = shift_mu_U(mu_U);
 
+
+
+        // for (int x = mu_U.size() -1 ; x > 0; x--)              //algortihm checks the n_array generated in get_n from back to front. 
+        //                                                 //Logs only jumps by one, so that there are no repetitions.
+        // {
+        //     if (mu_U[x].n_min <= mu_U[x-1].n_min)
+        //     {
+
+        //         mu_U.erase(mu_U.begin()+x);
+                
+        //     }
+            
+        // }
         for(int i = 0; i< mu_U.size();i++)
         {
             cout<< "\t"<< mu_U[i].mu << "\t"<< mu_U[i].n_min <<"\t"<< mu_U[i].n_max <<endl;
         }
 
+
+
+    
     return 0.0;
 }
 
@@ -269,7 +307,7 @@ belt MPFeldman_Cousins::calculate_limit(double _mu, double _b)
 {
     belt*     r = new belt;
     
-    double bkg  =       _b;
+    double  bkg =        _b;
     double mu   =      _mu;
     int n_min   =        0;
     int n_max   =        0;
@@ -279,6 +317,8 @@ belt MPFeldman_Cousins::calculate_limit(double _mu, double _b)
     double* buf_R  = new double[7]; //Prepare buffer for R values of size 7
     double* buf_n  = new double[7]; //Prepare buffer of corresponding n values associated to buffer
     
+    // cout<< "mu = " << mu << endl << " n_top : "<< ceil( mu + bkg ) << endl << " First round of buffering" <<endl;
+
     for(int i = 0 ; i < 7; i++) //Filling out buffer around the n_top value. 
     {
         if (ceil( mu + bkg ) - 3 + i < 0)  //Makes sure that the buffer of n values doesn't go to negatives 
@@ -307,6 +347,16 @@ belt MPFeldman_Cousins::calculate_limit(double _mu, double _b)
         double cho_P = 0;   //cho_n is the corresponding n for highest R
         int    cho_j = 0;   //cho_n is the corresponding n for highest R
 
+
+
+
+        // cout << "PO| n |   P    |    P_bst    |     R   " << endl;
+        // for(int i = 0 ; i < 7; i++)
+        // {
+        //     cout << i << " | " << buf_n[i] << " | " << poisson(buf_n[i] , mu + bkg, false) << " | " << poisson(buf_n[i] , get_muBest(buf_n[i], bkg, false) + bkg, false) << " | " << buf_R[i] << endl;
+        // }
+        // cout << endl << endl;
+
         for (int j = 0 ; j < 7 ; j++)       //find the highest R value from buffer and it's corresponding n
         {
             if(cho_R <= buf_R[j])
@@ -330,6 +380,8 @@ belt MPFeldman_Cousins::calculate_limit(double _mu, double _b)
                  
         
         P_Sum       +=  cho_P;
+
+        // cout << "*****CHOSEN = " << cho_n << " cho_j " << cho_j << ", P(cho_n) = " << poisson(cho_n , mu + bkg, false) << "\t P_Sum = " << P_Sum << endl << endl;
 
 
         if( buf_n[0] == 0 || 
@@ -383,24 +435,36 @@ belt MPFeldman_Cousins::calculate_limit(double _mu, double _b)
     r->n_min     =  n_min;  
     r->n_max     =  n_max;
 
+    // cout<< "+++++ Belt struct!!!+++++  mu = " << r->mu << " \t nmin = " << r->n_min <<  "\t nmax = " << r->n_max <<"\t b = "<<bkg << endl;
+
     return *r;
 }
 
 vector<belt> MPFeldman_Cousins::shift_mu_U(vector<belt> _bt)
 {
+    
     for (int x = _bt.size() ; x > 0; x--)              //algortihm checks the n_array generated in get_n from back to front. 
-                                                       //Logs only jumps by one, so that there are no repetitions.
+                                                          //Logs only jumps by one, so that there are no repetitions.
     {
         if (_bt[x].n_min <= _bt[x-1].n_min)
         {
             _bt.erase(_bt.begin()+x);
+
         }
+
     }
 
     for (int x = 0; x <  _bt.size(); x++)              
     {
         _bt[x].mu = _bt[x+1].mu;
     }
+
+
+    // cout<< " shift mu U \t n_min \t n_max"<<endl;
+    // for(int i = 0; i< _bt.size();i++)
+    // {
+    //     cout<< "\t "<< _bt[i].mu << "\t"<< _bt[i].n_min <<"\t"<< _bt[i].n_max <<endl;
+    // }
 
     return _bt;
 }
@@ -413,35 +477,73 @@ vector<belt> MPFeldman_Cousins::shift_mu_U(vector<belt> _bt)
 
 void MPFeldman_Cousins::fill_m_table(int _n_0)
 {   
-    double b_step =            0.1;
-    int max_bkg   = int(30/b_step);
-    int       m   =              0;
+    double step = 0.1;
+    int max_bkg = int(30/step);
 
-    vector<belt>             bt;
+   
+
+    cout<< " max bkg = " << max_bkg << endl;
     m_table = new double*[_n_0];
 
 
-    for(int bg = 0; bg < max_bkg  ; bg++ )
+    for (int r = 0; r < _n_0; r++) 
     {
-        bt.push_back( calculate_limit( m, double( b + bg * b_step ) ) );
+        m_table[r] = new double[max_bkg];
+    }
+
+    for( int i = 0; i < 30; i++)
+    {
+        if( i%5 == 0 )
+        {
+            cout << std::setprecision(2);
+            cout<<"|";
+            cout<<setfill(' ')<< i*step<<setw(5);  
+        }
+
+    }
+    cout<< endl;
+
+    cout<<setfill(' ')<<setw(7)<< "n\\b  |"
+        <<setfill(' ')<<setw(7)<<"|"<<setfill(' ')<<setw(7)<< "|"<<setfill(' ')<<setw(7)
+        <<setfill(' ')<<setw(7)<<"|"<<setfill(' ')<<setw(7)<< "|"<<setfill(' ')<<setw(7)
+        <<setfill(' ')<<setw(7)<<"|"<<setfill(' ')<<setw(7)<< "|"<<setfill(' ')<<setw(7)
+        << "|"<<setfill(' ')<<setw(7)<<"|"<<setfill(' ')<<setw(7)<<"|"<<setfill(' ')<<setw(7)
+        << "|"<<setfill(' ')<<setw(7)<<"|"<<setfill(' ')<<setw(7)<<"|"<<setfill(' ')<<setw(7)<<endl;
+
+    cout<< "----------------------------------------------------------------------------------"<<
+           "----------------------------------------------------------------------------------"<<endl;
+    cout << std::setprecision(4);
+    
+    vector<belt> bt;
+    int       m = 0;
+
+    for(int bg = 0; bg < max_bkg  ; bg++)
+    {
+        bt.push_back(calculate_limit(m, double( b + bg * step ) ));
+
         m = 1;
 
         while(bt.back().n_min < _n_0 + 1)
 
         {
-            bt.push_back( calculate_limit( double( m * STEP ) , double( b + bg * b_step ) ) );
+            bt.push_back(calculate_limit( double( m * STEP ) , double( b + bg * step ) ));
             m++;
         }
 
         bt = shift_mu_U( bt );
 
-        for(int r = 0; r < _n_0 ; r++ )
+
+        for(int r = 0; r < _n_0 ; r++)
         {
             m_table[r][bg] = bt[r].mu;
+            // cout<< " mu - " << bt[r].mu; 
         }
 
+        // cout<<endl;
+
         bt.clear();
-        m   =    0; 
+        m     = 0 ; 
+
     }
         
     for(int r = 0; r < _n_0  ; r++)
@@ -456,37 +558,12 @@ void MPFeldman_Cousins::fill_m_table(int _n_0)
 
     }
 
-    ///////////////////FROM HERE IT'S JUST COUT//////////////////////
-    for (int r = 0; r < _n_0; r++) 
+
+
+
+    for(int r = 0; r < _n_0  ; r++)
     {
-        m_table[r] = new double[max_bkg];
-    }
-
-    for( int i = 0; i < 30; i++)
-    {
-        if( i%5 == 0 )
-        {
-            cout << std::setprecision(2);
-            cout<<"|";
-            cout<<setfill(' ')<< i*b_step<<setw(5);  
-        }
-
-    }
-    cout<< endl;
-
-    cout<<setfill(' ')      <<setw(7)   << "n\\b  |"
-        <<setfill(' ')      <<setw(7)   <<"|"<<setfill(' ') <<setw(7)   << "|"  <<setfill(' ')  <<setw(7)
-        <<setfill(' ')      <<setw(7)   <<"|"<<setfill(' ') <<setw(7)   << "|"  <<setfill(' ')  <<setw(7)
-        << "|"<<setfill(' ')<<setw(7)   <<"|"<<setfill(' ') <<setw(7)   <<"|"   <<setfill(' ')  <<setw(7)   <<  endl;
-
-    cout<< "----------------------------------------------------------------------------------"<<
-           "----------------------------------------------------------------------------------"<<endl;
-    cout << std::setprecision(4);
-
-
-    for(int r = 0 ; r < _n_0  ; r++ )
-    {
-        for(int c = 0; c < int( max_bkg * b_step ); c++ )
+        for(int c = 0; c < int(max_bkg*step); c++)
         {
             if( c%5 == 0 )
             {
@@ -494,9 +571,12 @@ void MPFeldman_Cousins::fill_m_table(int _n_0)
                 cout<< m_table[r][c]<<"|";
             }
         }
+
         cout<< endl; 
     }
         
+        
+
     m_table_set = true;
 
     return;
@@ -506,9 +586,13 @@ void MPFeldman_Cousins::fill_m_table(int _n_0)
 
 void MPFeldman_Cousins::draw_upper()
 {
+
+
     int*           n =      new int[int(2*mu_U.size())];
     double*       mu =   new double[int(2*mu_U.size())];
     int            y =                                0;
+
+    // double* mu_U =      shift_mu_U(_b, mu_U.size);
 
     TGraph *gr  = new TGraph();
 
@@ -521,6 +605,7 @@ void MPFeldman_Cousins::draw_upper()
     }
 
     mu[0] = 0 ;
+
     y     = 1 ;
 
     for (int i = 1; i<2*mu_U.size()-1; i+=2)
