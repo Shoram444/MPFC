@@ -14,7 +14,7 @@ R__LOAD_LIBRARY(./lib/libMPFC.so);
 int FC() 
 { 
 
-    MPFeldman_Cousins* obj = new MPFeldman_Cousins(3, 0.9);   // order for parameters (double _b, double _step, int _rows, int _mu_max, double _CL)
+    MPFeldman_Cousins* obj = new MPFeldman_Cousins(0, 0.6827);   // order for parameters (double _b, double _step, int _rows, int _mu_max, double _CL)
     // obj->print_table  (0.0, 2.5);
 
     obj->calculate_lim();
@@ -27,10 +27,24 @@ int FC()
     //     obj->shift_mu_U(bkg, 10);
     //     cout<< endl;
     // }
-    obj->draw_upper();
+    // obj->draw_upper();
+
+    obj->fill_m_table(20);
 
 
-    // obj->fill_m_table(10);
+    // TGraph* gr = new TGraph();
+
+    // for (int i =0; i< 70 ; i++)
+    // {
+    //     gr->SetPoint(i, double( 0 + i * 0.2 ), double( obj->m_table[0][i] ) );
+    // }
+
+    // gr->Draw("ALP");
+
+    
+
+
+    // cout<< " m_table[0][0] = " <<obj->m_table[0][0]<<endl;
 
 
     // obj->shift_mu_U(3.0, 10);

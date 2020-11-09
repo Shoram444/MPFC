@@ -33,11 +33,12 @@ class MPFeldman_Cousins: public TObject
         double  print_poisson         (int _n, double _mu);         
         double  get_muBest            (int n, double b, bool _warn = true);
         double  poisson               (int _n, double _mu, bool _warn = true);
-        double* shift_mu_U            (double _b, int _n_0);
         void    fill_m_table          (int _n_0);
         void    draw_upper            ();
 
-        belt    calculate_limit       (double _mu, double _b);
+
+        belt                calculate_limit       (double _mu, double _b);
+        std::vector<belt>   shift_mu_U             (std::vector<belt> _bt);
         
 
         static double** p_table;             // 2D Array generated in constructor - holds values of P. Row -> n ; Column -> mu/STEP. 
