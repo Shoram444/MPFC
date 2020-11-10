@@ -38,7 +38,7 @@ class MPFeldman_Cousins: public TObject
 
 
         belt                calculate_limit       (double _mu, double _b);
-        std::vector<belt>   shift_mu_U             (std::vector<belt> _bt);
+        double*              shift_mu_U             (std::vector<belt> _bt , int _n_0);
         
 
         static double** p_table;             // 2D Array generated in constructor - holds values of P. Row -> n ; Column -> mu/STEP. 

@@ -14,10 +14,21 @@ R__LOAD_LIBRARY(./lib/libMPFC.so);
 int FC() 
 { 
 
-    MPFeldman_Cousins* obj = new MPFeldman_Cousins(0, 0.6827);   // order for parameters (double _b, double _step, int _rows, int _mu_max, double _CL)
+    MPFeldman_Cousins* obj = new MPFeldman_Cousins(14, 0.9);   // order for parameters (double _b, double _step, int _rows, int _mu_max, double _CL)
     // obj->print_table  (0.0, 2.5);
 
     // obj->calculate_lim();
+
+    // int m = 0 ;
+    // std:vector<belt> bt;
+    // do
+    // {
+    //     bt.push_back(obj->calculate_limit(m*0.01, 15));
+    //     m++;        
+
+    // } 
+    // while(bt.back().n_min <= 10);
+
 
     // double bkg;
     // for(int i = 0; i < 10; i++)
