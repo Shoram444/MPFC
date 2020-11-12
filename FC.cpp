@@ -18,6 +18,8 @@ int FC()
     // obj->print_table  (0.0, 2.5);
 
     // obj->calculate_lim();
+    // obj->print_table(9.9, 10.3, 0, 21);
+    // obj->print_table(13.9, 14.3, 0, 21);
 
     // int m = 0 ;
     // std:vector<belt> bt;
@@ -39,14 +41,27 @@ int FC()
     //     cout<< endl;
     // }
     // obj->draw_upper();
-    // TGraph* gr = new TGraph();
+    TGraph* gr[20] ;
+    gr[0] = new TGraph();
+    for (int i =0; i< 4000 ; i++)
+    {
+        gr[0]->SetPoint(i, double( i*0.01 ), double( obj->m_table[i][0] ) );
+    }
+    gr[0]->Draw("ALP");
 
-    // for (int i =0; i< 70 ; i++)
-    // {
-    //     gr->SetPoint(i, double( 0 + i * 0.2 ), double( obj->m_table[0][i] ) );
-    // }
 
-    // gr->Draw("ALP");
+    for (int g = 1; g<20;g++)
+    {
+        gr[g] = new TGraph();
+        for (int i =0; i< 4000 ; i++)
+            {
+                gr[g]->SetPoint(i, double( i*0.01 ), double( obj->m_table[i][g] ) );
+            }
+
+        gr[g]->Draw("same");
+            
+    }
+    
 
     
 

@@ -547,31 +547,13 @@ void MPFeldman_Cousins::fill_m_table()
         }
         while( mu.back().n_min <= NLST_M + 1 );
 
-        /*for (int i = 0; i < mu.size(); i++)
-        {
-        	cout << mu[i].mu    << " "
-        	     << mu[i].n_min << " "
-        	     << mu[i].n_max << " " << endl;
-        }
-
-        cout << endl;*/
-
         m_table[bkg] = shift_mu_U(mu);
-
-        cout << bkg << ": " << bkg*STEP_M << ": "; 
-        for(int l = 0; l <= NLST_M; l++)
-        {
-            cout << m_table[bkg][l] << " ";
-        }
-        cout << endl;
 
         mu.clear();
 	}
     
     m_table_set = true;
     
-    cout << "BEFORE: " << endl;
-    print_table(0, 14.0, 0, NLST_M + 1);
 
     for(int n = 0; n <= NLST_M; n++)
     {
@@ -584,8 +566,6 @@ void MPFeldman_Cousins::fill_m_table()
         }
     }
 
-    cout << "AFTER: " << endl;
-    print_table(0, 14.0, 0, NLST_M + 1);
 
     return;
 }

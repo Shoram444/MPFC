@@ -52,7 +52,7 @@ class MPFeldman_Cousins: public TObject
         const int    ROWS_P  = 1000;             
         const int    COLS_P  = ROWS_P/STEP_P;    
 
-        const double STEP_M = 0.5;    
+        const double STEP_M = 0.01;    
         const int    NLST_M = 20; 
               int    COLS_M; 
         const double MUPREC = 0.01;              
