@@ -39,10 +39,6 @@ int FC()
     //     cout<< endl;
     // }
     // obj->draw_upper();
-
-    obj->fill_m_table(20);
-
-
     // TGraph* gr = new TGraph();
 
     // for (int i =0; i< 70 ; i++)
