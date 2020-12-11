@@ -14,12 +14,33 @@ R__LOAD_LIBRARY(./lib/libMPFC.so);
 int FC() 
 { 
 
-    MPFeldman_Cousins* obj = new MPFeldman_Cousins(14, 0.9);   // order for parameters (double _b, double _step, int _rows, int _mu_max, double _CL)
+    MPFeldman_Cousins* obj = new MPFeldman_Cousins(1, 0.9);   // order for parameters (double _b, double _step, int _rows, int _mu_max, double _CL)
     // obj->print_table  (0.0, 2.5);
 
     // obj->calculate_lim();
     // obj->print_table(9.9, 10.3, 0, 21);
-    // obj->print_table(13.9, 14.3, 0, 21);
+    obj->print_table(2.5, 2.9, 0, 10);
+    cout << "First print " << endl;
+
+    obj->m_extend();
+    cout<< " extend" << endl;
+    obj->print_table(2.8, 3.9, 0, 10);
+
+
+    // for ( int i = 0 ; i < 6; i++ )
+    // {
+    //     cout<< " n = " << i << endl;
+    //     obj->get_mu_U(i, 33.0);
+    //     cout<< endl;
+    // }
+
+    // obj->get_sensitivity(); 
+
+
+
+
+    // obj->print_table(41.98, 42.00, 0, 22);
+    // obj->print_table(41.98, 42.01, 0, 22);
 
     // int m = 0 ;
     // std:vector<belt> bt;
@@ -41,26 +62,26 @@ int FC()
     //     cout<< endl;
     // }
     // obj->draw_upper();
-    TGraph* gr[20] ;
-    gr[0] = new TGraph();
-    for (int i =0; i< 4000 ; i++)
-    {
-        gr[0]->SetPoint(i, double( i*0.01 ), double( obj->m_table[i][0] ) );
-    }
-    gr[0]->Draw("ALP");
+    // TGraph* gr[20] ;
+    // gr[0] = new TGraph();
+    // for (int i =0; i< 4000 ; i++)
+    // {
+    //     gr[0]->SetPoint(i, double( i*0.01 ), double( obj->m_table[i][0] ) );
+    // }
+    // gr[0]->Draw("ALP");
 
 
-    for (int g = 1; g<20;g++)
-    {
-        gr[g] = new TGraph();
-        for (int i =0; i< 4000 ; i++)
-            {
-                gr[g]->SetPoint(i, double( i*0.01 ), double( obj->m_table[i][g] ) );
-            }
+    // for (int g = 1; g<20;g++)
+    // {
+    //     gr[g] = new TGraph();
+    //     for (int i =0; i< 4000 ; i++)
+    //         {
+    //             gr[g]->SetPoint(i, double( i*0.01 ), double( obj->m_table[i][g] ) );
+    //         }
 
-        gr[g]->Draw("same");
+    //     gr[g]->Draw("same");
             
-    }
+    // }
     
 
     

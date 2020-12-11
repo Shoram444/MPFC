@@ -156,6 +156,68 @@ double MPFeldman_Cousins::poisson(int _n, double _mu, bool _warn)
     }
 }
 
+double MPFeldman_Cousins::get_mu_U(int _n, double _b)
+{
+    int bg1 = floor( _b / STEP_M );         // finding correct index in m_table
+    int bg2 = bg1 + 1 ; 
+
+    double b1 = bg1 * STEP_M;               // finding corresponging background value
+    double b2 = bg2 * STEP_M; 
+
+    double Mu1 = m_table[bg1][_n];          // pick out correct mu from m_table
+    double Mu2 = m_table[bg2][_n];
+
+    cout<< " Mu1 = " << Mu1 << " \t Mu2 = " << Mu2 << endl;
+
+    double a   = (Mu1 - Mu2) / (b1 - b2);   // slope of linear fit
+    double c   = Mu1 - a * b1;              // y-intersect of linear fit
+
+    cout<< " mu = " << a*_b + c << endl;    
+    return a*_b + c;
+}
+
+
+double  MPFeldman_Cousins::get_sensitivity()
+{
+    double    U_times_P;
+
+    double   Sens = 0.0;
+    int         n =   0;
+
+    cout << " Sensitivity for bkg =  " << b << endl;
+    cout << setw(15) << "n            |" 
+         << setw(15) << "U(n ,b )     |" 
+         << setw(15) << "P(n, b)      |" 
+         << setw(15) << "U_times_P    |" 
+         << setw(15) << "Sensitivity  |" 
+         << endl;
+
+    do
+    {
+        U_times_P   = get_mu_U ( n , b ) * poisson( n , b , false) ;
+        Sens       += U_times_P; 
+        
+        cout << setw(15) << n                        << "|"  
+             << setw(15) << get_mu_U ( n , b )       << "|"
+             << setw(15) << poisson( n , b , false)  << "|"
+             << setw(15) << U_times_P                << "|"
+             << setw(15) << Sens                     << "|" 
+             << endl;
+
+        n++;
+    }
+    while(U_times_P > 1e-30 || n < NLST_M );
+
+    if( n >= NLST_M)
+    {
+        cout << "!!!!!!   n >= NLST_M    !!!!!! " << endl; 
+    }
+
+    return Sens;
+}
+
+
+
 //////////////////////////////////////////////////////
 // Printing and visualization
 
@@ -370,6 +432,17 @@ void   MPFeldman_Cousins::print_table  (double _colmin, double _colmax, int _nmi
             cout << endl;
         }
 
+        cout << setw(4)  << "b |";
+
+        
+
+        for (int m = floor(_colmin/stp); double(m)*stp <= _colmax; m++)
+        {
+                cout << setprecision(min_order) << setw(max_order + min_order + 2) << double(m)*stp  << " |";
+        }
+
+        cout << endl;
+
         print_symb("-", 5);
 
         for (int i = ceil(_colmin/stp); double(i)*stp <= _colmax; i++)
@@ -535,7 +608,7 @@ void MPFeldman_Cousins::fill_m_table()
 	vector<belt> mu;          
 	m_table = new double*[COLS_M];
 
-    for (int bkg = 0; bkg <= COLS_M; bkg++)
+    for (int bkg = 0; bkg < COLS_M; bkg++)
 	{
     	double m = 0.0;
 		//cout << "bkg " << bkg << endl;
@@ -569,6 +642,69 @@ void MPFeldman_Cousins::fill_m_table()
 
     return;
 }
+
+void MPFeldman_Cousins::m_extend()
+{
+    vector<belt> mu;          
+
+    int ext = 10; 
+
+    double** m_extension = new double*[COLS_M + ext];
+    // std::copy(m_table[0], m_table[COLS_M], m_extension);
+
+    for(int bkg = 0; bkg < COLS_M; bkg++)
+    {
+        m_extension[bkg] = m_table[bkg];
+        // cout<< " m_extension[bkg][0] = " << m_extension[bkg][0]<< endl;
+    }
+
+    // cout<< " copying "<< endl;
+
+    delete[] m_table;
+
+
+    for (int bkg = COLS_M - 1; bkg < COLS_M + ext; bkg++)
+    {
+        double m = 0.0;
+        //cout << "bkg " << bkg << endl;
+
+        do
+        {
+            mu.push_back( calculate_limit(m, bkg*STEP_M ) );
+            m += MUPREC;
+        }
+        while( mu.back().n_min <= NLST_M + 1 );
+
+        m_extension[bkg] = shift_mu_U(mu);
+
+        mu.clear();
+    }
+    
+    // cout<< " fill new "<< endl;
+
+
+    for(int n = 0; n <= NLST_M; n++)
+    {
+        // cout<< " n = " << n; 
+        for(int bkg = COLS_M + 9 - 1; bkg > 0; bkg--)
+        {
+            // cout<< "\t bkg = " << bkg<< endl;
+            // cout<< " m_extension[bkg-1][n] = "<<  m_extension[bkg-1][n] << " \t <= m_extension[bkg][n] = " << m_extension[bkg][n] <<endl;
+            if( m_extension[bkg-1][n] <= m_extension[bkg][n])
+            {
+                m_extension[bkg-1][n] = m_extension[bkg][n];
+            }
+        }
+    }
+
+    // cout<< " correction "<< endl;
+
+    m_table = m_extension; 
+
+    return;
+}
+
+
 
 void MPFeldman_Cousins::fill_p_table()
 {
