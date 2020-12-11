@@ -21,6 +21,7 @@ int FC()
     // obj->print_table(9.9, 10.3, 0, 21);
     obj->print_table(2.5, 2.9, 0, 10);
     cout << "First print " << endl;
+    //change
 
     obj->m_extend();
     cout<< " extend" << endl;
