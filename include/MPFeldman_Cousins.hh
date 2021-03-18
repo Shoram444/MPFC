@@ -29,15 +29,16 @@ class MPFeldman_Cousins: public TObject
         double  get_R             (int _n, double _lam1, double _lam2, bool _warn = true); 
         double  poisson           (int _n, double _mu, bool _warn = true);
         double  get_mu_U          (int _n, double _b);
-        double  get_sensitivity   ();
+        double  get_sensitivity   (double _b, bool _msg = false);
 
         // Printing and visualization
         void    draw_upper        ();
-        void    print_table       (double _colmin, double _colmax, int _nmin, int _nmax, bool _isp = false);
+        void    print_table       (double _colmin, double _colmax, int _nmin, int _nmax, double _stp, bool _isp = false);
         void    print_symb        (string _s, int _rep);
 
         // Extend method
-        void    m_extend          ();
+        //void    m_extend          ();
+
         // Static variables to save table of poisson values and limits for mu
         static double** m_table;            
         static bool     m_table_set;
@@ -52,20 +53,21 @@ class MPFeldman_Cousins: public TObject
         double       CL;        
 
         // Constants given by the design of the algorithm
-        const double STEP_P  = 0.01;      
+        const double STEP_P  = 0.01;     
+        const double MAX_P   = 700.0;       
         const int    ROWS_P  = 1000;             
-        const int    COLS_P  = ROWS_P/STEP_P;    
+        const int    COLS_P  = MAX_P/STEP_P;    
 
-        const double STEP_M = 0.1;    
-        const int    NLST_M = 10; 
+              double STEP_M; 		// minimal distance within column datapoint in m-table (granularity of value of background)
               int    COLS_M; 
-        const double MUPREC = 0.01;              
+              int    ROWS_M; 
+        const double MUPREC = 0.01;  	// Each calculated mu is given with this precision            
 
         // Calculation algorithm methods
         belt    calculate_limit       (double _mu, double _b);
         void    fill_m_table          ();
         void    fill_p_table          ();  
-        double* shift_mu_U            (std::vector<belt> _bt);
+        double* correct_mu_U          (std::vector<belt> _bt);
                             
         ClassDef(MPFeldman_Cousins,1);
 };
