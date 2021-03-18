@@ -1,0 +1,3 @@
+/home/shoram/Work/Diploma_Thesis/MPFC/build/CMakeFiles/rebuild_cache.dir
+/home/shoram/Work/Diploma_Thesis/MPFC/build/CMakeFiles/MPFC.dir
+/home/shoram/Work/Diploma_Thesis/MPFC/build/CMakeFiles/edit_cache.dir

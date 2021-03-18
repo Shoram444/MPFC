@@ -28,12 +28,16 @@ class MPFeldman_Cousins: public TObject
         double  get_muBest        (int n, double b, bool _warn = true); 
         double  get_R             (int _n, double _lam1, double _lam2, bool _warn = true); 
         double  poisson           (int _n, double _mu, bool _warn = true);
+        double  get_mu_U          (int _n, double _b);
+        double  get_sensitivity   ();
 
         // Printing and visualization
         void    draw_upper        ();
         void    print_table       (double _colmin, double _colmax, int _nmin, int _nmax, bool _isp = false);
         void    print_symb        (string _s, int _rep);
-        
+
+        // Extend method
+        void    m_extend          ();
         // Static variables to save table of poisson values and limits for mu
         static double** m_table;            
         static bool     m_table_set;
@@ -52,8 +56,8 @@ class MPFeldman_Cousins: public TObject
         const int    ROWS_P  = 1000;             
         const int    COLS_P  = ROWS_P/STEP_P;    
 
-        const double STEP_M = 0.5;    
-        const int    NLST_M = 20; 
+        const double STEP_M = 0.1;    
+        const int    NLST_M = 10; 
               int    COLS_M; 
         const double MUPREC = 0.01;              
 
